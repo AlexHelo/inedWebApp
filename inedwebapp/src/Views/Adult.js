@@ -19,7 +19,18 @@ import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import styled from 'styled-components';
+
+const TableTitle = styled(Typography)({
+
+    fontFamily: "Open Sans",
+    fontSize: '32px !important',
+    color: '#294F91',
+    marginRight: '2%',
+    marginTop: '5px'
+})
 
 
 function createData(name, calories, fat, carbs, protein) {
@@ -161,26 +172,32 @@ const EnhancedTableToolbar = (props) => {
         >
             {numSelected > 0 ? (
                 <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
-                    {numSelected} selected
+                    {numSelected} seleccionados
                 </Typography>
             ) : (
-                    <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-                        Nutrition
-                    </Typography>
+                    <TableTitle className={classes.title} variant="h6" id="tableTitle" component="div">
+                        Base de Datos de Adultos Mayores
+                    </TableTitle>
                 )}
 
             {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
-                        <DeleteIcon />
-                    </IconButton>
-                </Tooltip>
-            ) : (
-                    <Tooltip title="Filter list">
-                        <IconButton aria-label="filter list">
-                            <FilterListIcon />
+
+                <div>
+                    <Tooltip title="Borrar">
+                        <IconButton aria-label="Borrar">
+                            <DeleteIcon />
                         </IconButton>
                     </Tooltip>
+                    <Tooltip title="Editar">
+                        <IconButton aria-label="Editar">
+                            <EditIcon />
+                        </IconButton>
+                    </Tooltip>
+
+                </div>
+
+            ) : (
+                    <span />
                 )}
         </Toolbar>
     );
@@ -221,7 +238,7 @@ export default function EnhancedTable() {
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -283,7 +300,7 @@ export default function EnhancedTable() {
                     <Table
                         className={classes.table}
                         aria-labelledby="tableTitle"
-                        size={dense ? 'small' : 'medium'}
+
                         aria-label="enhanced table"
                     >
                         <EnhancedTableHead
@@ -329,7 +346,7 @@ export default function EnhancedTable() {
                                     );
                                 })}
                             {emptyRows > 0 && (
-                                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                                <TableRow >
                                     <TableCell colSpan={6} />
                                 </TableRow>
                             )}
@@ -337,7 +354,7 @@ export default function EnhancedTable() {
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
+                    rowsPerPageOptions={[10, 25, 50]}
                     component="div"
                     count={rows.length}
                     rowsPerPage={rowsPerPage}
@@ -346,10 +363,7 @@ export default function EnhancedTable() {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
-            <FormControlLabel
-                control={<Switch checked={dense} onChange={handleChangeDense} />}
-                label="Dense padding"
-            />
+
         </div>
     );
 }

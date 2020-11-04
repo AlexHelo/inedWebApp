@@ -7,7 +7,9 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import EnhancedTable from './Adult'
+import Adulto from './Adult'
+import Usuario from './User'
+import Request from './Request'
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -45,6 +47,10 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
+        width: '80%',
+        marginLeft: 'Auto',
+        marginRight: 'Auto'
+
     },
 }));
 
@@ -60,20 +66,20 @@ const TableTabs = () => {
         <div className={classes.root}>
             <AppBar position="static">
                 <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-                    <Tab label="Item One" {...a11yProps(0)} />
-                    <Tab label="Item Two" {...a11yProps(1)} />
-                    <Tab label="Item Three" {...a11yProps(2)} />
+                    <Tab label="Adultos" {...a11yProps(0)} />
+                    <Tab label="Solicitudes" {...a11yProps(1)} />
+                    <Tab label="Usuarios" {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                <EnhancedTable />
+                <Adulto />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Item Two
-        </TabPanel>
+                <Request />
+            </TabPanel>
             <TabPanel value={value} index={2}>
-                Item Three
-        </TabPanel>
+                <Usuario />
+            </TabPanel>
         </div>
     );
 

@@ -8,12 +8,16 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 
 
-const NavBar = styled.p({
+const NavBar = styled.span({
 
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     flexWrap: 'noWrap',
+    backgroundColor: 'white',
+    paddingTop: '1%',
+    paddingBottom: '1%',
+    marginBottom: '2%'
 })
 
 const Title = styled.span({
@@ -88,7 +92,7 @@ const Nav = () => {
 
             </StyledComboBox>
             <StyledTextField id="filled-basic" label="Busqueda" variant="filled" />
-            <Title>Ined | Base de Datos de Adultos Mayores</Title>
+            <Title>INED | Instituto para el Envejecimiento Digno</Title>
         </NavBar>
     )
 
