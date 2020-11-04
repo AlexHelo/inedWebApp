@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Nav from './Views/Nav';
+import Tabs from './Views/Tabs';
 
 ReactDOM.render(
   <React.StrictMode>
     <Nav />
+    <Tabs />
   </React.StrictMode>,
   document.getElementById('root')
 );

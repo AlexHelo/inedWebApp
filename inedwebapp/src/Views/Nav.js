@@ -33,13 +33,7 @@ const StyledTextField = styled(TextField)({
 
 const StyledComboBox = styled(TextField)({
     marginLeft: '2% !important',
-})
-
-
-
-
-    ;
-
+});
 
 const fields = [
     {
