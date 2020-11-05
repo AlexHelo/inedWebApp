@@ -14,7 +14,6 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import Button from '@material-ui/core/Button';
 
 const StyledTextField = styled(TextField)({
     width: '100%',
@@ -30,7 +29,7 @@ const SmallTextField = styled(TextField)({
 
 })
 
-const CreateBox = styled.form({
+const CreateBox = styled.span({
 
     display: 'flex',
     flexDirection: 'column',
@@ -455,7 +454,7 @@ const GradoDeEstudios = [
 
 
 
-const CreateForm = () => {
+const AdminEditForm = () => {
 
     const [tipoE, setTipoE] = React.useState();
     const handleChangeTipoE = (event) => {
@@ -491,16 +490,7 @@ const CreateForm = () => {
 
 
     return (
-        <CreateBox onSubmit={(e)=>{
-            e.preventDefault();
-            
-            console.log(Array.from(e.target).map(i => i.value));
-            // fetch('http://localhost:8080/API/SetAdults',{
-            //     method: 'POST',
-            //     headers: {'Content-Type': 'application/json' },
-            //     body: JSON.stringify(e.target)
-            // }).then((res)=>console.log(res))
-        }}>
+        <CreateBox>
             <FormLine>
                 <StyledTextField id="IDP" label="IDP" />
 
@@ -650,16 +640,10 @@ const CreateForm = () => {
             <FormLine>
                 <StyledTextField id="Comentarios" label="Comentarios" />
             </FormLine>
-            <FormLine>
-                <Button variant="contained" color="primary" type='submit'>
-                    Agregar
-                </Button>
-            </FormLine>
 
 
         </CreateBox>
 
     )
 }
-
-export default CreateForm;
+export default AdminEditForm;

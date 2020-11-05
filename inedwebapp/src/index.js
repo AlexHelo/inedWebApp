@@ -6,27 +6,31 @@ import Nav from './Components/Nav';
 import Tabs from './Components/Tabs';
 import Button from './Components/Button'
 import Create from './Components/Create'
+import AdminEdit from './Components/AdminEdit';
 
 
 ReactDOM.render(
-  <React.StrictMode>
+
     <BrowserRouter>
       <Nav />
       <Switch>
         <Redirect exact from="/" to="/Visualizar" />
         <Route path='/Visualizar'>
           <Button to="/Crear" txt='Agregar Adulto' />
-          <Tabs />
+          <Tabs to='/Editar' />
         </Route>
         <Route path='/Crear'>
           <Button to="/Visualizar" txt='Cancelar' />
           <Create />
         </Route>
+        <Route path='/Editar'>
+          <Button to="/Visualizar" txt='Cancelar' />
+          <AdminEdit />
+        </Route>
 
       </Switch>
 
-    </BrowserRouter>
-  </React.StrictMode>,
+    </BrowserRouter>,
 
   document.getElementById('root')
 );

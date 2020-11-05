@@ -23,7 +23,7 @@ function TabPanel(props) {
         >
             {value === index && (
                 <Box p={3}>
-                    <Typography>{children}</Typography>
+                    <Typography component='div'>{children}</Typography>
                 </Box>
             )}
         </div>
@@ -55,13 +55,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const TableTabs = () => {
+const TableTabs = (props) => {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
+        
     };
+    
     return (
         <div className={classes.root}>
             <AppBar position="static">
@@ -72,7 +74,7 @@ const TableTabs = () => {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                <Adulto />
+                <Adulto to={props.to}/>
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <Request />

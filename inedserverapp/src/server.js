@@ -8,7 +8,7 @@ const app = express();
 var corsOptions = {
     origin: "http://localhost:3000"
 };
-
+app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
 app.get('/API/AllAdults', async (req, res) => {
@@ -17,6 +17,13 @@ app.get('/API/AllAdults', async (req, res) => {
 
     res.send(adults)
 })
+
+app.post('/API/SetAdults', async (req, res) => {
+
+    console.log(req.body);
+    res.sendStatus(200);
+})
+
 
 const sequelize = new Sequelize('ineddb', 'root', '', {
     host: 'localhost',
