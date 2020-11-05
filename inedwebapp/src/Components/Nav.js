@@ -80,7 +80,7 @@ const Nav = () => {
                 label="Select"
                 value={field}
                 onChange={(e) => setField(e.target.value)}
-                variant="filled"
+
             >
 
 
@@ -91,7 +91,7 @@ const Nav = () => {
                 ))}
 
             </StyledComboBox>
-            <StyledTextField id="filled-basic" label="Busqueda" variant="filled" />
+            <StyledTextField id="filled-basic" label="Busqueda" />
             <Title>INED | Instituto para el Envejecimiento Digno</Title>
         </NavBar>
     )

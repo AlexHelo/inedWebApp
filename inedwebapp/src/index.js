@@ -1,14 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './index.css';
-import Nav from './Views/Nav';
-import Tabs from './Views/Tabs';
+import Nav from './Components/Nav';
+import Tabs from './Components/Tabs';
+import Button from './Components/Button'
+import Create from './Components/Create'
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <Nav />
-    <Tabs />
+    <BrowserRouter>
+      <Nav />
+      <Switch>
+        <Redirect exact from="/" to="/Visualizar" />
+        <Route path='/Visualizar'>
+          <Button to="/Crear" txt='Agregar Adulto' />
+          <Tabs />
+        </Route>
+        <Route path='/Crear'>
+          <Button to="/Visualizar" txt='Cancelar' />
+          <Create />
+        </Route>
+
+      </Switch>
+
+    </BrowserRouter>
   </React.StrictMode>,
+
   document.getElementById('root')
 );
 

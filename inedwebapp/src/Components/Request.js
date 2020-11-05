@@ -20,6 +20,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import styled from 'styled-components';
 
@@ -97,12 +98,7 @@ function EnhancedTableHead(props) {
         <TableHead>
             <TableRow>
                 <TableCell padding="checkbox">
-                    <Checkbox
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{ 'aria-label': 'select all desserts' }}
-                    />
+
                 </TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
@@ -176,7 +172,7 @@ const EnhancedTableToolbar = (props) => {
                 </Typography>
             ) : (
                     <TableTitle className={classes.title} variant="h6" id="tableTitle" component="div">
-                        Base de Datos de Usuarios del INED
+                        Base de Datos de Solicitudes
                     </TableTitle>
                 )}
 
@@ -188,9 +184,9 @@ const EnhancedTableToolbar = (props) => {
                             <DeleteIcon />
                         </IconButton>
                     </Tooltip>
-                    <Tooltip title="Editar">
-                        <IconButton aria-label="Editar">
-                            <EditIcon />
+                    <Tooltip title="Aceptar">
+                        <IconButton aria-label="Aceptar">
+                            <CheckCircleIcon />
                         </IconButton>
                     </Tooltip>
 
