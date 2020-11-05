@@ -37,6 +37,9 @@ function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
 }
 
+
+
+
 const rows = [
     createData('Cupcake', 305, 3.7, 67, 4.3),
     createData('Donut', 452, 25.0, 51, 4.9),
@@ -52,6 +55,7 @@ const rows = [
     createData('Nougat', 360, 19.0, 9, 37.0),
     createData('Oreo', 437, 18.0, 63, 4.0),
 ];
+
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -80,11 +84,12 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-    { id: 'name', numeric: false, disablePadding: true, label: 'Dessert (100g serving)' },
-    { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
-    { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
-    { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-    { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
+    { id: 'Nombre_Completo', numeric: false, disablePadding: true, label: 'Nombre' },
+    { id: 'Direccion', numeric: true, disablePadding: false, label: 'Direccion' },
+    { id: 'Curp', numeric: true, disablePadding: false, label: 'CURP' },
+    { id: 'Fecha_Nacimiento', numeric: true, disablePadding: false, label: 'Fecha de Nacimiento' },
+    { id: 'Telefono', numeric: true, disablePadding: false, label: 'Telefono' },
+    { id: 'Responsable', numeric: true, disablePadding: false, label: 'Responsable' }
 ];
 
 function EnhancedTableHead(props) {
@@ -226,6 +231,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 export default function EnhancedTable() {
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
@@ -234,12 +240,27 @@ export default function EnhancedTable() {
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [adult, setAdult] = React.useState([]);
+
+    React.useEffect(() => {
+        fetch('http://localhost:8080/API/AllAdults').then(response => {
+
+            return (
+                response.json()
+            )
+
+        }).then(a => { setAdult(a); console.log(a); })
+    }, []);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
+
+
+
+    //fix this, select all
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
@@ -285,7 +306,7 @@ export default function EnhancedTable() {
 
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, adult.length - page * rowsPerPage);
 
     return (
         <div className={classes.root}>
@@ -305,10 +326,10 @@ export default function EnhancedTable() {
                             orderBy={orderBy}
                             onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
+                            rowCount={adult.length}
                         />
                         <TableBody>
-                            {stableSort(rows, getComparator(order, orderBy))
+                            {stableSort(adult, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
                                     const isItemSelected = isSelected(row.name);
@@ -331,12 +352,13 @@ export default function EnhancedTable() {
                                                 />
                                             </TableCell>
                                             <TableCell component="th" id={labelId} scope="row" padding="none">
-                                                {row.name}
+                                                {row.Nombre_Completo}
                                             </TableCell>
-                                            <TableCell align="right">{row.calories}</TableCell>
-                                            <TableCell align="right">{row.fat}</TableCell>
-                                            <TableCell align="right">{row.carbs}</TableCell>
-                                            <TableCell align="right">{row.protein}</TableCell>
+                                            <TableCell align="right">{row.Domicilio_Principal}</TableCell>
+                                            <TableCell align="right">{row.Curp}</TableCell>
+                                            <TableCell align="right">{row.Fecha_Nacimiento}</TableCell>
+                                            <TableCell align="right">{row.Telefono}</TableCell>
+                                            <TableCell align="right">{row.Rep_Completo}</TableCell>
                                         </TableRow>
                                     );
                                 })}
@@ -351,7 +373,7 @@ export default function EnhancedTable() {
                 <TablePagination
                     rowsPerPageOptions={[10, 25, 50]}
                     component="div"
-                    count={rows.length}
+                    count={adult.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onChangePage={handleChangePage}
