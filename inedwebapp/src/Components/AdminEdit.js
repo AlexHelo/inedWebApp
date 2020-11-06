@@ -14,6 +14,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import Button from '@material-ui/core/Button';
 
 const StyledTextField = styled(TextField)({
     width: '100%',
@@ -29,7 +30,7 @@ const SmallTextField = styled(TextField)({
 
 })
 
-const CreateBox = styled.span({
+const CreateBox = styled.form({
 
     display: 'flex',
     flexDirection: 'column',
@@ -456,9 +457,39 @@ const GradoDeEstudios = [
 
 const AdminEditForm = () => {
 
+    const [tipoIDP, setTipoIDP] = React.useState();
+    const handleChangeTipoIDP = (event) => {
+        setTipoIDP(event.target.value);
+    };
+
     const [tipoE, setTipoE] = React.useState();
     const handleChangeTipoE = (event) => {
         setTipoE(event.target.value);
+    };
+
+    const [tipoNO, setTipoNO] = React.useState();
+    const handleChangeTipoNO = (event) => {
+        setTipoNO(event.target.value);
+    };
+    const [tipoNombre, setTipoNombre] = React.useState();
+    const handleChangeTipoNombre = (event) => {
+        setTipoNombre(event.target.value);
+    };
+    const [tipoApellidoP, setTipoApellidoP] = React.useState();
+    const handleChangeTipoApellidoP = (event) => {
+        setTipoApellidoP(event.target.value);
+    };
+    const [tipoApellidoM, setTipoApellidoM] = React.useState();
+    const handleChangeTipoApellidoM = (event) => {
+        setTipoApellidoM(event.target.value);
+    };
+    const [tipoEdad, setTipoEdad] = React.useState();
+    const handleChangeTipoEdad = (event) => {
+        setTipoEdad(event.target.value);
+    };
+    const [tipoLugarNacimiento, setTipoLugarNacimiento] = React.useState();
+    const handleChangeTipoLugarNacimiento = (event) => {
+        setTipoLugarNacimiento(event.target.value);
     };
 
     const [selectedDate, setSelectedDate] = React.useState(new Date());
@@ -467,10 +498,106 @@ const AdminEditForm = () => {
     };
 
 
-    const [valueGender, setValueGender] = React.useState('mujer');
+    const [valueGender, setValueGender] = React.useState();
     const handleChangeGender = (event) => {
         setValueGender(event.target.value);
     };
+    const [valueCIB, setValueCIB] = React.useState();
+    const handleChangeCIB = (event) => {
+        setValueCIB(event.target.value);
+    };
+    const [valueCURP, setValueCURP] = React.useState();
+    const handleChangeCURP = (event) => {
+        setValueCURP(event.target.value);
+    };
+
+    const [valueTelCasa, setValueTelCasa] = React.useState();
+    const handleChangeTelCasa = (event) => {
+        setValueTelCasa(event.target.value);
+    };
+    const [valueTelRec, setValueTelRec] = React.useState();
+    const handleChangeTelRec = (event) => {
+        setValueTelRec(event.target.value);
+    };
+    const [valueCelular, setValueCelular] = React.useState();
+    const handleChangeCelular = (event) => {
+        setValueCelular(event.target.value);
+    };
+
+    const [valueOcupacion, setValueOcupacion] = React.useState();
+    const handleChangeOcupacion = (event) => {
+        setValueOcupacion(event.target.value);
+    };
+    const [valuePadre, setValuePadre] = React.useState();
+    const handleChangePadre = (event) => {
+        setValuePadre(event.target.value);
+    };
+    const [valueMadre, setValueMadre] = React.useState();
+    const handleChangeMadre = (event) => {
+        setValueMadre(event.target.value);
+    };
+    const [valueTutor, setValueTutor] = React.useState();
+    const handleChangeTutor = (event) => {
+        setValueTutor(event.target.value);
+    };
+    const [valueCalle, setValueCalle] = React.useState();
+    const handleChangeCalle = (event) => {
+        setValueCalle(event.target.value);
+    };
+    const [valueNoInterno, setValueNoInterno] = React.useState();
+    const handleChangeNoInterno = (event) => {
+        setValueNoInterno(event.target.value);
+    };
+    const [valueNoExterno, setValueNoExterno] = React.useState();
+    const handleChangeNoExterno = (event) => {
+        setValueNoExterno(event.target.value);
+    };
+    const [valueUT, setValueUT] = React.useState();
+    const handleChangeUT = (event) => {
+        setValueUT(event.target.value);
+    };
+    const [valueCodigoPostal, setValueCodigoPostal] = React.useState();
+    const handleChangeCodigoPostal = (event) => {
+        setValueCodigoPostal(event.target.value);
+    };
+    const [valueEntreCalle1, setValueEntreCalle1] = React.useState();
+    const handleChangeEntreCalle1 = (event) => {
+        setValueEntreCalle1(event.target.value);
+    };
+    const [valueCalle2, setValueCalle2] = React.useState();
+    const handleChangeCalle2 = (event) => {
+        setValueCalle2(event.target.value);
+    };
+    const [valueNoReg, setValueNoReg] = React.useState();
+    const handleChangeNoReg = (event) => {
+        setValueNoReg(event.target.value);
+    };
+    const [valueTipoReg, setValueTipoReg] = React.useState();
+    const handleChangeTipoReg = (event) => {
+        setValueTipoReg(event.target.value);
+    };
+    const [valueNombreReg, setValueNombreReg] = React.useState();
+    const handleChangeNombreReg = (event) => {
+        setValueNombreReg(event.target.value);
+    };
+    const [valueNumeroAse, setValueNumeroAse] = React.useState();
+    const handleChangeNumeroAse = (event) => {
+        setValueNumeroAse(event.target.value);
+    };
+    const [valueTipoAse, setValueTipoAse] = React.useState();
+    const handleChangeTipoAse = (event) => {
+        setValueTipoAse(event.target.value);
+    };
+    const [valueNombreAse, setValueNombreAse] = React.useState();
+    const handleChangeNombreAse = (event) => {
+        setValueNombreAse(event.target.value);
+    };
+    const [valueComentario, setValueComentario] = React.useState();
+    const handleChangeComentario = (event) => {
+        setValueComentario(event.target.value);
+    };
+    
+    
 
 
     const [tipoVial, setTipoVial] = React.useState();
@@ -490,9 +617,23 @@ const AdminEditForm = () => {
 
 
     return (
-        <CreateBox>
+        <CreateBox onSubmit={(e)=>{
+            e.preventDefault();
+            
+            console.log(Array.from(e.target).map(i => i));
+            console.log(Array.from(e.target).map(i => i.value));
+            
+            // fetch('http://localhost:8080/API/SetAdults',{
+            //     method: 'POST',
+            //     headers: {'Content-Type': 'application/json' },
+            //     body: JSON.stringify(e.target)
+            // }).then((res)=>console.log(res))
+        }}>
             <FormLine>
-                <StyledTextField id="IDP" label="IDP" />
+                <StyledTextField id="IDP" label="IDP" 
+                    value={tipoIDP}
+                    onChange={handleChangeTipoIDP}
+                    />
 
                 <StyledTextField
                     id="TipoDeIngreso"
@@ -509,12 +650,20 @@ const AdminEditForm = () => {
                     ))}
                 </StyledTextField>
 
-                <StyledTextField id="Nu" label="No." />
+                <StyledTextField id="Nu" label="No." 
+                    value={tipoNO}
+                    onChange={handleChangeTipoNO} />
             </FormLine>
             <FormLine>
-                <StyledTextField id="Nombre" label="Nombre(s)"/>
-                <StyledTextField id="ApellidoP" label="Apellido Paterno" />
-                <StyledTextField id="AppelidoM" label="Apellido Materno" />
+                <StyledTextField id="Nombre" label="Nombre(s)" 
+                    value={tipoNombre}
+                    onChange={handleChangeTipoNombre}/>
+                <StyledTextField id="ApellidoP" label="Apellido Paterno" 
+                    value={tipoApellidoP}
+                    onChange={handleChangeTipoApellidoP}/>
+                <StyledTextField id="AppelidoM" label="Apellido Materno" 
+                    value={tipoApellidoM}
+                    onChange={handleChangeTipoApellidoM}/>
             </FormLine>
 
             <FormLine>
@@ -532,30 +681,54 @@ const AdminEditForm = () => {
                         }}
                     />
                 </MuiPickersUtilsProvider>
-                <TextField id="Edad" label="Edad" />
-                <TextField id="LdNacimiento" label="Lugar de Nacimiento" />
+                <TextField id="Edad" label="Edad" 
+                    value={tipoEdad}
+                    onChange={handleChangeTipoEdad}/>
+                <TextField id="LdNacimiento" label="Lugar de Nacimiento" 
+                    value={tipoLugarNacimiento}
+                    onChange={handleChangeTipoLugarNacimiento}/>
 
 
 
                 <FormControl component="fieldset">
                     <FormLabel component="legend">Sexo</FormLabel>
                     <RadioGroup row aria-label="gender" name="gender1" value={valueGender} onChange={handleChangeGender}>
-                        <FormControlLabel value="mujer" control={<Radio />} label="Mujer" />
-                        <FormControlLabel value="hombre" control={<Radio />} label="Hombre" />
+                        <FormControlLabel value="Mujer" control={<Radio 
+                            
+                            onChange={handleChangeGender}
+                            />} 
+                            label="Mujer" />
+                        <FormControlLabel value="Hombre" control={<Radio
+                            
+                            onChange={handleChangeGender}
+                            />} 
+                            label="Hombre" />
                     </RadioGroup>
                 </FormControl>
             </FormLine>
             <FormLine>
-                <StyledTextField id="CIB" label="C.I.B." />
-                <StyledTextField id="CURP" label="CURP" />
+                <StyledTextField id="CIB" label="C.I.B." 
+                    value={valueCIB}
+                    onChange={handleChangeCIB}/>
+                <StyledTextField id="CURP" label="CURP" 
+                    value={valueCURP}
+                    onChange={handleChangeCURP}/>
             </FormLine>
             <FormLine>
-                <StyledTextField id="TelCasa" label="Tel. Casa" />
-                <StyledTextField id="TelReca" label="Tel. Recados" />
-                <StyledTextField id="Cel" label="Celular" />
+                <StyledTextField id="TelCasa" label="Tel. Casa" 
+                    value={valueTelCasa}
+                    onChange={handleChangeTelCasa}/>
+                <StyledTextField id="TelReca" label="Tel. Recados"
+                    value={valueTelRec}
+                    onChange={handleChangeTelRec} />
+                <StyledTextField id="Cel" label="Celular" 
+                    value={valueCelular}
+                    onChange={handleChangeCelular}/>
             </FormLine>
             <FormLine>
-                <StyledTextField id="Ocupacion" label="Ocupacion" />
+                <StyledTextField id="Ocupacion" label="Ocupacion"
+                    value={valueOcupacion}
+                    onChange={handleChangeOcupacion} />
 
                 <StyledTextField
                     id="TipoDeEtnicidad"
@@ -589,18 +762,30 @@ const AdminEditForm = () => {
 
             </FormLine>
             <FormLine>
-                <StyledTextField id="Padre" label="Padre" />
+                <StyledTextField id="Padre" label="Padre" 
+                    value={valuePadre}
+                    onChange={handleChangePadre}/>
             </FormLine>
             <FormLine>
-                <StyledTextField id="Madre" label="Madre" />
+                <StyledTextField id="Madre" label="Madre" 
+                    value={valueMadre}
+                    onChange={handleChangeMadre}/>
             </FormLine>
             <FormLine>
-                <StyledTextField id="Tutor" label="Tutor" />
+                <StyledTextField id="Tutor" label="Tutor" 
+                    value={valueTutor}
+                    onChange={handleChangeTutor}/>
             </FormLine>
             <FormLine>
-                <StyledTextField id="Calle" label="Calle" />
-                <SmallTextField id='interno' label='Interno' />
-                <SmallTextField id='externo' label='Externo' />
+                <StyledTextField id="Calle" label="Calle"
+                    value={valueCalle}
+                    onChange={handleChangeCalle} />
+                <SmallTextField id='interno' label='Interno'
+                    value={valueNoInterno}
+                    onChange={handleChangeNoInterno} />
+                <SmallTextField id='externo' label='Externo' 
+                    value={valueNoExterno}
+                    onChange={handleChangeNoExterno}/>
             </FormLine>
 
             <FormLine>
@@ -618,27 +803,54 @@ const AdminEditForm = () => {
                         </MenuItem>
                     ))}
                 </StyledTextField>
-                <SmallTextField id='ut' label='UT' />
-                <SmallTextField id='CodigoPostal' label='Codigo Postal' />
+                <SmallTextField id='ut' label='UT'
+                    value={valueUT}
+                    onChange={handleChangeUT} />
+                <SmallTextField id='CodigoPostal' label='Codigo Postal' 
+                    value={valueCodigoPostal}
+                    onChange={handleChangeCodigoPostal}/>
             </FormLine>
             <FormLine>
-                <StyledTextField id="EntreCalle1" label="Entre Calle 1" />
+                <StyledTextField id="EntreCalle1" label="Entre Calle 1" 
+                    value={valueEntreCalle1}
+                    onChange={handleChangeEntreCalle1}/>
             </FormLine>
             <FormLine>
-                <StyledTextField id="EntreCalle2" label="Entre Calle 2" />
+                <StyledTextField id="EntreCalle2" label="Entre Calle 2"
+                    value={valueCalle2}
+                    onChange={handleChangeCalle2} />
             </FormLine>
             <FormLine>
-                <StyledTextField id="NumeroReg" label="Numero Regimen" />
-                <StyledTextField id="TipoReg" label="Tipo de Regimen" />
-                <StyledTextField id="NombreReg" label="Nombre de Regimen" />
+                <StyledTextField id="NumeroReg" label="Numero Regimen"
+                    value={valueNoReg}
+                    onChange={handleChangeNoReg} />
+                <StyledTextField id="TipoReg" label="Tipo de Regimen" 
+                    value={valueTipoReg}
+                    onChange={handleChangeTipoReg}/>
+                <StyledTextField id="NombreReg" label="Nombre de Regimen"
+                    value={valueNombreReg}
+                    onChange={handleChangeNombreReg} />
             </FormLine>
             <FormLine>
-                <StyledTextField id="NumeroAse" label="Numero Asentamiento" />
-                <StyledTextField id="TipoAse" label="Tipo de Asentamiento" />
-                <StyledTextField id="NombreAse" label="Nombre de Asentamiento" />
+                <StyledTextField id="NumeroAse" label="Numero Asentamiento" 
+                    value={valueNumeroAse}
+                    onChange={handleChangeNumeroAse}/>
+                <StyledTextField id="TipoAse" label="Tipo de Asentamiento" 
+                    value={valueTipoAse}
+                    onChange={handleChangeTipoAse}/>
+                <StyledTextField id="NombreAse" label="Nombre de Asentamiento"
+                    value={valueNombreAse}
+                    onChange={handleChangeNombreAse} />
             </FormLine>
             <FormLine>
-                <StyledTextField id="Comentarios" label="Comentarios" />
+                <StyledTextField id="Comentarios" label="Comentarios" 
+                v   alue={valueComentario}
+                    onChange={handleChangeComentario}/>
+            </FormLine>
+            <FormLine>
+                <Button variant="contained" color="primary" type='submit'>
+                    Agregar
+                </Button>
             </FormLine>
 
 
@@ -646,4 +858,5 @@ const AdminEditForm = () => {
 
     )
 }
+
 export default AdminEditForm;

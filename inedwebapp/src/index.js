@@ -7,6 +7,7 @@ import Tabs from './Components/Tabs';
 import Button from './Components/Button'
 import Create from './Components/Create'
 import AdminEdit from './Components/AdminEdit';
+import CreateUser from './Components/CreateUser';
 
 
 ReactDOM.render(
@@ -26,6 +27,10 @@ ReactDOM.render(
         <Route path='/Editar'>
           <Button to="/Visualizar" txt='Cancelar' />
           <AdminEdit />
+        </Route>
+        <Route path='/CrearUsuario'>
+          <Button to="/Visualizar" txt='Cancelar' />
+          <CreateUser />
         </Route>
 
       </Switch>

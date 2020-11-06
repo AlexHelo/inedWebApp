@@ -44,6 +44,7 @@ export default function OutlinedButtons(props) {
 
 
         <AddButton variant="outlined" onClick={() => history.push(props.to)}> {props.txt === 'Agregar Adulto' && (<AddIcon />)} {props.txt}   </AddButton>
+        //<AddButton variant="outlined" onClick={() => history.push(props.to)}> {props.txt === 'Agregar Usuario' && (<AddIcon />)} {props.txt}   </AddButton>
 
 
     );
