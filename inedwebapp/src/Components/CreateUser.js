@@ -9,12 +9,14 @@ import Input from '@material-ui/core/Input';
 import clsx from 'clsx';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
     KeyboardTimePicker,
     KeyboardDatePicker,
+    useUtils,
 } from '@material-ui/pickers';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -22,9 +24,21 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
+import { makeStyles } from '@material-ui/core/styles';
+import { LineStyle } from '@material-ui/icons';
+import { useHistory } from 'react-router-dom';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 
 const BigTextField = styled(TextField)({
+    width: '100%',
+    marginRight: '5% !important',
+    marginLeft: '5% !important'
+
+})
+
+const BigText = styled(Typography)({
     width: '100%',
     marginRight: '5% !important',
     marginLeft: '5% !important'
@@ -38,7 +52,7 @@ const BigPassword = styled(FormControl)({
 
 })
 
-const SmallTextField = styled(TextField)({
+const SmallText = styled(Typography)({
     width: '30%',
     marginRight: '5% !important',
     marginLeft: '5% !important'
@@ -86,6 +100,31 @@ const Niveles = [
     },
 ];
 
+const useStyles = makeStyles((theme) => ({
+    paper: {
+      position: 'absolute',
+      width: 400,
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
+  }));
+
+  function rand() {
+    return Math.round(Math.random() * 20) - 10;
+  }
+  
+  function getModalStyle() {
+    const top = 50 + rand();
+    const left = 50 + rand();
+  
+    return {
+      top: `${top}%`,
+      left: `${left}%`,
+      transform: `translate(-${top}%, -${left}%)`,
+    };
+  }
 
 const CreateUser = () => {
 
@@ -133,6 +172,26 @@ const CreateUser = () => {
         showPassword: false,
       });
 
+    const classes = useStyles();
+    const [modalStyle] = React.useState(getModalStyle);
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+      };
+    
+    const handleClose = () => {
+        setOpen(false);
+      };
+    
+    const UploadData=()=>{
+        fetch('http://localhost:8080/API/SetUsers',{
+            method: 'POST',
+            headers: {'Content-Type': 'application/json' },
+            body: JSON.stringify(AllDataUsers())
+        }).then((res)=>console.log(res));
+    }
+    const history = useHistory();
+
     const AllDataUsers=()=>{
         return {
             b01_us_Nombre: valueNombre,
@@ -143,17 +202,36 @@ const CreateUser = () => {
         }
         
     }
+    const BasicData={
+        b01_us_Nombre: 'Nombre',
+        b01_us_Apellido: 'Apellidos',
+        b01_us_clave: 'Clave',
+        b01_us_password: 'Contraseña',
+        b01_us_role: 'Rol'
+    }
+
+    const body = (
+        <div style={modalStyle} className={classes.paper}>
+          <h2 id="simple-modal-title">Se va a dar de Alta el Usuario:</h2>
+          {Object.keys(AllDataUsers()).map(key => 
+            <BigText key={key}>{ BasicData[key]+ " : " + AllDataUsers()[key]}</BigText>)}
+          <FormLine>
+            <Button to="/Visualizar" onClick={() => {UploadData(); handleClose(); history.push("/Visualizar");}} variant="contained" color="primary" >Aceptar</Button>
+            <Button onClick={handleClose} variant="contained" color="secondary" >Regresar</Button>
+          </FormLine>
+          
+        </div>
+    );
 
 
     return (
         <CreateBox onSubmit={(e)=>{
             e.preventDefault();
 
-            fetch('http://localhost:8080/API/SetUsers',{
-                method: 'POST',
-                headers: {'Content-Type': 'application/json' },
-                body: JSON.stringify(AllDataUsers())
-            }).then((res)=>console.log(res))
+            
+            console.log(AllDataUsers())
+            handleOpen()
+            
 
         }}>
             <FormLine>
@@ -174,11 +252,13 @@ const CreateUser = () => {
             </FormLine>
             <FormLine>
                 <BigPassword>
-                <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+                <InputLabel htmlFor="standard-adornment-password" >Password</InputLabel>
                 <Input
                 id="standard-adornment-password"
+                
                 type={values.showPassword ? 'text' : 'password'}
                 value={values.password}
+                
                 onChange={handleChangePassword('password')}
                 endAdornment={
                     <InputAdornment position="end">
@@ -192,6 +272,7 @@ const CreateUser = () => {
                     </InputAdornment>
                 }
                 />
+                
             </BigPassword>
             </FormLine>
             <FormLine>
@@ -216,7 +297,17 @@ const CreateUser = () => {
                     Crear
                 </Button>
             </FormLine>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    disableBackdropClick='true'
+                >
+                    {body}
+                </Modal>
         </CreateBox>
+        
 
     )
 }

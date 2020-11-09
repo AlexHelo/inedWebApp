@@ -17,6 +17,7 @@ ReactDOM.render(
       <Switch>
         <Redirect exact from="/" to="/Visualizar" />
         <Route path='/Visualizar'>
+          <Button to="/CrearUsuario" txt='Agregar Usuario' />
           <Button to="/Crear" txt='Agregar Adulto' />
           <Tabs to='/Editar' />
         </Route>
