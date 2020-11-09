@@ -109,6 +109,10 @@ const CreateUser = () => {
     const handleChangeValueUT = (event) => {
         setValueUT(event.target.value);
     };
+    const [valueClave, setValueClave] = React.useState();
+    const handleChangeClave = (event) => {
+        setValueClave(event.target.value);
+    };
     
     const handleChangePassword = (prop) => (event) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -129,9 +133,29 @@ const CreateUser = () => {
         showPassword: false,
       });
 
+    const AllDataUsers=()=>{
+        return {
+            b01_us_Nombre: valueNombre,
+            b01_us_Apellido: valueApellidoP+" "+valueApellidoM,
+            b01_us_clave: valueClave,
+            b01_us_password: values.password,
+            b01_us_role: tipoNivel
+        }
+        
+    }
+
 
     return (
-        <CreateBox>
+        <CreateBox onSubmit={(e)=>{
+            e.preventDefault();
+
+            fetch('http://localhost:8080/API/SetUsers',{
+                method: 'POST',
+                headers: {'Content-Type': 'application/json' },
+                body: JSON.stringify(AllDataUsers())
+            }).then((res)=>console.log(res))
+
+        }}>
             <FormLine>
                 <BigTextField id="Nombre" label="Nombre(s)" 
                 value={valueNombre}
@@ -142,6 +166,11 @@ const CreateUser = () => {
                 <BigTextField id="ApellidoM" label="Apellido Materno" 
                 value={valueApellidoM}
                 onChange={handleChangeApellidoM}/>
+            </FormLine>
+            <FormLine>
+                <BigTextField id="Clave" label="Clave" 
+                    value={valueClave}
+                    onChange={handleChangeClave}/>
             </FormLine>
             <FormLine>
                 <BigPassword>

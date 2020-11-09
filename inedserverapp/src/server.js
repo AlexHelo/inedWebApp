@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { Sequelize, QueryTypes } = require('sequelize');
+const { request } = require("express");
 
 const app = express();
 
@@ -18,11 +19,40 @@ app.get('/API/AllAdults', async (req, res) => {
     res.send(adults)
 })
 
+app.get('/API/AllUsers', async (req, res) => {
+
+    const users = await sequelize.query("SELECT b01_us_id,b01_us_Nombre, b01_us_Apellido, b01_us_clave, b01_us_password, b01_us_role FROM ds01_usuarios ORDER BY b01_us_Nombre", { type: QueryTypes.SELECT });
+
+    res.send(users)
+})
+
 app.post('/API/SetAdults', async (req, res) => {
 
     console.log(req.body);
     res.sendStatus(200);
 })
+
+app.post('/API/SetUsers', async (req, res) => {
+
+    console.log(req.body);
+    console.log(await sequelize.query("SELECT MAX(b01_us_id) FROM ds01_usuarios", { type: QueryTypes.SELECT }));
+    let id = await sequelize.query("SELECT MAX(b01_us_id) FROM ds01_usuarios", { type: QueryTypes.SELECT });
+    id[0]['MAX(b01_us_id)']++;
+    await sequelize.query("INSERT INTO ds01_usuarios (b01_us_id, b01_us_Nombre, b01_us_Apellido, b01_us_clave, b01_us_password, b01_us_role) VALUES (" + id[0]['MAX(b01_us_id)'] + ",'" + req.body.b01_us_Nombre + "','" + req.body.b01_us_Apellido + "','" + req.body.b01_us_clave + "'," +req.body.b01_us_password +",'" + req.body.b01_us_role + "')"), function(err){
+        res.sendStatus(500)
+    }
+    res.sendStatus(200);
+}
+    )
+
+app.get('/API/DeleteUser/:userId',async (req, res) => {
+    await sequelize.query(`DELETE FROM ds01_usuarios WHERE b01_us_id = ${req.params.userId} `,{
+        replacements: {},
+        type: QueryTypes.DELETE
+    });
+    res.sendStatus(200);
+})
+
 
 
 const sequelize = new Sequelize('ineddb', 'root', '', {

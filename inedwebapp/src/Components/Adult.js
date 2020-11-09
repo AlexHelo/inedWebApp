@@ -227,7 +227,7 @@ export default function EnhancedTable(props) {
                 response.json()
             )
 
-        }).then(a => { setAdult(a); console.log(a); })
+        }).then(a => { setAdult(a); })
     }, []);
 
     const handleRequestSort = (event, property) => {

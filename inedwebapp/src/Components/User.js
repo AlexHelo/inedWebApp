@@ -33,16 +33,6 @@ const TableTitle = styled(Typography)({
 })
 
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-    createData('Roberto R.', 'RobertoR', '*******', 'Monitor', 'El monitor'),
-    createData('Ignacio Rey king', 'IgnacioR', '*********', 'Usuario Basico', 'El Usuario Basico'),
-    createData('Aldo Pon', 'AldoP', '******', 'Administrador','El Administrador'),
-];
-
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
@@ -70,11 +60,11 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-    { id: 'name', numeric: false, disablePadding: true, label: 'Usuario' },
-    { id: 'calories', numeric: true, disablePadding: false, label: 'Clave' },
-    { id: 'fat', numeric: true, disablePadding: false, label: 'Contraseña' },
-    { id: 'carbs', numeric: true, disablePadding: false, label: 'Rol' },
-    { id: 'protein', numeric: true, disablePadding: false, label: 'Comentario' },
+    { id: 'b01_us_Nombre', numeric: false, disablePadding: true, label: 'Usuario' },
+    { id: 'b01_us_clave', numeric: true, disablePadding: false, label: 'Clave' },
+    { id: 'b01_us_password', numeric: true, disablePadding: false, label: 'Contraseña' },
+    { id: 'b01_us_role', numeric: true, disablePadding: false, label: 'Rol' },
+    { id: 'b01_us_Apellido', numeric: true, disablePadding: false, label: 'Comentario' },
 ];
 
 function EnhancedTableHead(props) {
@@ -147,7 +137,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();
-    const { numSelected } = props;
+    const { numSelected,OnClickDelete } = props;
 
     return (
         <Toolbar
@@ -169,7 +159,7 @@ const EnhancedTableToolbar = (props) => {
 
                 <div>
                     <Tooltip title="Borrar">
-                        <IconButton aria-label="Borrar">
+                        <IconButton aria-label="Borrar" onClick={OnClickDelete}>
                             <DeleteIcon />
                         </IconButton>
                     </Tooltip>
@@ -190,6 +180,7 @@ const EnhancedTableToolbar = (props) => {
 
 EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
+    OnClickDelete: PropTypes.func.isRequired,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -219,11 +210,23 @@ const useStyles = makeStyles((theme) => ({
 export default function EnhancedTable() {
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('calories');
+    const [orderBy, setOrderBy] = React.useState('b01_us_clave');
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [users, setUsers] = React.useState([]);
+
+
+    React.useEffect(() => {
+        fetch('http://localhost:8080/API/AllUsers').then(response => {
+
+            return (
+                response.json()
+            )
+
+        }).then(a => { setUsers(a); })
+    }, []);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -233,19 +236,19 @@ export default function EnhancedTable() {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = rows.map((n) => n.name);
+            const newSelecteds = users.map((n) => n.b01_us_id);
             setSelected(newSelecteds);
             return;
         }
         setSelected([]);
     };
 
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
+    const handleClick = (event, b01_us_id) => {
+        const selectedIndex = selected.indexOf(b01_us_id);
         let newSelected = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
+            newSelected = newSelected.concat(selected, b01_us_id);
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {
@@ -273,14 +276,25 @@ export default function EnhancedTable() {
         setDense(event.target.checked);
     };
 
-    const isSelected = (name) => selected.indexOf(name) !== -1;
+    const isSelected = (b01_us_id) => selected.indexOf(b01_us_id) !== -1;
 
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage);
 
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <EnhancedTableToolbar numSelected={selected.length} />
+                <EnhancedTableToolbar numSelected={selected.length} OnClickDelete={()=>{
+                    selected.forEach((select)=>{
+                        fetch(`http://localhost:8080/API/DeleteUser/${select}`)
+                        .then(()=>{
+                            console.log('Deleted ID = '+select)
+                            setUsers(users.filter((user)=>{
+                                return user.b01_us_id!==select
+                            }))
+                            setSelected([])
+                        })
+                    })
+                }} />
                 <TableContainer>
                     <Table
                         className={classes.table}
@@ -295,19 +309,19 @@ export default function EnhancedTable() {
                             orderBy={orderBy}
                             onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
+                            rowCount={users.length}
                         />
                         <TableBody>
-                            {stableSort(rows, getComparator(order, orderBy))
+                            {stableSort(users, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
-                                    const isItemSelected = isSelected(row.name);
+                                    const isItemSelected = isSelected(row.b01_us_id);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.name)}
+                                            onClick={(event) => handleClick(event, row.b01_us_id)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
@@ -321,12 +335,12 @@ export default function EnhancedTable() {
                                                 />
                                             </TableCell>
                                             <TableCell component="th" id={labelId} scope="row" padding="none">
-                                                {row.name}
+                                                {row.b01_us_Nombre}
                                             </TableCell>
-                                            <TableCell align="right">{row.calories}</TableCell>
-                                            <TableCell align="right">{row.fat}</TableCell>
-                                            <TableCell align="right">{row.carbs}</TableCell>
-                                            <TableCell align="right">{row.protein}</TableCell>
+                                            <TableCell align="right">{row.b01_us_clave}</TableCell>
+                                            <TableCell align="right">{row.b01_us_password}</TableCell>
+                                            <TableCell align="right">{row.b01_us_role}</TableCell>
+                                            <TableCell align="right">{row.b01_us_Apellido}</TableCell>
                                         </TableRow>
                                     );
                                 })}
@@ -341,7 +355,7 @@ export default function EnhancedTable() {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={rows.length}
+                    count={users.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onChangePage={handleChangePage}

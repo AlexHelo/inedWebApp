@@ -615,13 +615,18 @@ const CreateForm = () => {
         setTipoGrado(event.target.value);
     };
 
+    const AllDataAdults= ()=>{
+        
+    }
+
 
     return (
         <CreateBox onSubmit={(e)=>{
             e.preventDefault();
             
-            console.log(Array.from(e.target).map(i => i));
-            console.log(Array.from(e.target).map(i => i.value));
+            //console.log(Array.from(e.target).map(i => i));
+            //console.log(Array.from(e.target).map(i => i.value));
+
             
             // fetch('http://localhost:8080/API/SetAdults',{
             //     method: 'POST',
