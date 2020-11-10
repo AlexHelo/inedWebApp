@@ -54,12 +54,32 @@ app.get('/API/DeleteUser/:userId', async (req, res) => {
 })
 
 app.get('/API/EditUser/:userId', async (req, res) => {
-    await sequelize.query(`DELETE FROM ds01_usuarios WHERE b01_us_id = ${req.params.userId} `, {
+    const user = await sequelize.query(`SELECT b01_us_id, b01_us_Nombre, b01_us_Apellido, b01_us_clave, b01_us_password, b01_us_role FROM ds01_usuarios WHERE b01_us_id = ${req.params.userId} `, {
         replacements: {},
-        type: QueryTypes.DELETE
+        type: QueryTypes.SELECT
     });
-    res.sendStatus(200);
+    res.send(user);
 })
+
+app.post('/API/UpdateUser', async (req, res) => {
+
+    // console.log(req.body);
+    // console.log(await sequelize.query("SELECT MAX(b01_us_id) FROM ds01_usuarios", { type: QueryTypes.SELECT }));
+    // let id = await sequelize.query("SELECT MAX(b01_us_id) FROM ds01_usuarios", { type: QueryTypes.SELECT });
+    // id[0]['MAX(b01_us_id)']++;
+    await sequelize.query(`UPDATE ds01_usuarios 
+    SET b01_us_Nombre = '${req.body.b01_us_Nombre}', 
+    b01_us_Apellido = '${req.body.b01_us_Apellido}', 
+    b01_us_clave = '${req.body.b01_us_clave}', 
+    b01_us_password = ${req.body.b01_us_password}, 
+    b01_us_role= '${req.body.b01_us_role}' 
+    WHERE b01_us_id= ${req.body.b01_us_id}`
+    ,
+    )
+
+    res.sendStatus(200);
+}
+)
 
 
 

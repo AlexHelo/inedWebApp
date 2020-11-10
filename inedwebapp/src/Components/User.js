@@ -171,7 +171,10 @@ const EnhancedTableToolbar = (props) => {
 
                             console.log(selected);
 
-                            history.push(props.to + 'Usuario' + '/' + selected[0])
+                            history.push({
+                                pathname: props.to + 'Usuario' + '/' + selected[0],
+                                id: selected[0]
+                            })
                         }}>
                             <EditIcon />
                         </IconButton>

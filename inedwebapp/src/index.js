@@ -8,6 +8,7 @@ import Button from './Components/Button'
 import Create from './Components/Create'
 import AdminEdit from './Components/AdminEdit';
 import CreateUser from './Components/CreateUser';
+import EditUser from './Components/EditUser';
 import styled from 'styled-components';
 
 
@@ -36,7 +37,7 @@ ReactDOM.render(
       </Route>
       <Route path='/EditarUsuario'>
         <Button to="/Visualizar" txt='Cancelar' />
-        <CreateUser />
+        <EditUser />
       </Route>
       <Route path='/CrearUsuario'>
         <Button to="/Visualizar" txt='Cancelar' />
