@@ -8,35 +8,44 @@ import Button from './Components/Button'
 import Create from './Components/Create'
 import AdminEdit from './Components/AdminEdit';
 import CreateUser from './Components/CreateUser';
+import styled from 'styled-components';
+
+
 
 
 ReactDOM.render(
 
-    <BrowserRouter>
-      <Nav />
-      <Switch>
-        <Redirect exact from="/" to="/Visualizar" />
-        <Route path='/Visualizar'>
-          <Button to="/CrearUsuario" txt='Agregar Usuario' />
-          <Button to="/Crear" txt='Agregar Adulto' />
-          <Tabs to='/Editar' />
-        </Route>
-        <Route path='/Crear'>
-          <Button to="/Visualizar" txt='Cancelar' />
-          <Create />
-        </Route>
-        <Route path='/Editar'>
-          <Button to="/Visualizar" txt='Cancelar' />
-          <AdminEdit />
-        </Route>
-        <Route path='/CrearUsuario'>
-          <Button to="/Visualizar" txt='Cancelar' />
-          <CreateUser />
-        </Route>
+  <BrowserRouter>
+    <Nav />
+    <Switch>
+      <Redirect exact from="/" to="/Visualizar" />
+      <Route path='/Visualizar'>
 
-      </Switch>
+        <Button to="/CrearUsuario" txt='Agregar Usuario' />
+        <Button to="/Crear" txt='Agregar Adulto' />
 
-    </BrowserRouter>,
+        <Tabs to='/Editar' />
+      </Route>
+      <Route path='/Crear'>
+        <Button to="/Visualizar" txt='Cancelar' />
+        <Create />
+      </Route>
+      <Route path='/EditarAdulto'>
+        <Button to="/Visualizar" txt='Cancelar' />
+        <AdminEdit />
+      </Route>
+      <Route path='/EditarUsuario'>
+        <Button to="/Visualizar" txt='Cancelar' />
+        <CreateUser />
+      </Route>
+      <Route path='/CrearUsuario'>
+        <Button to="/Visualizar" txt='Cancelar' />
+        <CreateUser />
+      </Route>
+
+    </Switch>
+
+  </BrowserRouter>,
 
   document.getElementById('root')
 );

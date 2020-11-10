@@ -22,6 +22,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 const TableTitle = styled(Typography)({
 
@@ -137,7 +138,9 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();
-    const { numSelected,OnClickDelete } = props;
+    const { numSelected, OnClickDelete, selected } = props;
+    const history = useHistory();
+
 
     return (
         <Toolbar
@@ -164,7 +167,12 @@ const EnhancedTableToolbar = (props) => {
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Editar">
-                        <IconButton aria-label="Editar">
+                        <IconButton aria-label="Editar" onClick={() => {
+
+                            console.log(selected);
+
+                            history.push(props.to + 'Usuario' + '/' + selected[0])
+                        }}>
                             <EditIcon />
                         </IconButton>
                     </Tooltip>
@@ -207,7 +215,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function EnhancedTable() {
+export default function EnhancedTable(props) {
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('b01_us_clave');
@@ -283,18 +291,22 @@ export default function EnhancedTable() {
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <EnhancedTableToolbar numSelected={selected.length} OnClickDelete={()=>{
-                    selected.forEach((select)=>{
-                        fetch(`http://localhost:8080/API/DeleteUser/${select}`)
-                        .then(()=>{
-                            console.log('Deleted ID = '+select)
-                            setUsers(users.filter((user)=>{
-                                return user.b01_us_id!==select
-                            }))
-                            setSelected([])
+                <EnhancedTableToolbar selected={selected} numSelected={selected.length} to={props.to}
+                    OnClickDelete={() => {
+                        selected.forEach((select) => {
+                            fetch(`http://localhost:8080/API/DeleteUser/${select}`)
+                                .then(() => {
+                                    console.log('Deleted ID = ' + select)
+                                    setUsers(users.filter((user) => {
+                                        return user.b01_us_id !== select
+                                    }))
+                                    setSelected([])
+                                })
                         })
-                    })
-                }} />
+                    }}
+
+
+                />
                 <TableContainer>
                     <Table
                         className={classes.table}

@@ -165,9 +165,9 @@ const EnhancedTableToolbar = (props) => {
                     </Tooltip>
                     <Tooltip title="Editar">
                         <IconButton aria-label="Editar" onClick={() => {
-                            
-                            history.push(props.to) 
-                            }}>
+
+                            history.push(props.to + 'Adulto')
+                        }}>
                             <EditIcon />
                         </IconButton>
                     </Tooltip>

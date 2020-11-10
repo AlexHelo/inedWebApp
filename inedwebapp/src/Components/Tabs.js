@@ -61,9 +61,9 @@ const TableTabs = (props) => {
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
-        
+
     };
-    
+
     return (
         <div className={classes.root}>
             <AppBar position="static">
@@ -74,13 +74,13 @@ const TableTabs = (props) => {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                <Adulto to={props.to}/>
+                <Adulto to={props.to} />
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <Request />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <Usuario />
+                <Usuario to={props.to} />
             </TabPanel>
         </div>
     );
