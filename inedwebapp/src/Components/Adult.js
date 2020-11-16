@@ -136,7 +136,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();
-    const { numSelected } = props;
+    const { numSelected, OnClickDelete, selected } = props;
     const history = useHistory();
 
     return (
@@ -159,14 +159,19 @@ const EnhancedTableToolbar = (props) => {
 
                 <div>
                     <Tooltip title="Borrar">
-                        <IconButton aria-label="Borrar">
+                        <IconButton aria-label="Borrar" onClick={OnClickDelete}>
                             <DeleteIcon />
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Editar">
                         <IconButton aria-label="Editar" onClick={() => {
 
-                            history.push(props.to + 'Adulto')
+                            console.log(selected);
+
+                            history.push({
+                                pathname: props.to + 'Adulto' + '/' + selected[0],
+                                id: selected[0]
+                            })
                         }}>
                             <EditIcon />
                         </IconButton>
@@ -183,6 +188,7 @@ const EnhancedTableToolbar = (props) => {
 
 EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
+    OnClickDelete: PropTypes.func.isRequired,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -242,19 +248,19 @@ export default function EnhancedTable(props) {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = adult.map((n) => n.Nombre_Completo);
+            const newSelecteds = adult.map((n) => n.Id_Persona);
             setSelected(newSelecteds);
             return;
         }
         setSelected([]);
     };
 
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
+    const handleClick = (event, Id_Persona) => {
+        const selectedIndex = selected.indexOf(Id_Persona);
         let newSelected = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
+            newSelected = newSelected.concat(selected, Id_Persona);
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {
@@ -282,14 +288,26 @@ export default function EnhancedTable(props) {
         setDense(event.target.checked);
     };
 
-    const isSelected = (name) => selected.indexOf(name) !== -1;
+    const isSelected = (Id_Persona) => selected.indexOf(Id_Persona) !== -1;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, adult.length - page * rowsPerPage);
 
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <EnhancedTableToolbar numSelected={selected.length} to={props.to} />
+                <EnhancedTableToolbar selected={selected} numSelected={selected.length} to={props.to} OnClickDelete={() => {
+                    selected.forEach((select) => {
+                        fetch(`http://localhost:8080/API/DeleteAdult/${select}`)
+                            .then(() => {
+                                console.log('Deleted ID = ' + select)
+                                setAdult(adult.filter((adulto) => {
+                                    return adulto.Id_Persona !== select
+                                }))
+                                setSelected([])
+                            })
+                    })
+                }}
+                 />
                 <TableContainer>
                     <Table
                         className={classes.table}
@@ -310,13 +328,13 @@ export default function EnhancedTable(props) {
                             {stableSort(adult, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
-                                    const isItemSelected = isSelected(row.Nombre_Completo);
+                                    const isItemSelected = isSelected(row.Id_Persona);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.Nombre_Completo)}
+                                            onClick={(event) => handleClick(event, row.Id_Persona)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}

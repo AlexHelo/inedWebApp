@@ -15,6 +15,12 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
+import { makeStyles } from '@material-ui/core/styles';
+import { LineStyle } from '@material-ui/icons';
+import { useHistory } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 const StyledTextField = styled(TextField)({
     width: '100%',
@@ -29,6 +35,14 @@ const SmallTextField = styled(TextField)({
     marginLeft: '5% !important'
 
 })
+
+const BigText = styled(Typography)({
+    width: '100%',
+    marginRight: '5% !important',
+    marginLeft: '5% !important'
+
+})
+
 
 const CreateBox = styled.form({
 
@@ -450,6 +464,32 @@ const GradoDeEstudios = [
     },
 ];
 
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        position: 'absolute',
+        width: 700,
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
+}));
+
+function rand() {
+    return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+    const top = 50;
+    const left = 50;
+
+    return {
+        top: `${top}%`,
+        left: `${left}%`,
+        transform: `translate(-${top}%, -${left}%)`,
+    };
+}
+
 
 
 
@@ -462,9 +502,9 @@ const AdminEditForm = () => {
         setTipoIDP(event.target.value);
     };
 
-    const [tipoE, setTipoE] = React.useState();
-    const handleChangeTipoE = (event) => {
-        setTipoE(event.target.value);
+    const [tipoIngreso, setTipoIngreso] = React.useState();
+    const handleChangeTipoIngreso = (event) => {
+        setTipoIngreso(event.target.value);
     };
 
     const [tipoNO, setTipoNO] = React.useState();
@@ -597,9 +637,6 @@ const AdminEditForm = () => {
         setValueComentario(event.target.value);
     };
     
-    
-
-
     const [tipoVial, setTipoVial] = React.useState();
     const handleChangeTipoVial = (event) => {
         setTipoVial(event.target.value);
@@ -614,20 +651,146 @@ const AdminEditForm = () => {
     const handleChangeTipoGrado = (event) => {
         setTipoGrado(event.target.value);
     };
+    const [valueHelperText, setHelperText] = React.useState('');
+    const [valueError, setError] = React.useState(false);
+
+    const AllDataAdults= ()=>
+        {
+            return {
+                Idp: tipoIDP,
+                TipoIngrso: tipoIngreso,
+                Folio_solicitud: tipoNO,
+                Nombre: tipoNombre,
+                Apellido_Paterno: tipoApellidoP,
+                Apellido_Materno: tipoApellidoM,
+                Fecha_Nacimiento: selectedDate,
+                Edad: tipoEdad,
+                LugarNacimiento: tipoLugarNacimiento,
+                Sexo: valueGender,
+                CIB: valueCIB,
+                Curp: valueCURP,
+                Tipo_Telefono: valueTelCasa,
+                Telefono: valueTelRec,
+                Celular: valueCelular,
+                Ocupacion: valueOcupacion,
+                Tipo_de_Etnicidad:tipoEtnica,
+                Tipo_de_Grado:tipoGrado,
+                Padre: valuePadre,
+                Madre: valueMadre,
+                Rep_Completo: valueTutor,
+                Calle: valueCalle,
+                do_No_Interior: valueNoInterno,
+                do_No_Exterior:valueNoExterno,
+                Tipo_Vialidad: tipoVial,
+                UT: valueUT,
+                Codigo_Postal:valueCodigoPostal,
+                do_Calle1: valueEntreCalle1,
+                do_Calle2: valueCalle2,
+                Regimen_Hab: valueNoReg,
+                Regimen: valueTipoReg,
+                do_Regimen: valueNombreReg,
+                tipo_Asentamiento: valueNumeroAse,
+                Asentamiento: valueTipoAse,
+                do_Asentamiento: valueNombreAse,
+                Observaciones:valueComentario
+            }
+        }
+    const BasicData = {
+            Idp: 'IDP',
+            TipoIngrso: 'Tipo de Ingreso',
+            Folio_solicitud: 'Folio Solicitud',
+            Nombre: 'Nombre',
+            Apellido_Paterno: 'Apellido Paterno',
+            Apellido_Materno: 'Apellido Materno',
+            Fecha_Nacimiento: 'Fecha de Nacimiento',
+            Edad: 'Edad',
+            LugarNacimiento: 'Lugar de Nacimiento',
+            Sexo: 'Genero',
+            CIB: 'CIB',
+            Curp: 'CURP',
+            Tipo_Telefono: 'Tel. Casa',
+            Telefono: 'Tel. Recados',
+            Celular: 'Celular',
+            Ocupacion: 'Ocupacion',
+            Tipo_de_Etnicidad:'Etnicidad',
+            Tipo_de_Grado:'Tipo de Grado',
+            Padre: 'Padre',
+            Madre: 'Madre',
+            Rep_Completo: 'Tutor',
+            Calle: 'Calle',
+            do_No_Interior: 'No. Interno',
+            do_No_Exterior:'No. Externo',
+            Tipo_Vialidad: 'Tipo de Vialidad',
+            UT: 'Unidad Territorial',
+            Codigo_Postal:'Codigo Postal',
+            do_Calle1: 'Entre Calle 1',
+            do_Calle2: 'Entre Calle 2',
+            Regimen_Hab: 'No. Regimen',
+            Regimen: 'Tipo de Regimen',
+            do_Regimen: 'Nombre de Regimen',
+            tipo_Asentamiento: 'Numero Asentamiento',
+            Asentamiento: 'Tipo de Asentamiento',
+            do_Asentamiento: 'Nombre de Asentamiento',
+            Observaciones:'Comentarios'
+        }
+    const history = useHistory();
+    const classes = useStyles();
+    const [modalStyle] = React.useState(getModalStyle);
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    
+    const UploadData = () => {
+        // fetch('http://localhost:8080/API/SetUsers', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(AllDataUsers())
+        // }).then((res) => console.log(res));
+    }
+    const body = (
+        <div style={modalStyle} className={classes.paper}>
+            <h2 id="simple-modal-title">Se va a dar de Alta el Usuario:</h2>
+            {Object.keys(AllDataAdults()).map(key =>
+                <BigText key={key}>{BasicData[key] + " : " + AllDataAdults()[key]}</BigText>)}
+            <FormLine>
+                <Button to="/Visualizar" onClick={() => { UploadData(); handleClose(); history.push("/Visualizar"); }} variant="contained" color="primary" >Aceptar</Button>
+                <Button onClick={handleClose} variant="contained" color="secondary" >Regresar</Button>
+            </FormLine>
+
+        </div>
+    );
+
+    // React.useEffect(() => {
+    //     fetch(`http://localhost:8080/API/EditAdult/${location.id}`).then(response => {
+
+    //         return (
+    //             response.json()
+    //         )
+
+    //     }).then(a => { 
+    //         setUser(a[0]); 
+    //         setValueNombre(a[0].b01_us_Nombre);
+    //         setValueApellidoP((a[0].b01_us_Apellido).split(" ")[0]);
+    //         setValueApellidoM((a[0].b01_us_Apellido).split(" ")[1]);
+    //         setValueClave(a[0].b01_us_clave);
+    //         setValues({ ...values, password:a[0].b01_us_password });
+    //         setTipoNivel(a[0].b01_us_role);
+
+    //     })
+    // }, []);
 
 
     return (
         <CreateBox onSubmit={(e)=>{
             e.preventDefault();
-            
-            console.log(Array.from(e.target).map(i => i));
-            console.log(Array.from(e.target).map(i => i.value));
-            
-            // fetch('http://localhost:8080/API/SetAdults',{
-            //     method: 'POST',
-            //     headers: {'Content-Type': 'application/json' },
-            //     body: JSON.stringify(e.target)
-            // }).then((res)=>console.log(res))
+            handleOpen()
+
         }}>
             <FormLine>
                 <StyledTextField id="IDP" label="IDP" 
@@ -639,8 +802,8 @@ const AdminEditForm = () => {
                     id="TipoDeIngreso"
                     select
                     label="Tipo de Entrada"
-                    value={tipoE}
-                    onChange={handleChangeTipoE}
+                    value={tipoIngreso}
+                    onChange={handleChangeTipoIngreso}
 
                 >
                     {TiposDeEntrada.map((option) => (
@@ -844,7 +1007,7 @@ const AdminEditForm = () => {
             </FormLine>
             <FormLine>
                 <StyledTextField id="Comentarios" label="Comentarios" 
-                v   alue={valueComentario}
+                    value={valueComentario}
                     onChange={handleChangeComentario}/>
             </FormLine>
             <FormLine>
@@ -852,6 +1015,15 @@ const AdminEditForm = () => {
                     Agregar
                 </Button>
             </FormLine>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                disableBackdropClick='true'
+            >
+                {body}
+            </Modal>
 
 
         </CreateBox>

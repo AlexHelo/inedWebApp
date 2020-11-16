@@ -10,6 +10,8 @@ import AdminEdit from './Components/AdminEdit';
 import CreateUser from './Components/CreateUser';
 import EditUser from './Components/EditUser';
 import styled from 'styled-components';
+import Login from './Components/Login'
+import NavNoS from './Components/NavNoSearch'
 
 
 
@@ -17,29 +19,43 @@ import styled from 'styled-components';
 ReactDOM.render(
 
   <BrowserRouter>
-    <Nav />
+    
     <Switch>
       <Redirect exact from="/" to="/Visualizar" />
-      <Route path='/Visualizar'>
 
+      <Route path='/Login'>
+        <NavNoS />
+        <Login/>
+      </Route>
+
+      <Route path='/Visualizar'>
+        <Nav />
         <Button to="/CrearUsuario" txt='Agregar Usuario' />
         <Button to="/Crear" txt='Agregar Adulto' />
 
         <Tabs to='/Editar' />
       </Route>
+
       <Route path='/Crear'>
+        <NavNoS />
         <Button to="/Visualizar" txt='Cancelar' />
         <Create />
       </Route>
+
       <Route path='/EditarAdulto'>
+        <NavNoS />
         <Button to="/Visualizar" txt='Cancelar' />
         <AdminEdit />
       </Route>
+
       <Route path='/EditarUsuario'>
+        <NavNoS />
         <Button to="/Visualizar" txt='Cancelar' />
         <EditUser />
       </Route>
+      
       <Route path='/CrearUsuario'>
+        <NavNoS />
         <Button to="/Visualizar" txt='Cancelar' />
         <CreateUser />
       </Route>

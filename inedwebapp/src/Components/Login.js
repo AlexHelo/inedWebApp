@@ -127,28 +127,8 @@ function getModalStyle() {
     };
 }
 
-const CreateUser = () => {
+const LoginScreen = () => {
 
-    const [valueNombre, setValueNombre] = React.useState();
-    const handleChangeNombre = (event) => {
-        setValueNombre(event.target.value);
-    };
-    const [valueApellidoP, setValueApellidoP] = React.useState();
-    const handleChangeApellidoP = (event) => {
-        setValueApellidoP(event.target.value);
-    };
-    const [valueApellidoM, setValueApellidoM] = React.useState();
-    const handleChangeApellidoM = (event) => {
-        setValueApellidoM(event.target.value);
-    };
-    const [tipoNivel, setTipoNivel] = React.useState();
-    const handleChangeTipoNivel = (event) => {
-        setTipoNivel(event.target.value);
-    };
-    const [valueUT, setValueUT] = React.useState();
-    const handleChangeValueUT = (event) => {
-        setValueUT(event.target.value);
-    };
     const [valueClave, setValueClave] = React.useState();
     const handleChangeClave = (event) => {
         setValueClave(event.target.value);
@@ -190,6 +170,7 @@ const CreateUser = () => {
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
+    const [user, setUser] = React.useState([]);
     const handleOpen = () => {
         setOpen(true);
     };
@@ -198,22 +179,44 @@ const CreateUser = () => {
         setOpen(false);
     };
 
-    const UploadData = () => {
-        fetch('http://localhost:8080/API/SetUsers', {
+    const CheckUserInDB = () => {
+        let cond=true;
+        fetch('http://localhost:8080/API/CheckUser', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(AllDataUsers())
-        }).then((res) => console.log(res));
+            body: JSON.stringify(DataUser())
+        }).then((res) => {console.log(res);
+            if(res.status==404){
+                console.log('Yeah');
+                cond=false
+            }else{
+                setUser(res);
+                cond=true
+            }
+         });
+         return cond
     }
     const history = useHistory();
 
-    const AllDataUsers = () => {
+    const CheckForm = ()=> {
+        if (valueClave && values.password){
+            const cond=CheckUserInDB();
+            if(cond==true){
+                console.log(user);
+                handleOpen();
+            }
+                
+        }else{
+
+        }
+        
+    }
+
+    const DataUser = () => {
+        console.log(valueClave,values.password)
         return {
-            b01_us_Nombre: valueNombre,
-            b01_us_Apellido: valueApellidoP + " " + valueApellidoM,
             b01_us_clave: valueClave,
             b01_us_password: values.password,
-            b01_us_role: tipoNivel
         }
 
     }
@@ -227,14 +230,11 @@ const CreateUser = () => {
 
     const body = (
         <div style={modalStyle} className={classes.paper}>
-            <h2 id="simple-modal-title">Se va a dar de Alta el Usuario:</h2>
-
-            {Object.keys(AllDataUsers()).map(key =>
-                <BigText key={key}>{BasicData[key] + " : " + AllDataUsers()[key]}</BigText>)}
-                
+            <h2 id="simple-modal-title">¿Eres tú?</h2>
+            
             <FormLine>
-                <Button to="/Visualizar" onClick={() => { UploadData(); handleClose(); history.push("/Visualizar"); }} variant="contained" color="primary" >Aceptar</Button>
-                <Button onClick={handleClose} variant="contained" color="secondary" >Regresar</Button>
+                <Button to="/Visualizar" onClick={() => { handleClose(); history.push("/Visualizar"); }} variant="contained" color="primary" >Si</Button>
+                <Button onClick={handleClose} variant="contained" color="secondary" >No</Button>
             </FormLine>
 
         </div>
@@ -244,24 +244,11 @@ const CreateUser = () => {
     return (
         <CreateBox onSubmit={(e) => {
             e.preventDefault();
-
-
-            console.log(AllDataUsers())
-            handleOpen()
+            CheckForm();
+            
 
 
         }}>
-            <FormLine>
-                <BigTextField id="Nombre" label="Nombre(s)"
-                    value={valueNombre}
-                    onChange={handleChangeNombre} />
-                <BigTextField id="ApellidoP" label="Apellido Paterno"
-                    value={valueApellidoP}
-                    onChange={handleChangeApellidoP} />
-                <BigTextField id="ApellidoM" label="Apellido Materno"
-                    value={valueApellidoM}
-                    onChange={handleChangeApellidoM} />
-            </FormLine>
             <FormLine>
                 <BigTextField id="Clave" label="Clave"
                     value={valueClave}
@@ -269,17 +256,14 @@ const CreateUser = () => {
             </FormLine>
             <FormLine>
                 <BigPassword>
-                    <InputLabel htmlFor="standard-adornment-password" >Password</InputLabel>
+                    <InputLabel htmlFor="standard-adornment-password" >Contraseña</InputLabel>
                     <Input
-
-
                         id="standard-adornment-password"
 
                         type={values.showPassword ? 'text' : 'password'}
                         value={values.password}
 
                         onChange={handleChangePassword('password')}
-
                         error={valueError}
                         endAdornment={
                             <InputAdornment position="end">
@@ -298,25 +282,8 @@ const CreateUser = () => {
                 </BigPassword>
             </FormLine>
             <FormLine>
-                <BigTextField
-                    id="Nivel"
-                    select
-                    label="Nivel"
-                    value={tipoNivel}
-                    onChange={handleChangeTipoNivel}
-
-                >
-                    {Niveles.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </BigTextField>
-                <BigTextField id="UT" label="Unidad Territorial" value={valueUT} onChange={handleChangeValueUT} />
-            </FormLine>
-            <FormLine>
                 <Button variant="contained" color="primary" type='submit'>
-                    Crear
+                    Iniciar Sesión
                 </Button>
             </FormLine>
             <Modal
@@ -334,4 +301,4 @@ const CreateUser = () => {
     )
 }
 
-export default CreateUser;
+export default LoginScreen;
