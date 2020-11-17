@@ -171,6 +171,7 @@ const LoginScreen = () => {
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
     const [user, setUser] = React.useState([]);
+    const [errorM, setErrorM] = React.useState(false);
     const handleOpen = () => {
         setOpen(true);
     };
@@ -178,34 +179,54 @@ const LoginScreen = () => {
     const handleClose = () => {
         setOpen(false);
     };
+    // const setUser=(info)=>{
+    //     user=info;
+    // }
 
     const CheckUserInDB = () => {
-        let cond=true;
         fetch('http://localhost:8080/API/CheckUser', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(DataUser())
-        }).then((res) => {console.log(res);
-            if(res.status==404){
-                console.log('Yeah');
-                cond=false
+
+        }).then((response)=>{
+            return (
+                response.json()
+            )
+        }).then((a) => {
+            if(a.length!=0){
+                //console.log('y');
+                setUser(a[0]);
+                CheckError(true);
             }else{
-                setUser(res);
-                cond=true
+                CheckError(false);
             }
          });
-         return cond
+         
+         
     }
     const history = useHistory();
 
+    const CheckError= (n)=>{
+        let cond;
+        if(n){
+            //console.log(user);
+            cond=true;
+            setErrorM(false);
+        }else{
+            cond=false;
+            setErrorM(true);
+        }
+        if(cond===true){
+            handleOpen();
+        }       
+
+    }
+
     const CheckForm = ()=> {
         if (valueClave && values.password){
-            const cond=CheckUserInDB();
-            if(cond==true){
-                console.log(user);
-                handleOpen();
-            }
-                
+            CheckUserInDB();
+                  
         }else{
 
         }
@@ -213,12 +234,25 @@ const LoginScreen = () => {
     }
 
     const DataUser = () => {
-        console.log(valueClave,values.password)
+        //console.log(valueClave,values.password)
         return {
             b01_us_clave: valueClave,
             b01_us_password: values.password,
         }
 
+    }
+
+    const hist=()=>{
+        switch(user.b01_us_role){
+            case 'Administrador':
+                break;
+            case '':
+                break;
+            case '':
+                break;
+
+        }
+        history.push("/Visualizar");
     }
     const BasicData = {
         b01_us_Nombre: 'Nombre',
@@ -231,10 +265,11 @@ const LoginScreen = () => {
     const body = (
         <div style={modalStyle} className={classes.paper}>
             <h2 id="simple-modal-title">¿Eres tú?</h2>
-            
+            {Object.keys(user).map(key =>
+                <BigText key={key}>{BasicData[key] + " : " + user[key]}</BigText>)}
             <FormLine>
-                <Button to="/Visualizar" onClick={() => { handleClose(); history.push("/Visualizar"); }} variant="contained" color="primary" >Si</Button>
-                <Button onClick={handleClose} variant="contained" color="secondary" >No</Button>
+                <Button to="/Visualizar" onClick={() => { handleClose(); hist(); }} variant="contained" color="primary" >Si</Button>
+                <Button onClick={()=>{handleClose(); setUser([]);}} variant="contained" color="secondary" >No</Button>
             </FormLine>
 
         </div>
@@ -245,6 +280,7 @@ const LoginScreen = () => {
         <CreateBox onSubmit={(e) => {
             e.preventDefault();
             CheckForm();
+            
             
 
 
@@ -285,6 +321,9 @@ const LoginScreen = () => {
                 <Button variant="contained" color="primary" type='submit'>
                     Iniciar Sesión
                 </Button>
+            </FormLine>
+            <FormLine>
+                <BigText>{errorM ? 'El usuario/constraseña que ingresaste es incorrecto' : undefined}</BigText>
             </FormLine>
             <Modal
                 open={open}

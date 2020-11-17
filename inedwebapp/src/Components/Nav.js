@@ -4,10 +4,24 @@ import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
 
 
 
+const CreateBox = styled.form({
 
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    flexWrap: 'noWrap',
+    backgroundColor: 'white',
+    paddingTop: '1%',
+    paddingBottom: '1%',
+    width: '60%',
+    marginLeft: 'Auto',
+    marginRight: 'Auto'
+
+})
 const NavBar = styled.span({
 
     display: 'flex',
@@ -69,17 +83,33 @@ const fields = [
 const Nav = () => {
 
     const [field, setField] = React.useState('Name');
+    const handleChangeField = (event) => {
+        setField(event.target.value);
+    };
+    const [valueBusqueda, setValueBusqueda] = React.useState();
+    const handleChangeBusqueda = (event) => {
+        setValueBusqueda(event.target.value);
+    };
+    const AllDataUsers = () => {
+        return {
+            //b01_us_id: location.id,
+        }
+
+    }
 
     return (
         <NavBar>
-
-
+            <CreateBox onSubmit={(e) => {
+                e.preventDefault();
+    
+    
+            }}>
             <StyledComboBox
                 id="filled-select-currency"
                 select
                 label="Select"
                 value={field}
-                onChange={(e) => setField(e.target.value)}
+                onChange={handleChangeField}
 
             >
 
@@ -91,7 +121,12 @@ const Nav = () => {
                 ))}
 
             </StyledComboBox>
-            <StyledTextField id="filled-basic" label="Busqueda" />
+            <StyledTextField id="filled-basic" label="Busqueda" value={valueBusqueda}
+            onChange={handleChangeBusqueda} />
+            <Button variant="contained" color="primary" type='submit'>
+                    Buscar
+                </Button>
+            </CreateBox>
             <Title>INED | Instituto para el Envejecimiento Digno</Title>
         </NavBar>
     )

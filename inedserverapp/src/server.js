@@ -118,15 +118,17 @@ app.post('/API/UpdateAdult', async (req, res) => {
 )
 
 app.post('/API/CheckUser', async (req, res) => {
-    console.log('pass')
-    const user = await sequelize.query(`SELECT b01_us_id, b01_us_Nombre, b01_us_Apellido, b01_us_clave, b01_us_password, b01_us_role FROM ds01_usuarios WHERE b01_us_clave = '${req.body.b01_us_clave}' AND b01_us_password= ${req.body.b01_us_password}`, {
+    
+    const user = await sequelize.query(`SELECT b01_us_Nombre, b01_us_Apellido, b01_us_clave, b01_us_password, b01_us_role FROM ds01_usuarios WHERE b01_us_clave = '${req.body.b01_us_clave}' AND b01_us_password= ${req.body.b01_us_password}`, {
         replacements: {},
         type: QueryTypes.SELECT
-    }, 
+    }
+    , 
     function (err) {
         res.sendStatus(404)
     }
     );
+    //console.log(user);
     res.send(user);
 })
 
