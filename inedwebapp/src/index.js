@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './index.css';
 import Nav from './Components/Nav';
-import Tabs from './Components/Tabs';
+import AdminTabs from './Components/AdminTabs';
+import ModeratorTabs from './Components/ModeratorTabs';
+import UserTabs from './Components/UserTabs';
 import Button from './Components/Button'
 import Create from './Components/Create'
 import AdminEdit from './Components/AdminEdit';
@@ -12,6 +14,8 @@ import EditUser from './Components/EditUser';
 import styled from 'styled-components';
 import Login from './Components/Login'
 import NavNoS from './Components/NavNoSearch'
+import Search from './Components/Search'
+
 
 
 
@@ -19,21 +23,39 @@ import NavNoS from './Components/NavNoSearch'
 ReactDOM.render(
 
   <BrowserRouter>
-    
+
     <Switch>
       <Redirect exact from="/" to="/Login" />
 
-      <Route path='/Login'>
+      <Route path='/Buscar'>
         <NavNoS />
-        <Login/>
+        <Search />
       </Route>
 
-      <Route path='/Visualizar'>
+      <Route path='/Login'>
+        <NavNoS />
+        <Login />
+      </Route>
+
+      <Route path='/VisualizarAdmin'>
         <Nav />
         <Button to="/CrearUsuario" txt='Agregar Usuario' />
         <Button to="/Crear" txt='Agregar Adulto' />
 
-        <Tabs to='/Editar' />
+        <AdminTabs to='/Editar' />
+      </Route>
+
+      <Route path='/VisualizarModerador'>
+        <Nav />
+        <Button to="/Crear" txt='Agregar Adulto' />
+        <ModeratorTabs to='/Editar' />
+      </Route>
+
+      <Route path='/VisualizarUsuario'>
+        <Nav />
+        <Button to="/Crear" txt='Agregar Adulto' />
+
+        <UserTabs to='/Editar' />
       </Route>
 
       <Route path='/Crear'>
@@ -53,7 +75,9 @@ ReactDOM.render(
         <Button to="/Visualizar" txt='Cancelar' />
         <EditUser />
       </Route>
-      
+
+
+
       <Route path='/CrearUsuario'>
         <NavNoS />
         <Button to="/Visualizar" txt='Cancelar' />

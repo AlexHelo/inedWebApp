@@ -225,13 +225,14 @@ const CreateUser = () => {
         b01_us_role: 'Rol'
     }
 
+
     const body = (
         <div style={modalStyle} className={classes.paper}>
             <h2 id="simple-modal-title">Se va a dar de Alta el Usuario:</h2>
 
             {Object.keys(AllDataUsers()).map(key =>
                 <BigText key={key}>{BasicData[key] + " : " + AllDataUsers()[key]}</BigText>)}
-                
+
             <FormLine>
                 <Button to="/Visualizar" onClick={() => { UploadData(); handleClose(); history.push("/Visualizar"); }} variant="contained" color="primary" >Aceptar</Button>
                 <Button onClick={handleClose} variant="contained" color="secondary" >Regresar</Button>

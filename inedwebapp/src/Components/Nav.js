@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -80,6 +81,8 @@ const fields = [
     },
 ];
 
+
+
 const Nav = () => {
 
     const [field, setField] = React.useState('Name');
@@ -90,6 +93,8 @@ const Nav = () => {
     const handleChangeBusqueda = (event) => {
         setValueBusqueda(event.target.value);
     };
+
+    const history = useHistory();
     const AllDataUsers = () => {
         return {
             //b01_us_id: location.id,
@@ -99,34 +104,11 @@ const Nav = () => {
 
     return (
         <NavBar>
-            <CreateBox onSubmit={(e) => {
-                e.preventDefault();
-    
-    
-            }}>
-            <StyledComboBox
-                id="filled-select-currency"
-                select
-                label="Select"
-                value={field}
-                onChange={handleChangeField}
 
-            >
-
-
-                {fields.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                    </MenuItem>
-                ))}
-
-            </StyledComboBox>
-            <StyledTextField id="filled-basic" label="Busqueda" value={valueBusqueda}
-            onChange={handleChangeBusqueda} />
-            <Button variant="contained" color="primary" type='submit'>
-                    Buscar
+            <Button onClick={() => { history.push("/Buscar"); }} variant="contained" color="primary" type='submit'>
+                Regresar a Busqueda
                 </Button>
-            </CreateBox>
+
             <Title>INED | Instituto para el Envejecimiento Digno</Title>
         </NavBar>
     )
