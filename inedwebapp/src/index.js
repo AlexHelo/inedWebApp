@@ -21,7 +21,7 @@ ReactDOM.render(
   <BrowserRouter>
     
     <Switch>
-      <Redirect exact from="/" to="/Visualizar" />
+      <Redirect exact from="/" to="/Login" />
 
       <Route path='/Login'>
         <NavNoS />
