@@ -32,6 +32,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 
 
+
 const BigTextField = styled(TextField)({
     width: '100%',
     marginRight: '5% !important',
@@ -132,18 +133,13 @@ const busqueda = [
         value: 'Adult',
         label: 'Adulto',
     },
-    {
-        value: 'Request',
-        label: 'Solicitud',
-    },
-    {
-        value: 'User',
-        label: 'Usuario',
-    },
+
 
 ];
 
-const Search = () => {
+const UserSearch = () => {
+
+    const history = useHistory();
 
     const [tipoBusqueda, setTipoBusqueda] = React.useState();
     const handleChangeTipoBusqueda = (event) => {
@@ -211,7 +207,7 @@ const Search = () => {
                     onChange={handleChangeBusqueda} />
             </FormLine>
             <FormLine>
-                <Button variant="contained" color="primary" type='submit'>
+                <Button onClick={() => { history.push("/VisualizarUsuario"); }} variant="contained" color="primary" type='submit'>
                     Buscar
         </Button>
             </FormLine>
@@ -222,4 +218,4 @@ const Search = () => {
     )
 }
 
-export default Search;
+export default UserSearch;

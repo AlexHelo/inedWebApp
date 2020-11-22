@@ -189,48 +189,48 @@ const LoginScreen = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(DataUser())
 
-        }).then((response)=>{
+        }).then((response) => {
             return (
                 response.json()
             )
         }).then((a) => {
-            if(a.length!=0){
+            if (a.length != 0) {
                 //console.log('y');
                 setUser(a[0]);
                 CheckError(true);
-            }else{
+            } else {
                 CheckError(false);
             }
-         });
-         
-         
+        });
+
+
     }
     const history = useHistory();
 
-    const CheckError= (n)=>{
+    const CheckError = (n) => {
         let cond;
-        if(n){
+        if (n) {
             //console.log(user);
-            cond=true;
+            cond = true;
             setErrorM(false);
-        }else{
-            cond=false;
+        } else {
+            cond = false;
             setErrorM(true);
         }
-        if(cond===true){
+        if (cond === true) {
             handleOpen();
-        }       
+        }
 
     }
 
-    const CheckForm = ()=> {
-        if (valueClave && values.password){
+    const CheckForm = () => {
+        if (valueClave && values.password) {
             CheckUserInDB();
-                  
-        }else{
+
+        } else {
 
         }
-        
+
     }
 
     const DataUser = () => {
@@ -242,8 +242,8 @@ const LoginScreen = () => {
 
     }
 
-    const hist=()=>{
-        switch(user.b01_us_role){
+    const hist = () => {
+        switch (user.b01_us_role) {
             case 'Administrador':
                 break;
             case '':
@@ -252,7 +252,7 @@ const LoginScreen = () => {
                 break;
 
         }
-        history.push("/Visualizar");
+        history.push("/VisualizarAdmin");
     }
     const BasicData = {
         b01_us_Nombre: 'Nombre',
@@ -269,7 +269,7 @@ const LoginScreen = () => {
                 <BigText key={key}>{BasicData[key] + " : " + user[key]}</BigText>)}
             <FormLine>
                 <Button to="/Visualizar" onClick={() => { handleClose(); hist(); }} variant="contained" color="primary" >Si</Button>
-                <Button onClick={()=>{handleClose(); setUser([]);}} variant="contained" color="secondary" >No</Button>
+                <Button onClick={() => { handleClose(); setUser([]); }} variant="contained" color="secondary" >No</Button>
             </FormLine>
 
         </div>
@@ -280,8 +280,8 @@ const LoginScreen = () => {
         <CreateBox onSubmit={(e) => {
             e.preventDefault();
             CheckForm();
-            
-            
+
+
 
 
         }}>

@@ -14,8 +14,9 @@ import EditUser from './Components/EditUser';
 import styled from 'styled-components';
 import Login from './Components/Login'
 import NavNoS from './Components/NavNoSearch'
-import Search from './Components/Search'
-
+import AdminSearch from './Components/AdminSearch'
+import MonitorSearch from './Components/MonitorSearch'
+import UserSearch from './Components/UserSearch'
 
 
 
@@ -27,10 +28,21 @@ ReactDOM.render(
     <Switch>
       <Redirect exact from="/" to="/Login" />
 
-      <Route path='/Buscar'>
+      <Route path='/AdminBuscar'>
         <NavNoS />
-        <Search />
+        <AdminSearch />
       </Route>
+
+      <Route path='/MonitorBuscar'>
+        <NavNoS />
+        <MonitorSearch />
+      </Route>
+
+      <Route path='/UsuarioBuscar'>
+        <NavNoS />
+        <UserSearch />
+      </Route>
+
 
       <Route path='/Login'>
         <NavNoS />
@@ -38,21 +50,21 @@ ReactDOM.render(
       </Route>
 
       <Route path='/VisualizarAdmin'>
-        <Nav />
+        <Nav to="/AdminBuscar" />
         <Button to="/CrearUsuario" txt='Agregar Usuario' />
         <Button to="/Crear" txt='Agregar Adulto' />
 
         <AdminTabs to='/Editar' />
       </Route>
 
-      <Route path='/VisualizarModerador'>
-        <Nav />
+      <Route path='/VisualizarMonitor'>
+        <Nav to="/MonitorBuscar" />
         <Button to="/Crear" txt='Agregar Adulto' />
         <ModeratorTabs to='/Editar' />
       </Route>
 
       <Route path='/VisualizarUsuario'>
-        <Nav />
+        <Nav to="/UsuarioBuscar" />
         <Button to="/Crear" txt='Agregar Adulto' />
 
         <UserTabs to='/Editar' />

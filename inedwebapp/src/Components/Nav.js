@@ -83,7 +83,7 @@ const fields = [
 
 
 
-const Nav = () => {
+const Nav = (props) => {
 
     const [field, setField] = React.useState('Name');
     const handleChangeField = (event) => {
@@ -105,7 +105,7 @@ const Nav = () => {
     return (
         <NavBar>
 
-            <Button onClick={() => { history.push("/Buscar"); }} variant="contained" color="primary" type='submit'>
+            <Button onClick={() => { history.push(props.to); }} variant="contained" color="primary" type='submit'>
                 Regresar a Busqueda
                 </Button>
 
