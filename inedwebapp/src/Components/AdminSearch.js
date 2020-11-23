@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const fields = [
+const fields1 = [
     {
         value: 'Name',
         label: 'Nombre',
@@ -120,13 +120,55 @@ const fields = [
     },
     {
         value: 'Cellphone',
-        label: 'Celular',
+        label: 'Telefono',
     },
     {
         value: 'Responsible',
         label: 'Responsable',
     },
 ];
+const fields2 = [
+    {
+        value: 'User',
+        label: 'Usuario',
+    },
+    {
+        value: 'Tipo Solicitud',
+        label: 'Tipo de Solicitud',
+    },
+    {
+        value: 'Nombre de Adulto',
+        label: 'Nombre de Adulto',
+    },
+    {
+        value: 'Comentario',
+        label: 'Comentario',
+    }
+];
+const fields3 = [
+    {
+        value: 'Usuario',
+        label: 'Usuario',
+    },
+    {
+        value: 'Clave',
+        label: 'Clave',
+    },
+    {
+        value: 'Contraseña',
+        label: 'Contraseña',
+    },
+    {
+        value: 'Rol',
+        label: 'Rol',
+    },
+    {
+        value: 'Comentario',
+        label: 'Comentario',
+    }
+];
+
+const fields= fields1;
 
 const busqueda = [
     {
@@ -151,6 +193,7 @@ const AdminSearch = () => {
     const [tipoBusqueda, setTipoBusqueda] = React.useState();
     const handleChangeTipoBusqueda = (event) => {
         setTipoBusqueda(event.target.value);
+        changeField(event.target.value);
     };
 
     const [tipoCampo, setTipoCampo] = React.useState();
@@ -161,6 +204,21 @@ const AdminSearch = () => {
     const handleChangeBusqueda = (event) => {
         setValueBusqueda(event.target.value);
     };
+
+    let changeField= (val)=>{
+        switch(val){
+            case 'Adulto':
+                fields=fields1;
+                break;
+            case 'Solicitud':
+                fields=fields2;
+                break;
+            case 'Usuario':
+                fields=fields3;
+                break;
+        }
+    }
+    
 
 
 
