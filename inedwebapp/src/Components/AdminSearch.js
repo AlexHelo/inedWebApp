@@ -168,8 +168,6 @@ const fields3 = [
     }
 ];
 
-const fields= fields1;
-
 const busqueda = [
     {
         value: 'Adult',
@@ -190,13 +188,15 @@ const AdminSearch = () => {
 
 
     const history = useHistory();
-    const [tipoBusqueda, setTipoBusqueda] = React.useState();
+    const [tipoBusqueda, setTipoBusqueda] = React.useState('');
     const handleChangeTipoBusqueda = (event) => {
         setTipoBusqueda(event.target.value);
+        console.log(event.target.value);
         changeField(event.target.value);
     };
+    const [fields, setFields] = React.useState([]);
 
-    const [tipoCampo, setTipoCampo] = React.useState();
+    const [tipoCampo, setTipoCampo] = React.useState('');
     const handleChangeTipoCampo = (event) => {
         setTipoCampo(event.target.value);
     };
@@ -207,14 +207,14 @@ const AdminSearch = () => {
 
     let changeField= (val)=>{
         switch(val){
-            case 'Adulto':
-                fields=fields1;
+            case 'Adult':
+                setFields(fields1);
                 break;
-            case 'Solicitud':
-                fields=fields2;
+            case 'Request':
+                setFields(fields2);
                 break;
-            case 'Usuario':
-                fields=fields3;
+            case 'User':
+                setFields(fields3);
                 break;
         }
     }
