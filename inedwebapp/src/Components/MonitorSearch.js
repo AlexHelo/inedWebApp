@@ -210,7 +210,7 @@ const MonitorSearch = () => {
                     onChange={handleChangeBusqueda} />
             </FormLine>
             <FormLine>
-                <Button onClick={() => { history.push("/VisualizarModerador"); }} variant="contained" color="primary" type='submit'>
+                <Button onClick={() => { history.push("/VisualizarMonitor"); }} variant="contained" color="primary" type='submit'>
                     Buscar
         </Button>
             </FormLine>
