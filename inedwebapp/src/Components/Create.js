@@ -549,6 +549,11 @@ const CreateForm = () => {
         setValueCURP(event.target.value);
     };
 
+    const [valueRFC, setValueRFC] = React.useState();
+    const handleChangeRFC = (event) => {
+        setValueRFC(event.target.value);
+    };
+
     const [valueTelCasa, setValueTelCasa] = React.useState();
     const handleChangeTelCasa = (event) => {
         setValueTelCasa(event.target.value);
@@ -652,7 +657,17 @@ const CreateForm = () => {
     const [valueHelperText, setHelperText] = React.useState('');
     const [valueError, setError] = React.useState(false);
 
+    const NombreCompleto = String(tipoNombre) + " " + String(tipoApellidoP) + " " + String(tipoApellidoM)
+    const DomicilioPrincipal = String(valueCalle) + " " + String(valueNoInterno) + " " + String(valueNoExterno)
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = mm + '/' + dd + '/' + yyyy;
     const AllDataAdults = () => {
+
         return {
             Idp: tipoIDP,
             TipoIngrso: tipoIngreso,
@@ -664,8 +679,14 @@ const CreateForm = () => {
             Edad: tipoEdad,
             LugarNacimiento: tipoLugarNacimiento,
             Sexo: valueGender,
+            Status: "1",
+            StatusArchivo: "1",
+            Tipo_Telefono: "todos",
+            Domicilio_Principal: DomicilioPrincipal,
             CIB: valueCIB,
+            Rfc: valueRFC,
             Curp: valueCURP,
+            Nombre_Completo: NombreCompleto,
             Tipo_Telefono: valueTelCasa,
             Telefono: valueTelRec,
             Celular: valueCelular,
@@ -683,15 +704,27 @@ const CreateForm = () => {
             Codigo_Postal: valueCodigoPostal,
             do_Calle1: valueEntreCalle1,
             do_Calle2: valueCalle2,
-            Regimen_Hab: valueNoReg,
+            Regimen_Hab: "0",
+            //ValueNoReg
             Regimen: valueTipoReg,
             do_Regimen: valueNombreReg,
-            tipo_Asentamiento: valueNumeroAse,
+            tipo_Asentamiento: "0",
+            //ValueNumeroAse
             Asentamiento: valueTipoAse,
             do_Asentamiento: valueNombreAse,
-            Observaciones: valueComentario
+            Observaciones: valueComentario,
+            Fecha_Alta: today
         }
+
     }
+
+    //     Executing (default): SELECT MAX(Id_Persona) FROM ds02_personas
+    // Executing (default): INSERT INTO ds02_personas(Id_Persona, Folio_solicitud, Nombre, Apellido_Paterno, Apellido_Materno, Fecha_Nacimiento, RFC, Curp, Nombre_Completo, Sexo, Status, StatusArchivo, Edad, Tipo_Telefono, Telefono, Rep_Completo, Domicilio_Principal, Tipo_Vialidad, Unidad_Territorial, Codigo_Postal, Regimen_Hab, Regimen, Tipo_Asentamiento, Asentamiento, Observaciones, Fecha_Alta) VALUES (4,'1','juana','testing',test,'2020-11-28T09:20:25.182Z,'1234rfc,'1234567curp,'juana testing test,'Mujer,'1,'undefined,'100,'undefined,'551234reca,'ledo,'av siempreviva 123 456,'Viaducto,'5555,'66666,'0,'regimen,'0,'aaaaaaa,'cool,'11/28/2020')
+    // (node:17512) UnhandledPromiseRejectionWarning: SequelizeDatabaseError: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1234rfc,'1234567curp,'juana testing test,'Mujer,'1,'undefined,'100,'undefined,'5' at line 1
+    //     at Query.formatError (D:\Documents\GitHub\inedWebApp\inedserverapp\node_modules\sequelize\lib\dialects\mysql\query.js:239:16)
+    //     at Query.run (D:\Documents\GitHub\inedWebApp\inedserverapp\node_modules\sequelize\lib\dialects\mysql\query.js:54:18)
+    //     at process._tickCallback (internal/process/next_tick.js:68:7)
+    // (node:17512) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 13)
     const BasicData = {
         Idp: 'IDP',
         TipoIngrso: 'Tipo de Ingreso',
@@ -744,11 +777,11 @@ const CreateForm = () => {
 
 
     const UploadData = () => {
-        // fetch('http://localhost:8080/API/SetUsers', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(AllDataUsers())
-        // }).then((res) => console.log(res));
+        fetch('http://localhost:8080/API/SetAdults', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(AllDataAdults())
+        }).then((res) => console.log(res));
     }
     const body = (
         <div style={modalStyle} className={classes.paper}>
@@ -770,7 +803,9 @@ const CreateForm = () => {
 
             //console.log(selectedDate);
             handleOpen()
+            console.log(AllDataAdults())
 
+            const NombreCompleto = tipoNombre.concat(tipoApellidoP, tipoApellidoM)
             //console.log(Array.from(e.target).map(i => i));
             //console.log(Array.from(e.target).map(i => i.value));
 
@@ -861,8 +896,8 @@ const CreateForm = () => {
             <FormLine>
 
                 <SmallTextField id="RFC" label="RFC"
-                    value={valueCURP}
-                    onChange={handleChangeCURP} />
+                    value={valueRFC}
+                    onChange={handleChangeRFC} />
 
                 <StyledTextField id="CURP" label="CURP"
                     value={valueCURP}
