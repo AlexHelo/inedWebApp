@@ -39,12 +39,13 @@ const BigTextField = styled(TextField)({
     marginLeft: '5% !important'
 
 })
+const BigText = styled.span({
 
-const BigText = styled(Typography)({
-    width: '100%',
-    marginRight: '5% !important',
-    marginLeft: '5% !important'
-
+    fontFamily: "Open Sans",
+    fontSize: '32px',
+    color: '#294F91',
+    marginRight: '2%',
+    marginTop: '5px'
 })
 
 const BigPassword = styled(FormControl)({
@@ -99,32 +100,71 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
-
-const fields = [
+const fields1 = [
     {
         value: 'Name',
         label: 'Nombre',
     },
     {
-        value: 'Direction',
-        label: 'Dirección',
+        value: 'Apellido Paterno',
+        label: 'Apellido Paterno',
+    },
+    {
+        value: 'Apellido Materno',
+        label: 'Apellido Materno',
     },
     {
         value: 'CURP',
         label: 'CURP',
     },
     {
-        value: 'Birthday',
-        label: 'Fecha de Nacimiento',
-    },
-    {
         value: 'Cellphone',
-        label: 'Celular',
+        label: 'Telefono',
     },
     {
         value: 'Responsible',
-        label: 'Responsable',
+        label: 'Responsable Nombre',
+    },
+    {
+        value: 'Responsible Apellido Materno',
+        label: 'Responsable Apellido Materno',
+    },
+    {
+        value: 'Responsable Apellido Paterno',
+        label: 'Responsable Apellido Paterno',
+    },
+
+];
+const fields2 = [
+    {
+        value: 'User',
+        label: 'Usuario',
+    },
+    {
+        value: 'Tipo Solicitud',
+        label: 'Tipo de Solicitud',
+    },
+    {
+        value: 'Nombre de Adulto',
+        label: 'Nombre de Adulto',
+    }
+];
+const fields3 = [
+    {
+        value: 'Usuario',
+        label: 'Usuario Nombre',
+    },
+    {
+        value: 'Clave',
+        label: 'Clave',
+    },
+    {
+        value: 'Contraseña',
+        label: 'Contraseña',
+    },
+    {
+        value: 'Rol',
+        label: 'Rol',
     },
 ];
 
@@ -141,10 +181,13 @@ const UserSearch = () => {
 
     const history = useHistory();
 
-    const [tipoBusqueda, setTipoBusqueda] = React.useState();
+    const [tipoBusqueda, setTipoBusqueda] = React.useState('');
     const handleChangeTipoBusqueda = (event) => {
         setTipoBusqueda(event.target.value);
+        console.log(event.target.value);
+        changeField(event.target.value);
     };
+    const [fields, setFields] = React.useState([]);
 
     const [tipoCampo, setTipoCampo] = React.useState();
     const handleChangeTipoCampo = (event) => {
@@ -155,7 +198,159 @@ const UserSearch = () => {
         setValueBusqueda(event.target.value);
     };
 
+    let changeField= (val)=>{
+        switch(val){
+            case 'Adult':
+                setFields(fields1);
+                break;
+            case 'Request':
+                setFields(fields2);
+                break;
+            case 'User':
+                setFields(fields3);
+                break;
+        }
+    }
 
+    const AllDataSearch = () => {
+        return {
+            Tipo: FilterSearch(tipoBusqueda),
+            Campo: FilterData(tipoCampo),
+            Datos: valueBusqueda,
+            Informacion : FilterSearchType(tipoBusqueda),
+            BusquedaF: FilterSSearch(tipoBusqueda),
+            BusquedaData: FilterSSSearch(tipoBusqueda),
+        }
+
+    }
+    let FilterSSSearch=(data)=>{
+        let con='yes';
+        switch(data){
+            case 'Adult':
+                con= 0
+                break;
+            case 'Request':
+                con= 2
+                break;
+            case 'User':
+                con= 'Usuario'
+                break;
+        }
+        return con;
+    }
+    let FilterSSearch=(data)=>{
+        let con='yes';
+        switch(data){
+            case 'Adult':
+                con= 'Adulto'
+                break;
+            case 'Request':
+                con= 'Adulto'
+                break;
+            case 'User':
+                con= 'Usuario'
+                break;
+        }
+        return con;
+    }
+    let FilterSearch=(data)=>{
+        let con='yes';
+        switch(data){
+            case 'Adult':
+                con= 'ds02_personas'
+                break;
+            case 'Request':
+                con= 'ds02_personas'
+                break;
+            case 'User':
+                con= 'ds01_usuarios'
+                break;
+        }
+        return con;
+    }
+
+    let FilterSearchType=(data)=>{
+        let con='yes';
+        switch(data){
+            case 'Adult':
+                con= '*'
+                break;
+            case 'Request':
+                con= '*'
+                break;
+            case 'User':
+                con= 'b01_us_id,b01_us_Nombre,b01_us_Apellido,b01_us_clave,b01_us_password,b01_us_role'
+                break;
+        }
+        return con;
+    }
+
+    let FilterData=(data)=>
+    {
+        let con='yes';
+        switch(data){
+            case 'Name':
+                con= 'Nombre';
+                break;
+            case 'Apellido Paterno':
+                con='Apellido_Paterno';
+                break;
+            case 'Apellido Materno':
+                con='Apellido_Materno';
+                break;
+            case 'CURP':
+                con='Curp';
+                break;
+            case 'Responsible':
+                con='Rep_Nombre';
+                break;
+            case 'Responsible Apellido Materno':
+                con='Rep_ApePat';
+                break;
+            case 'Responsible Apellido Paterno':
+                con='Rep_ApeMat';
+                break;
+            case 'Cellphone':
+                con= 'Telefono';
+                break;
+            case 'User':
+                con='Recibe_solicitud'
+                break;
+            case 'Tipo Solicitud':
+                con='Status'
+                break;
+            case 'Nombre de Adulto':
+                con='Nombre'
+                break;
+            case 'Usuario':
+                con='b01_us_Nombre';
+                break;
+            case 'Clave':
+                con='b01_us_clave';
+                break;
+            case 'Contraseña':
+                con='b01_us_password';
+                break;
+            case 'Rol':
+                con='b01_us_role';
+                break;
+        }
+        return con;
+    }
+
+    const UploadData = () => {
+        fetch('http://localhost:8080/API/Search', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(AllDataSearch())
+        }).then((response) => {
+            return (
+                response.json()
+            )
+        }).then((a) => {
+            console.log(a);
+        });
+    }
 
 
 
@@ -166,8 +361,21 @@ const UserSearch = () => {
 
 
     return (
-        <CreateBox >
+        <CreateBox onSubmit={(e) => {
+            e.preventDefault();
+            
+            UploadData();
+            //AllDataSearch();
+            // console.log(AllDataUsers())
+            // handleOpen()
+            history.push("/VisualizarUsuario");
 
+
+        }}>
+            <FormLine>
+                <BigText>Usuario Basico</BigText>
+                <Button onClick={() => { history.push("/Login"); }} variant="contained" color="secondary">Cerrar Sesion</Button>
+            </FormLine>
             <FormLine>
                 <BigTextField
                     id="TipoDeBusqueda"
@@ -207,7 +415,7 @@ const UserSearch = () => {
                     onChange={handleChangeBusqueda} />
             </FormLine>
             <FormLine>
-                <Button onClick={() => { history.push("/VisualizarUsuario"); }} variant="contained" color="primary" type='submit'>
+                <Button  variant="contained" color="primary" type='submit'>
                     Buscar
         </Button>
             </FormLine>

@@ -149,6 +149,42 @@ app.post('/API/CheckUser', async (req, res) => {
     res.send(user);
 })
 
+app.post('/API/Search', async (req, res) => {
+    const user = await sequelize.query(`SELECT ${req.body.Informacion} FROM ${req.body.Tipo} WHERE ${req.body.Campo} = '${req.body.Datos}'`, {
+        replacements: {},
+        type: QueryTypes.SELECT
+    }
+    , 
+    function (err) {
+        res.sendStatus(404)
+    }
+    );
+    if(req.body.BusquedaF=='Adulto'){
+        const user = await sequelize.query(`SELECT ${req.body.Informacion} FROM ${req.body.Tipo} WHERE ${req.body.Campo} = '${req.body.Datos}' AND Status = '${req.body.BusquedaData}'`, {
+            replacements: {},
+            type: QueryTypes.SELECT
+        }
+        , 
+        function (err) {
+            res.sendStatus(404)
+        }
+        );
+    }else if(req.body.BusquedaF=='Usuario'){
+        const user = await sequelize.query(`SELECT ${req.body.Informacion} FROM ${req.body.Tipo} WHERE ${req.body.Campo} = '${req.body.Datos}'`, {
+            replacements: {},
+            type: QueryTypes.SELECT
+        }
+        , 
+        function (err) {
+            res.sendStatus(404)
+        }
+        );
+    }
+    
+    //console.log(user);
+    res.send(user);
+})
+
 
 const sequelize = new Sequelize('ineddb', 'root', '', {
     host: 'localhost',

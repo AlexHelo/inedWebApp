@@ -243,16 +243,20 @@ const LoginScreen = () => {
     }
 
     const hist = () => {
+        console.log(user.b01_us_role)
         switch (user.b01_us_role) {
             case 'Administrador':
+                history.push("/AdminBuscar");
                 break;
-            case '':
+            case 'Monitor':
+                history.push("/MonitorBuscar");
                 break;
-            case '':
+            case 'Usuario':
+                history.push("/UsuarioBuscar");
                 break;
 
         }
-        history.push("/VisualizarAdmin");
+        
     }
     const BasicData = {
         b01_us_Nombre: 'Nombre',

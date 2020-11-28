@@ -65,7 +65,7 @@ const headCells = [
     { id: 'b01_us_clave', numeric: true, disablePadding: false, label: 'Clave' },
     { id: 'b01_us_password', numeric: true, disablePadding: false, label: 'Contraseña' },
     { id: 'b01_us_role', numeric: true, disablePadding: false, label: 'Rol' },
-    { id: 'b01_us_Apellido', numeric: true, disablePadding: false, label: 'Comentario' },
+    { id: 'b01_us_Apellido', numeric: true, disablePadding: false, label: 'Apellido' },
 ];
 
 function EnhancedTableHead(props) {

@@ -756,7 +756,7 @@ const CreateForm = () => {
             {Object.keys(AllDataAdults()).map(key =>
                 <BigText key={key}>{BasicData[key] + " : " + AllDataAdults()[key]}</BigText>)}
             <FormLine>
-                <Button to="/Visualizar" onClick={() => { UploadData(); handleClose(); history.push("/Visualizar"); }} variant="contained" color="primary" >Aceptar</Button>
+                <Button to="/VisualizarAdmin" onClick={() => { UploadData(); handleClose(); history.push("/VisualizarAdmin"); }} variant="contained" color="primary" >Aceptar</Button>
                 <Button onClick={handleClose} variant="contained" color="secondary" >Regresar</Button>
             </FormLine>
 
