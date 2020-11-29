@@ -431,35 +431,35 @@ const PertenenciaEtnica = [
 
 const GradoDeEstudios = [
     {
-        value: 0,
+        value: 'NUNCA ASISTIO',
         label: 'NUNCA ASISTIO',
     },
     {
-        value: 1,
+        value: 'PRIMARIA',
         label: 'PRIMARIA',
     },
     {
-        value: 2,
+        value: 'SECUNDARIA',
         label: 'SECUNDARIA',
     },
     {
-        value: 3,
+        value: 'PREPA',
         label: 'PREPA',
     },
     {
-        value: 4,
+        value: 'TECNICA',
         label: 'TECNICA',
     },
     {
-        value: 5,
+        value: 'LIC',
         label: 'LIC',
     },
     {
-        value: 6,
+        value: 'MAESTRIA',
         label: 'MAESTRIA',
     },
     {
-        value: 7,
+        value: 'DOCTORADO',
         label: 'DOCTORADO',
     },
 ];
@@ -530,7 +530,7 @@ const CreateForm = () => {
         setTipoLugarNacimiento(event.target.value);
     };
 
-    const [selectedDate, setSelectedDate] = React.useState(new Date());
+    const [selectedDate, setSelectedDate] = React.useState(new Date().toISOString().slice(0, 19).replace('T', ' '));
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
@@ -665,29 +665,30 @@ const CreateForm = () => {
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
 
-    today = mm + '/' + dd + '/' + yyyy;
+    today = yyyy + '-' + mm + '-' + dd;
     const AllDataAdults = () => {
-
+        const NewvalueGender= (valueGender === 'Hombre' )? 1 : 2;
         return {
             Idp: tipoIDP,
-            TipoIngrso: tipoIngreso,
-            Folio_solicitud: tipoNO,
+            //TipoIngrso: tipoIngreso,
+            //Folio_solicitud: tipoNO,
             Nombre: tipoNombre,
             Apellido_Paterno: tipoApellidoP,
             Apellido_Materno: tipoApellidoM,
             Fecha_Nacimiento: selectedDate,
             Edad: tipoEdad,
             LugarNacimiento: tipoLugarNacimiento,
-            Sexo: valueGender,
-            Status: "1",
-            StatusArchivo: "1",
-            Tipo_Telefono: "todos",
+            Sexo: NewvalueGender,
+            Status1: 1,
+            StatusArchivo: 1,
+            Tipo_Telefono: 1,
             Domicilio_Principal: DomicilioPrincipal,
             CIB: valueCIB,
             Rfc: valueRFC,
             Curp: valueCURP,
             Nombre_Completo: NombreCompleto,
-            Tipo_Telefono: valueTelCasa,
+            //Tipo_Telefono: valueTelCasa,
+            Tipo_Telefono: 1,
             Telefono: valueTelRec,
             Celular: valueCelular,
             Ocupacion: valueOcupacion,
@@ -699,16 +700,17 @@ const CreateForm = () => {
             Calle: valueCalle,
             do_No_Interior: valueNoInterno,
             do_No_Exterior: valueNoExterno,
-            Tipo_Vialidad: tipoVial,
+            Vialidad: tipoVial,
+            Tipo_Vialidad: 1,
             UT: valueUT,
             Codigo_Postal: valueCodigoPostal,
             do_Calle1: valueEntreCalle1,
             do_Calle2: valueCalle2,
-            Regimen_Hab: "0",
+            Regimen_Hab: 1,
             //ValueNoReg
             Regimen: valueTipoReg,
             do_Regimen: valueNombreReg,
-            tipo_Asentamiento: "0",
+            tipo_Asentamiento: 1,
             //ValueNumeroAse
             Asentamiento: valueTipoAse,
             do_Asentamiento: valueNombreAse,
@@ -805,7 +807,7 @@ const CreateForm = () => {
             handleOpen()
             console.log(AllDataAdults())
 
-            const NombreCompleto = tipoNombre.concat(tipoApellidoP, tipoApellidoM)
+            
             //console.log(Array.from(e.target).map(i => i));
             //console.log(Array.from(e.target).map(i => i.value));
 

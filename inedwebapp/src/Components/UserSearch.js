@@ -364,7 +364,11 @@ const UserSearch = () => {
         <CreateBox onSubmit={(e) => {
             e.preventDefault();
             
-            UploadData();
+            if(valueBusqueda){
+                UploadData();
+            }else{
+                
+            }
             //AllDataSearch();
             // console.log(AllDataUsers())
             // handleOpen()

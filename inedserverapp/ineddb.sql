@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `ineddb` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `ineddb`;
 -- MySQL dump 10.13  Distrib 8.0.22, for macos10.15 (x86_64)
 --
 -- Host: localhost    Database: ineddb
@@ -473,7 +471,7 @@ CREATE TABLE `cat_status` (
 
 LOCK TABLES `cat_status` WRITE;
 /*!40000 ALTER TABLE `cat_status` DISABLE KEYS */;
-INSERT INTO `cat_status` VALUES (1,'No acepta','No acepta','No acepta',NULL,'0',NULL,'0','NA',1,NULL),(2,'Invalidez','Invalidez','Invalidez',NULL,'0',NULL,'0','IN',2,NULL),(3,'Fallecio','Fallecio','Fallecio',NULL,'0',NULL,'0','F',3,NULL);
+INSERT INTO `cat_status` VALUES (1,'No acepta','No acepta','No acepta',NULL,'0',NULL,'0','NA',1,NULL),(2,'Invalidez','Invalidez','Invalidez',NULL,'0',NULL,'0','IN',2,NULL),(3,'Fallecio','Fallecio','Fallecio',NULL,'0',NULL,'0','F',3,NULL),(4,'Dado de alta','Dado alta','Dado alta',NULL,'0',NULL,'0','DA',4,NULL),(5,'En Revision','En Revision','En Revision',NULL,'0',NULL,'0','ER',5,NULL),(6,'Aceptado por Monitor','Aceptado por Monitor','AceptadoMon',NULL,'0',NULL,'0','AM',6,NULL);
 /*!40000 ALTER TABLE `cat_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1263,6 +1261,37 @@ LOCK TABLES `ds09_domicilios` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `ds10_complpersonal`
+--
+
+DROP TABLE IF EXISTS `ds10_complpersonal`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ds10_complpersonal` (
+  `co_persona` int(4) NOT NULL,
+  `co_lugarnac` varchar(20) NOT NULL,
+  `co_etnica` varchar(20) NOT NULL,
+  `co_gradoest` varchar(20) NOT NULL,
+  `co_tiempores` int(4) NOT NULL,
+  `co_ocupacion` varchar(20) NOT NULL,
+  `co_padre` varchar(20) NOT NULL,
+  `co_madre` varchar(20) NOT NULL,
+  `co_tutor` varchar(20) NOT NULL,
+  PRIMARY KEY (`co_persona`),
+  CONSTRAINT `FK_co_persona_Id_Persona` FOREIGN KEY (`co_persona`) REFERENCES `ds02_personas` (`Id_Persona`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ds10_complpersonal`
+--
+
+LOCK TABLES `ds10_complpersonal` WRITE;
+/*!40000 ALTER TABLE `ds10_complpersonal` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ds10_complpersonal` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ds20_pagos`
 --
 
@@ -1428,4 +1457,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-18 16:14:11
+-- Dump completed on 2020-11-28 22:43:13
