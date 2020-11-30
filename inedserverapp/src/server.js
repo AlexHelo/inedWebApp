@@ -14,7 +14,20 @@ app.use(cors(corsOptions));
 
 app.get('/API/AllAdults', async (req, res) => {
     
-    const adults = await sequelize.query("SELECT * FROM ds02_personas ORDER BY Nombre", { type: QueryTypes.SELECT });
+    const adults = await sequelize.query("SELECT * FROM ds02_personas ORDER BY Nombre WHERE Status=4", { type: QueryTypes.SELECT });
+
+    res.send(adults)
+})
+
+app.get('/API/AllRequestsMonitor', async (req, res) => {
+    
+    const adults = await sequelize.query("SELECT * FROM ds02_personas ORDER BY Nombre WHERE Status=5", { type: QueryTypes.SELECT });
+
+    res.send(adults)
+})
+app.get('/API/AllRequestsAdmin', async (req, res) => {
+    
+    const adults = await sequelize.query("SELECT * FROM ds02_personas ORDER BY Nombre WHERE Status=6", { type: QueryTypes.SELECT });
 
     res.send(adults)
 })
@@ -26,6 +39,30 @@ app.get('/API/AllUsers', async (req, res) => {
     res.send(users)
 })
 
+app.get('/API/AllPhones', async (req, res) => {
+    
+    const adults = await sequelize.query(`SELECT te_id, te_msglargo FROM cat_tipotel`, { type: QueryTypes.SELECT });
+
+    res.send(adults)
+})
+app.get('/API/AllRegimen', async (req, res) => {
+    
+    const adults = await sequelize.query(`SELECT re_id, re_msglargo FROM cat_regimen`, { type: QueryTypes.SELECT });
+
+    res.send(adults)
+})
+app.get('/API/AllAse', async (req, res) => {
+    
+    const adults = await sequelize.query(`SELECT as_id, as_msgcorto FROM cat_asentamiento`, { type: QueryTypes.SELECT });
+
+    res.send(adults)
+})
+app.get('/API/AllVialidad', async (req, res) => {
+    
+    const adults = await sequelize.query(`SELECT vi_id, vi_msglargo FROM cat_tipovialidad`, { type: QueryTypes.SELECT });
+
+    res.send(adults)
+})
 app.post('/API/SetAdults', async (req, res) => {
 
     console.log(req.body);
@@ -92,7 +129,54 @@ app.post('/API/SetAdults', async (req, res) => {
     }
 
     let id2 = await sequelize.query("SELECT MAX(per_Id_Persona) FROM ds06_personas", { type: QueryTypes.SELECT });
-    id2[0]['MAX(Id_Persona)']++;
+    id2[0]['MAX(per_Id_Persona)']++;
+    let id3 = await sequelize.query("SELECT MAX(do_id) FROM ds03_domicilios", { type: QueryTypes.SELECT });
+    id3[0]['MAX(do_id)']++;
+
+    await sequelize.query(`INSERT INTO ds03_domicilios 
+    (
+        do_id, 
+        do_persona, 
+        do_No_Interior, 
+        do_No_Exterior, 
+        do_Tipo_Vialidad, 
+        do_Vialidad, 
+        do_Codigo_Postal, 
+        do_Calle1, 
+        do_Calle2, 
+        do_Regimen_Hab, 
+        do_Regimen, 
+        do_Tipo_Asentamiento, 
+        do_Asentamiento, 
+        do_Unidad_Territorial,
+        do_completo,
+        do_Tipo_Telefono,
+        do_Delegacion,
+        do_Status
+        ) VALUES
+    (${id3[0]["MAX(do_id)"]}  
+    ,${id[0]["MAX(Id_Persona)"]} 
+    ,'${req.body.do_No_Interior}' 
+    ,'${req.body.do_No_Exterior}' 
+    ,'${req.body.Tipo_Vialidad}'
+    ,'${req.body.Vialidad}'
+    ,'${req.body.Codigo_Postal}'  
+    ,'${req.body.do_Calle1}' 
+    ,'${req.body.do_Calle2}' 
+    ,'${req.body.Regimen_Hab}' 
+    ,'${req.body.Regimen}' 
+    ,'${req.body.tipo_Asentamiento}' 
+    ,'${req.body.Asentamiento}' 
+    ,'${req.body.UT}' 
+    ,'${req.body.Domicilio_Principal}'
+    ,${req.body.Tipo_Telefono}
+    ,${req.body.Status1}
+    ,${req.body.Status1})`)
+    , function (err) {
+        res.sendStatus(500)
+    }
+
+    
     await sequelize.query(`INSERT INTO ds06_personas 
     (
         per_Id_Persona, 
@@ -127,54 +211,11 @@ app.post('/API/SetAdults', async (req, res) => {
             ,${id[0]["MAX(Id_Persona)"]} 
             ,${req.body.Idp} 
             ,'${req.body.Fecha_Alta}' 
-            ,${req.body.Status1}
-            )`
-            
-            ), function (err) {
+            ,${id3[0]["MAX(do_id)"]} )`), function (err) {
         res.sendStatus(500)
     }
-    let id3 = await sequelize.query("SELECT MAX(do_id) FROM ds03_domicilios", { type: QueryTypes.SELECT });
-    id3[0]['MAX(do_id)']++;
-    await sequelize.query(`INSERT INTO ds03_domicilios 
-    (
-        do_id, 
-        do_persona, 
-        do_No_Interior, 
-        do_No_Exterior, 
-        do_Tipo_Vialidad, 
-        do_Vialidad, 
-        do_Codigo_Postal, 
-        do_Calle1, 
-        do_Calle2, 
-        do_Regimen_Hab, 
-        do_Regimen, 
-        do_Tipo_Asentamiento, 
-        do_Asentamiento, 
-        do_Unidad_Territorial,
-        do_completo,
-        do_Tipo_Telefono
-        ) 
-    VALUES 
-    (
-    ${id3[0]["MAX(do_id)"]}  
-    ,${id[0]["MAX(Id_Persona)"]} 
-    ,'${req.body.do_No_Interior}' 
-    ,'${req.body.do_No_Exterior}' 
-    ,'${req.body.Tipo_Vialidad}'
-    , ${req.body.Vialidad}
-    ,'${req.body.Codigo_Postal}'  
-    ,'${req.body.do_Calle1}' 
-    ,'${req.body.do_Calle2}' 
-    ,'${req.body.Regimen_Hab}' 
-    ,'${req.body.Regimen}' 
-    ,'${req.body.tipo_Asentamiento}' 
-    ,'${req.body.Asentamiento}' 
-    ,'${req.body.UT}' 
-    ,'${req.body.Domicilio_Principal}'
-    )`)
-    , function (err) {
-        res.sendStatus(500)
-    }
+    
+    
 
     await sequelize.query(`INSERT INTO 
     ds10_complpersonal
@@ -193,7 +234,7 @@ app.post('/API/SetAdults', async (req, res) => {
     ,'${req.body.LugarNacimiento}'  
     ,'${req.body.Tipo_de_Etnicidad}'  
     ,'${req.body.Tipo_de_Grado}' 
-    ,'${req.body.valueOcupacion}' 
+    ,'${req.body.Ocupacion}' 
     ,'${req.body.Padre}' 
     ,'${req.body.Madre}' 
     ,'${req.body.Rep_Completo}'

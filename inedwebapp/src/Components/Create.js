@@ -84,112 +84,112 @@ const TiposDeEntrada = [
     },
 ];
 
-const TipoDeVialidad = [
-    {
-        value: 'Calle',
-        label: 'CALLE',
-    },
-    {
-        value: 'Callejon',
-        label: 'CALLEJON',
-    },
-    {
-        value: 'Cerrada',
-        label: 'CERRADA',
-    },
-    {
-        value: 'Avenida',
-        label: 'AVENIDA',
-    },
-    {
-        value: 'Andador',
-        label: 'ANDADOR',
-    },
-    {
-        value: 'Privada',
-        label: 'PRIVADA',
-    },
-    {
-        value: 'Retorno',
-        label: 'RETORNO',
-    },
-    {
-        value: 'Calzada',
-        label: 'CALZADA',
-    },
-    {
-        value: 'Carretera',
-        label: 'CARRETERA',
-    },
-    {
-        value: 'Camino',
-        label: 'CAMINO',
-    },
-    {
-        value: 'Plaza',
-        label: 'PLAZA',
-    },
-    {
-        value: 'Boulevard',
-        label: 'BOULEVARD',
-    },
-    {
-        value: 'Paseo',
-        label: 'PASEO',
-    },
-    {
-        value: 'Plazuela',
-        label: 'PLAZUELA',
-    },
-    {
-        value: 'Pasaje',
-        label: 'PASAJE',
-    },
-    {
-        value: 'Glorieta',
-        label: 'GLORIETA',
-    },
-    {
-        value: 'Parque',
-        label: 'PARQUE',
-    },
-    {
-        value: 'Jardin',
-        label: 'JARDIN',
-    },
-    {
-        value: 'Autopista',
-        label: 'AUTOPISTA',
-    },
-    {
-        value: 'Eje',
-        label: 'EJE',
-    },
-    {
-        value: 'Viaducto',
-        label: 'VIADUCTO',
-    },
-    {
-        value: 'Circuito',
-        label: 'CIRCUITO',
-    },
-    {
-        value: 'Prolongacion',
-        label: 'PROLONGACION',
-    },
-    {
-        value: 'Seccion',
-        label: 'SECCION',
-    },
-    {
-        value: 'SuperManzana',
-        label: 'SUPER MANZANA',
-    },
-    {
-        value: 'Paraje',
-        label: 'PARAJE',
-    },
-];
+// const TipoDeVialidad = [
+//     {
+//         value: 'Calle',
+//         label: 'CALLE',
+//     },
+//     {
+//         value: 'Callejon',
+//         label: 'CALLEJON',
+//     },
+//     {
+//         value: 'Cerrada',
+//         label: 'CERRADA',
+//     },
+//     {
+//         value: 'Avenida',
+//         label: 'AVENIDA',
+//     },
+//     {
+//         value: 'Andador',
+//         label: 'ANDADOR',
+//     },
+//     {
+//         value: 'Privada',
+//         label: 'PRIVADA',
+//     },
+//     {
+//         value: 'Retorno',
+//         label: 'RETORNO',
+//     },
+//     {
+//         value: 'Calzada',
+//         label: 'CALZADA',
+//     },
+//     {
+//         value: 'Carretera',
+//         label: 'CARRETERA',
+//     },
+//     {
+//         value: 'Camino',
+//         label: 'CAMINO',
+//     },
+//     {
+//         value: 'Plaza',
+//         label: 'PLAZA',
+//     },
+//     {
+//         value: 'Boulevard',
+//         label: 'BOULEVARD',
+//     },
+//     {
+//         value: 'Paseo',
+//         label: 'PASEO',
+//     },
+//     {
+//         value: 'Plazuela',
+//         label: 'PLAZUELA',
+//     },
+//     {
+//         value: 'Pasaje',
+//         label: 'PASAJE',
+//     },
+//     {
+//         value: 'Glorieta',
+//         label: 'GLORIETA',
+//     },
+//     {
+//         value: 'Parque',
+//         label: 'PARQUE',
+//     },
+//     {
+//         value: 'Jardin',
+//         label: 'JARDIN',
+//     },
+//     {
+//         value: 'Autopista',
+//         label: 'AUTOPISTA',
+//     },
+//     {
+//         value: 'Eje',
+//         label: 'EJE',
+//     },
+//     {
+//         value: 'Viaducto',
+//         label: 'VIADUCTO',
+//     },
+//     {
+//         value: 'Circuito',
+//         label: 'CIRCUITO',
+//     },
+//     {
+//         value: 'Prolongacion',
+//         label: 'PROLONGACION',
+//     },
+//     {
+//         value: 'Seccion',
+//         label: 'SECCION',
+//     },
+//     {
+//         value: 'SuperManzana',
+//         label: 'SUPER MANZANA',
+//     },
+//     {
+//         value: 'Paraje',
+//         label: 'PARAJE',
+//     },
+// ];
 
 const PertenenciaEtnica = [
     {
@@ -464,6 +464,7 @@ const GradoDeEstudios = [
     },
 ];
 
+
 const useStyles = makeStyles((theme) => ({
     paper: {
         position: 'absolute',
@@ -654,6 +655,10 @@ const CreateForm = () => {
     const handleChangeTipoGrado = (event) => {
         setTipoGrado(event.target.value);
     };
+    const [tipoTele, setTipoTele] = React.useState([]);
+    const [tipoRegimen, setTipoRegimen] = React.useState([]);
+    const [tipoAsentamiento, setTipoAsentamiento] = React.useState([]);
+    const [TipoDeVialidad, setTipoDeVialidad] = React.useState([]);
     const [valueHelperText, setHelperText] = React.useState('');
     const [valueError, setError] = React.useState(false);
 
@@ -664,6 +669,37 @@ const CreateForm = () => {
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
+
+    React.useEffect(() => {
+        fetch('http://localhost:8080/API/AllPhones').then(response => {
+
+            return (
+                response.json()
+            )
+
+        }).then(a => { setTipoTele(a); console.log(a);});
+        fetch('http://localhost:8080/API/AllRegimen').then(response => {
+
+            return (
+                response.json()
+            )
+
+        }).then(a => { setTipoRegimen(a); console.log(a);});
+        fetch('http://localhost:8080/API/AllAse').then(response => {
+
+            return (
+                response.json()
+            )
+
+        }).then(a => { setTipoAsentamiento(a); console.log(a);});
+        fetch('http://localhost:8080/API/AllVialidad').then(response => {
+
+            return (
+                response.json()
+            )
+
+        }).then(a => { setTipoDeVialidad(a); console.log(a);});
+    }, []);
 
     today = yyyy + '-' + mm + '-' + dd;
     const AllDataAdults = () => {
@@ -679,16 +715,16 @@ const CreateForm = () => {
             Edad: tipoEdad,
             LugarNacimiento: tipoLugarNacimiento,
             Sexo: NewvalueGender,
-            Status1: 1,
-            StatusArchivo: 1,
-            Tipo_Telefono: 1,
+            Status1: 4,
+            StatusArchivo: 3,
+            //Tipo_Telefono: 1,
             Domicilio_Principal: DomicilioPrincipal,
             CIB: valueCIB,
             Rfc: valueRFC,
             Curp: valueCURP,
             Nombre_Completo: NombreCompleto,
             //Tipo_Telefono: valueTelCasa,
-            Tipo_Telefono: 1,
+            Tipo_Telefono: valueTelCasa,
             Telefono: valueTelRec,
             Celular: valueCelular,
             Ocupacion: valueOcupacion,
@@ -701,36 +737,60 @@ const CreateForm = () => {
             do_No_Interior: valueNoInterno,
             do_No_Exterior: valueNoExterno,
             Vialidad: tipoVial,
-            Tipo_Vialidad: 1,
+            Tipo_Vialidad: tipoVial,
             UT: valueUT,
             Codigo_Postal: valueCodigoPostal,
             do_Calle1: valueEntreCalle1,
             do_Calle2: valueCalle2,
-            Regimen_Hab: 1,
-            //ValueNoReg
-            Regimen: valueTipoReg,
+            Regimen_Hab: valueTipoReg,
+            Regimen: valueNombreReg,
             do_Regimen: valueNombreReg,
-            tipo_Asentamiento: 1,
+            tipo_Asentamiento: valueTipoAse,
             //ValueNumeroAse
-            Asentamiento: valueTipoAse,
+            Asentamiento: valueNombreAse,
             do_Asentamiento: valueNombreAse,
             Observaciones: valueComentario,
             Fecha_Alta: today
         }
 
     }
+    const AllDataAdults1 = () => {
+        const NewvalueGender= (valueGender === 'Hombre' )? 1 : 2;
+        return {
+            Idp: tipoIDP,
+            Nombre: tipoNombre,
+            Apellido_Paterno: tipoApellidoP,
+            Apellido_Materno: tipoApellidoM,
+            Fecha_Nacimiento: selectedDate,
+            Edad: tipoEdad,
+            LugarNacimiento: tipoLugarNacimiento,
+            Sexo: NewvalueGender,
+            Curp: valueCURP,
+            Telefono: valueTelRec,
+            Ocupacion: valueOcupacion,
+            Tipo_de_Etnicidad: tipoEtnica,
+            Tipo_de_Grado: tipoGrado,
+            Padre: valuePadre,
+            Madre: valueMadre,
+            Rep_Completo: valueTutor,
+            Domicilio_Principal: DomicilioPrincipal,
+            Tipo_Vialidad: tipoVial,
+            UT: valueUT,
+            Codigo_Postal: valueCodigoPostal,
+            Regimen_Hab: valueTipoReg,
+            Regimen: valueNombreReg,
+            do_Regimen: valueNombreReg,
+            tipo_Asentamiento: valueTipoAse,
+            Asentamiento: valueNombreAse,
+            do_Asentamiento: valueNombreAse,
+        }
 
-    //     Executing (default): SELECT MAX(Id_Persona) FROM ds02_personas
-    // Executing (default): INSERT INTO ds02_personas(Id_Persona, Folio_solicitud, Nombre, Apellido_Paterno, Apellido_Materno, Fecha_Nacimiento, RFC, Curp, Nombre_Completo, Sexo, Status, StatusArchivo, Edad, Tipo_Telefono, Telefono, Rep_Completo, Domicilio_Principal, Tipo_Vialidad, Unidad_Territorial, Codigo_Postal, Regimen_Hab, Regimen, Tipo_Asentamiento, Asentamiento, Observaciones, Fecha_Alta) VALUES (4,'1','juana','testing',test,'2020-11-28T09:20:25.182Z,'1234rfc,'1234567curp,'juana testing test,'Mujer,'1,'undefined,'100,'undefined,'551234reca,'ledo,'av siempreviva 123 456,'Viaducto,'5555,'66666,'0,'regimen,'0,'aaaaaaa,'cool,'11/28/2020')
-    // (node:17512) UnhandledPromiseRejectionWarning: SequelizeDatabaseError: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1234rfc,'1234567curp,'juana testing test,'Mujer,'1,'undefined,'100,'undefined,'5' at line 1
-    //     at Query.formatError (D:\Documents\GitHub\inedWebApp\inedserverapp\node_modules\sequelize\lib\dialects\mysql\query.js:239:16)
-    //     at Query.run (D:\Documents\GitHub\inedWebApp\inedserverapp\node_modules\sequelize\lib\dialects\mysql\query.js:54:18)
-    //     at process._tickCallback (internal/process/next_tick.js:68:7)
-    // (node:17512) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 13)
+    }
+
     const BasicData = {
         Idp: 'IDP',
-        TipoIngrso: 'Tipo de Ingreso',
-        Folio_solicitud: 'Folio Solicitud',
+        // TipoIngrso: 'Tipo de Ingreso',
+        // Folio_solicitud: 'Folio Solicitud',
         Nombre: 'Nombre',
         Apellido_Paterno: 'Apellido Paterno',
         Apellido_Materno: 'Apellido Materno',
@@ -738,32 +798,33 @@ const CreateForm = () => {
         Edad: 'Edad',
         LugarNacimiento: 'Lugar de Nacimiento',
         Sexo: 'Genero',
-        CIB: 'CIB',
+        // CIB: 'CIB',
         Curp: 'CURP',
-        Tipo_Telefono: 'Tel. Casa',
+        // Tipo_Telefono: 'Tel. Casa',
         Telefono: 'Tel. Recados',
-        Celular: 'Celular',
+        // Celular: 'Celular',
         Ocupacion: 'Ocupacion',
         Tipo_de_Etnicidad: 'Etnicidad',
         Tipo_de_Grado: 'Tipo de Grado',
         Padre: 'Padre',
         Madre: 'Madre',
         Rep_Completo: 'Tutor',
-        Calle: 'Calle',
-        do_No_Interior: 'No. Interno',
-        do_No_Exterior: 'No. Externo',
+        Domicilio_Principal: 'Domicilio Principal',
+        // Calle: 'Calle',
+        // do_No_Interior: 'No. Interno',
+        // do_No_Exterior: 'No. Externo',
         Tipo_Vialidad: 'Tipo de Vialidad',
         UT: 'Unidad Territorial',
         Codigo_Postal: 'Codigo Postal',
-        do_Calle1: 'Entre Calle 1',
-        do_Calle2: 'Entre Calle 2',
+        // do_Calle1: 'Entre Calle 1',
+        // do_Calle2: 'Entre Calle 2',
         Regimen_Hab: 'No. Regimen',
         Regimen: 'Tipo de Regimen',
         do_Regimen: 'Nombre de Regimen',
         tipo_Asentamiento: 'Numero Asentamiento',
         Asentamiento: 'Tipo de Asentamiento',
         do_Asentamiento: 'Nombre de Asentamiento',
-        Observaciones: 'Comentarios'
+        // Observaciones: 'Comentarios'
     }
     const history = useHistory();
     const classes = useStyles();
@@ -788,8 +849,8 @@ const CreateForm = () => {
     const body = (
         <div style={modalStyle} className={classes.paper}>
             <h2 id="simple-modal-title">Se va a dar de Alta el Usuario:</h2>
-            {Object.keys(AllDataAdults()).map(key =>
-                <BigText key={key}>{BasicData[key] + " : " + AllDataAdults()[key]}</BigText>)}
+            {Object.keys(AllDataAdults1()).map(key =>
+                <BigText key={key}>{BasicData[key] + " : " + AllDataAdults1()[key]}</BigText>)}
             <FormLine>
                 <Button to="/VisualizarAdmin" onClick={() => { UploadData(); handleClose(); history.push("/VisualizarAdmin"); }} variant="contained" color="primary" >Aceptar</Button>
                 <Button onClick={handleClose} variant="contained" color="secondary" >Regresar</Button>
@@ -806,17 +867,6 @@ const CreateForm = () => {
             //console.log(selectedDate);
             handleOpen()
             console.log(AllDataAdults())
-
-            
-            //console.log(Array.from(e.target).map(i => i));
-            //console.log(Array.from(e.target).map(i => i.value));
-
-
-            // fetch('http://localhost:8080/API/SetAdults',{
-            //     method: 'POST',
-            //     headers: {'Content-Type': 'application/json' },
-            //     body: JSON.stringify(e.target)
-            // }).then((res)=>console.log(res))
         }}>
             <FormLine>
                 <StyledTextField id="IDP" label="IDP"
@@ -906,15 +956,23 @@ const CreateForm = () => {
                     onChange={handleChangeCURP} />
             </FormLine>
             <FormLine>
-                <StyledTextField id="TelCasa" label="Tel. Casa"
+                <StyledTextField
+                    id="TelCasa"
+                    select
+                    label="Tel. Casa"
                     value={valueTelCasa}
-                    onChange={handleChangeTelCasa} />
-                <StyledTextField id="TelReca" label="Tel. Recados"
+                    onChange={handleChangeTelCasa}
+
+                >
+                    {tipoTele.map((option) => (
+                        <MenuItem key={option.te_id} value={option.te_id}>
+                            {option.te_msglargo}
+                        </MenuItem>
+                    ))}
+                </StyledTextField>
+                <StyledTextField id="TelReca" label="Telefono"
                     value={valueTelRec}
                     onChange={handleChangeTelRec} />
-                <StyledTextField id="Cel" label="Celular"
-                    value={valueCelular}
-                    onChange={handleChangeCelular} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="Ocupacion" label="Ocupacion"
@@ -989,8 +1047,8 @@ const CreateForm = () => {
 
                 >
                     {TipoDeVialidad.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
+                        <MenuItem key={option.vi_id} value={option.vi_id}>
+                            {option.vi_msglargo}
                         </MenuItem>
                     ))}
                 </StyledTextField>
@@ -1012,19 +1070,39 @@ const CreateForm = () => {
                     onChange={handleChangeCalle2} />
             </FormLine>
             <FormLine>
-
-                <StyledTextField id="TipoReg" label="Tipo de Regimen"
+                <StyledTextField
+                    id="TipoReg"
+                    select
+                    label="Tipo de Regimen"
                     value={valueTipoReg}
-                    onChange={handleChangeTipoReg} />
+                    onChange={handleChangeTipoReg}
+
+                >
+                {tipoRegimen.map((option) => (
+                    <MenuItem key={option.re_id} value={option.re_id}>
+                        {option.re_msglargo}
+                    </MenuItem>
+                ))}
+                </StyledTextField>
                 <StyledTextField id="NombreReg" label="Nombre de Regimen"
                     value={valueNombreReg}
                     onChange={handleChangeNombreReg} />
             </FormLine>
             <FormLine>
-
-                <StyledTextField id="TipoAse" label="Tipo de Asentamiento"
+                <StyledTextField
+                    id="TipoAse"
+                    select
+                    label="Tipo de Asentamiento"
                     value={valueTipoAse}
-                    onChange={handleChangeTipoAse} />
+                    onChange={handleChangeTipoAse}
+
+                >
+                    {tipoAsentamiento.map((option) => (
+                        <MenuItem key={option.as_id} value={option.as_id}>
+                            {option.as_msgcorto}
+                        </MenuItem>
+                    ))}
+                </StyledTextField>
                 <StyledTextField id="NombreAse" label="Nombre de Asentamiento"
                     value={valueNombreAse}
                     onChange={handleChangeNombreAse} />

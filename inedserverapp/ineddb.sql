@@ -692,7 +692,7 @@ CREATE TABLE `cat_tipotel` (
 
 LOCK TABLES `cat_tipotel` WRITE;
 /*!40000 ALTER TABLE `cat_tipotel` DISABLE KEYS */;
-INSERT INTO `cat_tipotel` VALUES (1,'descripcion1','msglargo1','msgcorto1','te1','2020-06-01','operador1','2020-06-02','operador1'),(2,'descripcion2','msglargo2','msgcorto2','te2','2020-07-01','operador2','2020-07-02','operador2'),(3,'descripcion3','msglargo3','msgcorto3','te3','2020-08-01','operador3','2020-08-02','operador1');
+INSERT INTO `cat_tipotel` VALUES (0,'No Especificado','No Especificado','No Especif','NE',NULL,'0',NULL,'0'),(1,'Telefono de Casa','Telefono Casa','Tel Casa','Casa',NULL,'0',NULL,'0'),(2,'Telefono de Oficina','Telefono Oficina','Tel Of','Of',NULL,'0',NULL,'0'),(3,'Telefono para Recados','Telefono Recados','Tel Rec','Rec',NULL,'0',NULL,'0'),(4,'Telefono Celular','Telefono Celular','Tel Cel','Cel',NULL,'0',NULL,'0');
 /*!40000 ALTER TABLE `cat_tipotel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1269,14 +1269,14 @@ DROP TABLE IF EXISTS `ds10_complpersonal`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ds10_complpersonal` (
   `co_persona` int(4) NOT NULL,
-  `co_lugarnac` varchar(20) NOT NULL,
-  `co_etnica` varchar(20) NOT NULL,
-  `co_gradoest` varchar(20) NOT NULL,
-  `co_tiempores` int(4) NOT NULL,
-  `co_ocupacion` varchar(20) NOT NULL,
-  `co_padre` varchar(20) NOT NULL,
-  `co_madre` varchar(20) NOT NULL,
-  `co_tutor` varchar(20) NOT NULL,
+  `co_lugarnac` varchar(255) DEFAULT NULL,
+  `co_etnica` varchar(255) DEFAULT NULL,
+  `co_gradoest` varchar(255) DEFAULT NULL,
+  `co_tiempores` int(4) DEFAULT NULL,
+  `co_ocupacion` varchar(255) DEFAULT NULL,
+  `co_padre` varchar(255) DEFAULT NULL,
+  `co_madre` varchar(255) DEFAULT NULL,
+  `co_tutor` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`co_persona`),
   CONSTRAINT `FK_co_persona_Id_Persona` FOREIGN KEY (`co_persona`) REFERENCES `ds02_personas` (`Id_Persona`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1457,4 +1457,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-28 22:43:13
+-- Dump completed on 2020-11-29 20:10:48
