@@ -636,6 +636,12 @@ const AdminEditForm = () => {
     const handleChangeNombreAse = (event) => {
         setValueNombreAse(event.target.value);
     };
+
+    const [valueRFC, setValueRFC] = React.useState();
+    const handleChangeRFC = (event) => {
+        setValueRFC(event.target.value);
+    };
+
     const [valueComentario, setValueComentario] = React.useState();
     const handleChangeComentario = (event) => {
         setValueComentario(event.target.value);
@@ -655,8 +661,57 @@ const AdminEditForm = () => {
     const handleChangeTipoGrado = (event) => {
         setTipoGrado(event.target.value);
     };
+
+    const [tipoTele, setTipoTele] = React.useState([]);
+    const [tipoRegimen, setTipoRegimen] = React.useState([]);
+    const [tipoAsentamiento, setTipoAsentamiento] = React.useState([]);
+    const [TipoDeVialidad, setTipoDeVialidad] = React.useState([]);
+    const handleChangeTipoDeVialidad = (event) => {
+        setTipoDeVialidad(event.target.value);
+    };
     const [valueHelperText, setHelperText] = React.useState('');
     const [valueError, setError] = React.useState(false);
+
+    const NombreCompleto = String(tipoNombre) + " " + String(tipoApellidoP) + " " + String(tipoApellidoM)
+    const DomicilioPrincipal = String(valueCalle) + " " + String(valueNoInterno) + " " + String(valueNoExterno)
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    React.useEffect(() => {
+        fetch('http://localhost:8080/API/AllPhones').then(response => {
+
+            return (
+                response.json()
+            )
+
+        }).then(a => { setTipoTele(a); console.log(a); });
+        fetch('http://localhost:8080/API/AllRegimen').then(response => {
+
+            return (
+                response.json()
+            )
+
+        }).then(a => { setTipoRegimen(a); console.log(a); });
+        fetch('http://localhost:8080/API/AllAse').then(response => {
+
+            return (
+                response.json()
+            )
+
+        }).then(a => { setTipoAsentamiento(a); console.log(a); });
+        fetch('http://localhost:8080/API/AllVialidad').then(response => {
+
+            return (
+                response.json()
+            )
+
+        }).then(a => { setTipoDeVialidad(a); console.log(a); });
+    }, []);
+
+    today = yyyy + '-' + mm + '-' + dd;
 
     const AllDataAdults = () => {
         return {
@@ -784,10 +839,30 @@ const AdminEditForm = () => {
             setTipoApellidoM(a[0].Apellido_Materno);
             setSelectedDate(a[0].Fecha_Nacimiento);
             setTipoEdad(a[0].Edad);
-            setValueCURP(a[0].Curp);
             setTipoLugarNacimiento(a[0].co_lugarnac);
-
-
+            setValueGender(a[0].Sexo);
+            setValueCURP(a[0].Curp);
+            setValueRFC(a[0].Curp);
+            setValueTelCasa(a[0].Tipo_Telefono);
+            setValueTelRec(a[0].Telefono);
+            setValueOcupacion(a[0].co_ocupacion);
+            setTipoEtnica(a[0].co_etnica);
+            setTipoGrado(a[0].co_gradoest);
+            setValuePadre(a[0].co_padre);
+            setValueMadre(a[0].co_madre);
+            setValueTutor(a[0].co_tutor);
+            setValueNoInterno(a[0].do_No_Interior);
+            setValueNoExterno(a[0].do_No_Exterior);
+            setTipoVial(a[0].do_Tipo_Vialidad);
+            setValueUT(a[0].Unidad_Territorial);
+            setValueCodigoPostal(a[0].Codigo_Postal);
+            setValueEntreCalle1(a[0].do_Calle1);
+            setValueCalle2(a[0].do_Calle2);
+            setValueTipoReg(a[0].Regimen_Hab);
+            setValueTipoAse(a[0].Tipo_Asentamiento);
+            setValueNombreReg(a[0].Regimen);
+            setValueNombreAse(a[0].Asentamiento);
+            setValueComentario(a[0].Observaciones);
 
 
 
@@ -879,23 +954,32 @@ const AdminEditForm = () => {
                 </FormControl>
             </FormLine>
             <FormLine>
-                <StyledTextField id="CIB" label="C.I.B."
-                    value={valueCIB}
-                    onChange={handleChangeCIB} />
+                <SmallTextField id="RFC" label="RFC"
+                    value={valueRFC}
+                    onChange={handleChangeRFC} />
                 <StyledTextField id="CURP" label="CURP"
                     value={valueCURP}
                     onChange={handleChangeCURP} />
             </FormLine>
             <FormLine>
-                <StyledTextField id="TelCasa" label="Tel. Casa"
+                <StyledTextField
+                    id="TelCasa"
+                    select
+                    label="Tipo de Telefono"
                     value={valueTelCasa}
-                    onChange={handleChangeTelCasa} />
-                <StyledTextField id="TelReca" label="Tel. Recados"
+                    onChange={handleChangeTelCasa}
+
+                >
+                    {tipoTele.map((option) => (
+                        <MenuItem key={option.te_id} value={option.te_id}>
+                            {option.te_msglargo}
+                        </MenuItem>
+                    ))}
+                </StyledTextField>
+                <StyledTextField id="TelReca" label="Telefono"
                     value={valueTelRec}
                     onChange={handleChangeTelRec} />
-                <StyledTextField id="Cel" label="Celular"
-                    value={valueCelular}
-                    onChange={handleChangeCelular} />
+
             </FormLine>
             <FormLine>
                 <StyledTextField id="Ocupacion" label="Ocupacion"
@@ -966,12 +1050,12 @@ const AdminEditForm = () => {
                     select
                     label="Tipo de Vialidad"
                     value={tipoVial}
-                    onChange={handleChangeTipoVial}
+                    onChange={handleChangeTipoDeVialidad}
 
                 >
                     {TipoDeVialidad.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
+                        <MenuItem key={option.vi_id} value={option.vi_id}>
+                            {option.vi_msglargo}
                         </MenuItem>
                     ))}
                 </StyledTextField>
@@ -993,23 +1077,39 @@ const AdminEditForm = () => {
                     onChange={handleChangeCalle2} />
             </FormLine>
             <FormLine>
-                <StyledTextField id="NumeroReg" label="Numero Regimen"
-                    value={valueNoReg}
-                    onChange={handleChangeNoReg} />
-                <StyledTextField id="TipoReg" label="Tipo de Regimen"
+                <StyledTextField
+                    id="TipoReg"
+                    select
+                    label="Tipo de Regimen"
                     value={valueTipoReg}
-                    onChange={handleChangeTipoReg} />
+                    onChange={handleChangeTipoReg}
+
+                >
+                    {tipoRegimen.map((option) => (
+                        <MenuItem key={option.re_id} value={option.re_id}>
+                            {option.re_msglargo}
+                        </MenuItem>
+                    ))}
+                </StyledTextField>
                 <StyledTextField id="NombreReg" label="Nombre de Regimen"
                     value={valueNombreReg}
                     onChange={handleChangeNombreReg} />
             </FormLine>
             <FormLine>
-                <StyledTextField id="NumeroAse" label="Numero Asentamiento"
-                    value={valueNumeroAse}
-                    onChange={handleChangeNumeroAse} />
-                <StyledTextField id="TipoAse" label="Tipo de Asentamiento"
+                <StyledTextField
+                    id="TipoAse"
+                    select
+                    label="Tipo de Asentamiento"
                     value={valueTipoAse}
-                    onChange={handleChangeTipoAse} />
+                    onChange={handleChangeTipoAse}
+
+                >
+                    {tipoAsentamiento.map((option) => (
+                        <MenuItem key={option.as_id} value={option.as_id}>
+                            {option.as_msgcorto}
+                        </MenuItem>
+                    ))}
+                </StyledTextField>
                 <StyledTextField id="NombreAse" label="Nombre de Asentamiento"
                     value={valueNombreAse}
                     onChange={handleChangeNombreAse} />

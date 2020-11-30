@@ -550,10 +550,7 @@ const CreateForm = () => {
         setValueCURP(event.target.value);
     };
 
-    const [valueRFC, setValueRFC] = React.useState();
-    const handleChangeRFC = (event) => {
-        setValueRFC(event.target.value);
-    };
+
 
     const [valueTelCasa, setValueTelCasa] = React.useState();
     const handleChangeTelCasa = (event) => {
@@ -620,6 +617,8 @@ const CreateForm = () => {
     const handleChangeTipoReg = (event) => {
         setValueTipoReg(event.target.value);
     };
+
+
     const [valueNombreReg, setValueNombreReg] = React.useState();
     const handleChangeNombreReg = (event) => {
         setValueNombreReg(event.target.value);
@@ -636,6 +635,12 @@ const CreateForm = () => {
     const handleChangeNombreAse = (event) => {
         setValueNombreAse(event.target.value);
     };
+
+    const [valueRFC, setValueRFC] = React.useState();
+    const handleChangeRFC = (event) => {
+        setValueRFC(event.target.value);
+    };
+
     const [valueComentario, setValueComentario] = React.useState();
     const handleChangeComentario = (event) => {
         setValueComentario(event.target.value);
@@ -677,33 +682,33 @@ const CreateForm = () => {
                 response.json()
             )
 
-        }).then(a => { setTipoTele(a); console.log(a);});
+        }).then(a => { setTipoTele(a); console.log(a); });
         fetch('http://localhost:8080/API/AllRegimen').then(response => {
 
             return (
                 response.json()
             )
 
-        }).then(a => { setTipoRegimen(a); console.log(a);});
+        }).then(a => { setTipoRegimen(a); console.log(a); });
         fetch('http://localhost:8080/API/AllAse').then(response => {
 
             return (
                 response.json()
             )
 
-        }).then(a => { setTipoAsentamiento(a); console.log(a);});
+        }).then(a => { setTipoAsentamiento(a); console.log(a); });
         fetch('http://localhost:8080/API/AllVialidad').then(response => {
 
             return (
                 response.json()
             )
 
-        }).then(a => { setTipoDeVialidad(a); console.log(a);});
+        }).then(a => { setTipoDeVialidad(a); console.log(a); });
     }, []);
 
     today = yyyy + '-' + mm + '-' + dd;
     const AllDataAdults = () => {
-        const NewvalueGender= (valueGender === 'Hombre' )? 1 : 2;
+        const NewvalueGender = (valueGender === 'Hombre') ? 1 : 2;
         return {
             Idp: tipoIDP,
             //TipoIngrso: tipoIngreso,
@@ -755,7 +760,7 @@ const CreateForm = () => {
 
     }
     const AllDataAdults1 = () => {
-        const NewvalueGender= (valueGender === 'Hombre' )? 1 : 2;
+        const NewvalueGender = (valueGender === 'Hombre') ? 1 : 2;
         return {
             Idp: tipoIDP,
             Nombre: tipoNombre,
@@ -959,7 +964,7 @@ const CreateForm = () => {
                 <StyledTextField
                     id="TelCasa"
                     select
-                    label="Tel. Casa"
+                    label="Tipo de Telefono"
                     value={valueTelCasa}
                     onChange={handleChangeTelCasa}
 
@@ -1078,11 +1083,11 @@ const CreateForm = () => {
                     onChange={handleChangeTipoReg}
 
                 >
-                {tipoRegimen.map((option) => (
-                    <MenuItem key={option.re_id} value={option.re_id}>
-                        {option.re_msglargo}
-                    </MenuItem>
-                ))}
+                    {tipoRegimen.map((option) => (
+                        <MenuItem key={option.re_id} value={option.re_id}>
+                            {option.re_msglargo}
+                        </MenuItem>
+                    ))}
                 </StyledTextField>
                 <StyledTextField id="NombreReg" label="Nombre de Regimen"
                     value={valueNombreReg}

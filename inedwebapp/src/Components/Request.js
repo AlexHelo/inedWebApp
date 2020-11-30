@@ -246,19 +246,19 @@ export default function EnhancedTable() {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = requests.map((n) => n.Nombre_Completo);
+            const newSelecteds = requests.map((n) => n.Id_Persona);
             setSelected(newSelecteds);
             return;
         }
         setSelected([]);
     };
 
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
+    const handleClick = (event, Id_Persona) => {
+        const selectedIndex = selected.indexOf(Id_Persona);
         let newSelected = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
+            newSelected = newSelected.concat(selected, Id_Persona);
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {
@@ -286,7 +286,7 @@ export default function EnhancedTable() {
         setDense(event.target.checked);
     };
 
-    const isSelected = (name) => selected.indexOf(name) !== -1;
+    const isSelected = (Id_Persona) => selected.indexOf(Id_Persona) !== -1;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, requests.length - page * rowsPerPage);
 
@@ -314,13 +314,13 @@ export default function EnhancedTable() {
                             {stableSort(requests, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
-                                    const isItemSelected = isSelected(row.name);
+                                    const isItemSelected = isSelected(row.Id_Persona);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.name)}
+                                            onClick={(event) => handleClick(event, row.Id_Persona)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
