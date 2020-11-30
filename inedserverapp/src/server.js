@@ -14,20 +14,20 @@ app.use(cors(corsOptions));
 
 app.get('/API/AllAdults', async (req, res) => {
 
-    const adults = await sequelize.query("SELECT * FROM ds02_personas ORDER BY Nombre WHERE Status=4", { type: QueryTypes.SELECT });
+    const adults = await sequelize.query("SELECT * FROM ds02_personas WHERE Status=4 ORDER BY Nombre ", { type: QueryTypes.SELECT });
 
     res.send(adults)
 })
 
 app.get('/API/AllRequestsMonitor', async (req, res) => {
 
-    const adults = await sequelize.query("SELECT * FROM ds02_personas ORDER BY Nombre WHERE Status=5", { type: QueryTypes.SELECT });
+    const adults = await sequelize.query("SELECT * FROM ds02_personas WHERE Status= 5 ORDER BY Nombre", { type: QueryTypes.SELECT });
 
     res.send(adults)
 })
 app.get('/API/AllRequestsAdmin', async (req, res) => {
 
-    const adults = await sequelize.query("SELECT * FROM ds02_personas ORDER BY Nombre WHERE Status=6", { type: QueryTypes.SELECT });
+    const adults = await sequelize.query("SELECT * FROM ds02_personas WHERE Status=6 ORDER BY Nombre ", { type: QueryTypes.SELECT });
 
     res.send(adults)
 })
@@ -151,7 +151,6 @@ app.post('/API/SetAdults', async (req, res) => {
         do_Unidad_Territorial,
         do_completo,
         do_Tipo_Telefono,
-        do_Delegacion,
         do_Status
         ) VALUES
     (${id3[0]["MAX(do_id)"]}  
@@ -170,7 +169,6 @@ app.post('/API/SetAdults', async (req, res) => {
     ,'${req.body.UT}' 
     ,'${req.body.Domicilio_Principal}'
     ,${req.body.Tipo_Telefono}
-    ,${req.body.Status1}
     ,${req.body.Status1})`)
         , function (err) {
             res.sendStatus(500)
@@ -277,7 +275,7 @@ app.get('/API/EditUser/:userId', async (req, res) => {
 
 app.get('/API/EditAdults/:adultId', async (req, res) => {
 
-    const adults = await sequelize.query(`SELECT * FROM ds02_personas ORDER BY Nombre WHERE Status=4 AND Id_Persona = ${req.params.adultId}`, { type: QueryTypes.SELECT });
+    const adults = await sequelize.query(`SELECT * FROM ds02_personas WHERE Status=4 AND Id_Persona = ${req.params.adultId} ORDER BY Nombre `, { type: QueryTypes.SELECT });
 
     res.send(adults)
 })
