@@ -777,13 +777,19 @@ const AdminEditForm = () => {
             )
 
         }).then(a => {
-            // setUser(a[0]);
-            // setValueNombre(a[0].b01_us_Nombre);
-            // setValueApellidoP((a[0].b01_us_Apellido).split(" ")[0]);
-            // setValueApellidoM((a[0].b01_us_Apellido).split(" ")[1]);
-            // setValueClave(a[0].b01_us_clave);
-            // setValues({ ...values, password: a[0].b01_us_password });
-            // setTipoNivel(a[0].b01_us_role);
+
+            setTipoIDP(a[0].Idp);
+            setTipoNombre(a[0].Nombre);
+            setTipoApellidoP(a[0].Apellido_Paterno);
+            setTipoApellidoM(a[0].Apellido_Materno);
+            setSelectedDate(a[0].Fecha_Nacimiento);
+            setTipoEdad(a[0].Edad);
+            setValueCURP(a[0].Curp);
+            setTipoLugarNacimiento(a[0].co_lugarnac);
+
+
+
+
 
         })
     }, []);

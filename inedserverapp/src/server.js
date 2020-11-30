@@ -265,18 +265,64 @@ app.get('/API/DeleteUser/:userId', async (req, res) => {
     res.sendStatus(200);
 })
 
-app.get('/API/EditUser/:userId', async (req, res) => {
-    const user = await sequelize.query(`SELECT b01_us_id, b01_us_Nombre, b01_us_Apellido, b01_us_clave, b01_us_password, b01_us_role FROM ds01_usuarios WHERE b01_us_id = ${req.params.userId} `, {
-        replacements: {},
-        type: QueryTypes.SELECT
-    });
-    res.send(user);
-})
 
 app.get('/API/EditAdults/:adultId', async (req, res) => {
 
-    const adults = await sequelize.query(`SELECT * FROM ds02_personas WHERE Status=4 AND Id_Persona = ${req.params.adultId} ORDER BY Nombre `, { type: QueryTypes.SELECT });
-
+    const adults = await sequelize.query(`SELECT 	Id_persona,
+    Nombre,
+    Apellido_Paterno,
+    Apellido_Materno,
+    Fecha_Nacimiento,
+    RFC,
+    Curp,
+    Nombre_Completo,
+    Sexo,
+    Status,
+    StatusArchivo,
+    Edad,
+    Tipo_Telefono,
+    Telefono,
+    Rep_Completo,
+    Domicilio_Principal,
+    Tipo_Vialidad,
+    Unidad_Territorial,
+    Codigo_Postal,
+    Regimen_Hab,
+    Regimen,
+    Tipo_Asentamiento,
+    Asentamiento,
+    Observaciones,
+    Fecha_Alta,
+  do_No_Interior,
+      do_No_Exterior,
+      do_Tipo_Vialidad,
+      do_Vialidad,
+      do_Codigo_Postal,
+      do_Calle1,
+      do_Calle2,
+      do_Regimen_Hab,
+      do_Regimen,
+      do_Tipo_Asentamiento,
+      do_Asentamiento,
+      do_Unidad_Territorial,
+      do_completo,
+      do_Tipo_Telefono,
+      do_Delegacion,
+      do_Status,
+  Idp,
+      per_Domprincipal,
+  co_lugarnac,
+      co_etnica,
+      co_gradoest,
+      co_ocupacion,
+      co_padre,
+      co_madre,
+      co_tutor
+FROM ds02_personas 
+JOIN ds03_domicilios  ON ds02_personas.Id_Persona = ds03_domicilios.do_Persona 
+JOIN ds06_personas  ON ds03_domicilios.do_Persona  = ds06_personas.idds02 
+JOIN ds10_complpersonal ON ds06_personas.idds02  = ds10_complpersonal.co_persona
+WHERE ds02_personas.Id_Persona=  ${req.params.adultId} ORDER BY Nombre `, { type: QueryTypes.SELECT });
     res.send(adults)
 })
 
@@ -308,7 +354,7 @@ app.get('/API/DeleteAdult/:userId', async (req, res) => {
     res.sendStatus(200);
 })
 
-app.get('/API/EditAdult/:userId', async (req, res) => {
+app.get('/API/EditUser/:userId', async (req, res) => {
     const user = await sequelize.query(`SELECT b01_us_id, b01_us_Nombre, b01_us_Apellido, b01_us_clave, b01_us_password, b01_us_role FROM ds01_usuarios WHERE b01_us_id = ${req.params.userId} `, {
         replacements: {},
         type: QueryTypes.SELECT
