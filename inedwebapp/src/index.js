@@ -10,7 +10,8 @@ import Button from './Components/Button'
 import Create from './Components/Create'
 import AdminEdit from './Components/AdminEdit';
 import CreateUser from './Components/CreateUser';
-import CreateRequest from './Components/CreateRequests';
+import CreateRequestMonitor from './Components/CreateRequestsMonitor';
+import CreateRequestUser from './Components/CreateRequests';
 import EditUser from './Components/EditUser';
 import Login from './Components/Login';
 import NavNoS from './Components/NavNoSearch';
@@ -34,10 +35,16 @@ ReactDOM.render(
         <AdminSearch />
       </Route>
 
-      <Route path='/CrearSolicitud'>
+      <Route path='/CrearSolicitudMonitor'>
         <NavNoS />
         <Button to="/VisualizarMonitor" txt='Cancelar' />
-        <CreateRequest />
+        <CreateRequestMonitor />
+      </Route>
+
+      <Route path='/CrearSolicitudUsuario'>
+        <NavNoS />
+        <Button to="/VisualizarUsuario" txt='Cancelar' />
+        <CreateRequestUser />
       </Route>
 
       <Route path='/MonitorBuscar'>
@@ -66,14 +73,13 @@ ReactDOM.render(
 
       <Route path='/VisualizarMonitor'>
         <Nav to="/MonitorBuscar" />
-        <Button to="/CrearSolicitud" txt='Crear Solicitud Adulto' />
+        <Button to="/CrearSolicitudMonitor" txt='Crear Solicitud Adulto' />
         <ModeratorTabs to='/Editar' />
       </Route>
 
       <Route path='/VisualizarUsuario'>
         <Nav to="/UsuarioBuscar" />
-        <Button to="/CrearSolicitud" txt='Crear Solicitud Adulto' />
-
+        <Button to="/CrearSolicitudUsuario" txt='Crear Solicitud Adulto' />
         <UserTabs to='/Editar' />
       </Route>
 

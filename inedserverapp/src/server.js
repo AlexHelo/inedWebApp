@@ -13,20 +13,20 @@ app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
 app.get('/API/AllAdults', async (req, res) => {
-    
+
     const adults = await sequelize.query("SELECT * FROM ds02_personas ORDER BY Nombre WHERE Status=4", { type: QueryTypes.SELECT });
 
     res.send(adults)
 })
 
 app.get('/API/AllRequestsMonitor', async (req, res) => {
-    
+
     const adults = await sequelize.query("SELECT * FROM ds02_personas ORDER BY Nombre WHERE Status=5", { type: QueryTypes.SELECT });
 
     res.send(adults)
 })
 app.get('/API/AllRequestsAdmin', async (req, res) => {
-    
+
     const adults = await sequelize.query("SELECT * FROM ds02_personas ORDER BY Nombre WHERE Status=6", { type: QueryTypes.SELECT });
 
     res.send(adults)
@@ -40,25 +40,25 @@ app.get('/API/AllUsers', async (req, res) => {
 })
 
 app.get('/API/AllPhones', async (req, res) => {
-    
+
     const adults = await sequelize.query(`SELECT te_id, te_msglargo FROM cat_tipotel`, { type: QueryTypes.SELECT });
 
     res.send(adults)
 })
 app.get('/API/AllRegimen', async (req, res) => {
-    
+
     const adults = await sequelize.query(`SELECT re_id, re_msglargo FROM cat_regimen`, { type: QueryTypes.SELECT });
 
     res.send(adults)
 })
 app.get('/API/AllAse', async (req, res) => {
-    
+
     const adults = await sequelize.query(`SELECT as_id, as_msgcorto FROM cat_asentamiento`, { type: QueryTypes.SELECT });
 
     res.send(adults)
 })
 app.get('/API/AllVialidad', async (req, res) => {
-    
+
     const adults = await sequelize.query(`SELECT vi_id, vi_msglargo FROM cat_tipovialidad`, { type: QueryTypes.SELECT });
 
     res.send(adults)
@@ -69,7 +69,7 @@ app.post('/API/SetAdults', async (req, res) => {
     let id = await sequelize.query("SELECT MAX(Id_Persona) FROM ds02_personas", { type: QueryTypes.SELECT });
     id[0]['MAX(Id_Persona)']++;
     await sequelize.query
-    (`INSERT INTO
+        (`INSERT INTO
     ds02_personas (
       Id_Persona,
       Nombre,
@@ -118,15 +118,15 @@ app.post('/API/SetAdults', async (req, res) => {
       ${req.body.Tipo_Vialidad},
       '${req.body.UT}',
       '${req.body.Codigo_Postal}',
-      ${req.body.Regimen_Hab },
+      ${req.body.Regimen_Hab},
       '${req.body.Regimen}',
-      ${req.body.tipo_Asentamiento },
+      ${req.body.tipo_Asentamiento},
       '${req.body.Asentamiento}',
       '${req.body.Observaciones}',
       '${req.body.Fecha_Alta}')`)
-    , function (err) {
-        res.sendStatus(500)
-    }
+        , function (err) {
+            res.sendStatus(500)
+        }
 
     let id2 = await sequelize.query("SELECT MAX(per_Id_Persona) FROM ds06_personas", { type: QueryTypes.SELECT });
     id2[0]['MAX(per_Id_Persona)']++;
@@ -172,11 +172,11 @@ app.post('/API/SetAdults', async (req, res) => {
     ,${req.body.Tipo_Telefono}
     ,${req.body.Status1}
     ,${req.body.Status1})`)
-    , function (err) {
-        res.sendStatus(500)
-    }
+        , function (err) {
+            res.sendStatus(500)
+        }
 
-    
+
     await sequelize.query(`INSERT INTO ds06_personas 
     (
         per_Id_Persona, 
@@ -212,10 +212,10 @@ app.post('/API/SetAdults', async (req, res) => {
             ,${req.body.Idp} 
             ,'${req.body.Fecha_Alta}' 
             ,${id3[0]["MAX(do_id)"]} )`), function (err) {
-        res.sendStatus(500)
-    }
-    
-    
+            res.sendStatus(500)
+        }
+
+
 
     await sequelize.query(`INSERT INTO 
     ds10_complpersonal
@@ -239,9 +239,9 @@ app.post('/API/SetAdults', async (req, res) => {
     ,'${req.body.Madre}' 
     ,'${req.body.Rep_Completo}'
     )`)
-    , function (err) {
-        res.sendStatus(500)
-    }
+        , function (err) {
+            res.sendStatus(500)
+        }
 
     res.sendStatus(200);
 })
@@ -273,6 +273,13 @@ app.get('/API/EditUser/:userId', async (req, res) => {
         type: QueryTypes.SELECT
     });
     res.send(user);
+})
+
+app.get('/API/EditAdults/:adultId', async (req, res) => {
+
+    const adults = await sequelize.query(`SELECT * FROM ds02_personas ORDER BY Nombre WHERE Status=4 AND Id_Persona = ${req.params.adultId}`, { type: QueryTypes.SELECT });
+
+    res.send(adults)
 })
 
 app.post('/API/UpdateUser', async (req, res) => {
@@ -332,15 +339,15 @@ app.post('/API/UpdateAdult', async (req, res) => {
 )
 
 app.post('/API/CheckUser', async (req, res) => {
-    
+
     const user = await sequelize.query(`SELECT b01_us_Nombre, b01_us_Apellido, b01_us_clave, b01_us_password, b01_us_role FROM ds01_usuarios WHERE b01_us_clave = '${req.body.b01_us_clave}' AND b01_us_password= ${req.body.b01_us_password}`, {
         replacements: {},
         type: QueryTypes.SELECT
     }
-    , 
-    function (err) {
-        res.sendStatus(404)
-    }
+        ,
+        function (err) {
+            res.sendStatus(404)
+        }
     );
     //console.log(user);
     res.send(user);
@@ -351,33 +358,33 @@ app.post('/API/Search', async (req, res) => {
         replacements: {},
         type: QueryTypes.SELECT
     }
-    , 
-    function (err) {
-        res.sendStatus(404)
-    }
+        ,
+        function (err) {
+            res.sendStatus(404)
+        }
     );
-    if(req.body.BusquedaF=='Adulto'){
+    if (req.body.BusquedaF == 'Adulto') {
         const user = await sequelize.query(`SELECT ${req.body.Informacion} FROM ${req.body.Tipo} WHERE ${req.body.Campo} = '${req.body.Datos}' AND Status = '${req.body.BusquedaData}'`, {
             replacements: {},
             type: QueryTypes.SELECT
         }
-        , 
-        function (err) {
-            res.sendStatus(404)
-        }
+            ,
+            function (err) {
+                res.sendStatus(404)
+            }
         );
-    }else if(req.body.BusquedaF=='Usuario'){
+    } else if (req.body.BusquedaF == 'Usuario') {
         const user = await sequelize.query(`SELECT ${req.body.Informacion} FROM ${req.body.Tipo} WHERE ${req.body.Campo} = '${req.body.Datos}'`, {
             replacements: {},
             type: QueryTypes.SELECT
         }
-        , 
-        function (err) {
-            res.sendStatus(404)
-        }
+            ,
+            function (err) {
+                res.sendStatus(404)
+            }
         );
     }
-    
+
     //console.log(user);
     res.send(user);
 })

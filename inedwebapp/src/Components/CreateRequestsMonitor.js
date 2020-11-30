@@ -721,7 +721,7 @@ const CreateForm = () => {
             Edad: tipoEdad,
             LugarNacimiento: tipoLugarNacimiento,
             Sexo: NewvalueGender,
-            Status1: 5,
+            Status1: 6,
             StatusArchivo: 0,
             //Tipo_Telefono: 1,
             Domicilio_Principal: DomicilioPrincipal,
@@ -858,7 +858,7 @@ const CreateForm = () => {
             {Object.keys(AllDataAdults1()).map(key =>
                 <BigText key={key}>{BasicData[key] + " : " + AllDataAdults1()[key]}</BigText>)}
             <FormLine>
-                <Button to="/VisualizarUsuario" onClick={() => { UploadData(); handleClose(); history.push("/VisualizarUsuario"); }} variant="contained" color="primary" >Aceptar</Button>
+                <Button to="/VisualizarMonitor" onClick={() => { UploadData(); handleClose(); history.push("/VisualizarMonitor"); }} variant="contained" color="primary" >Aceptar</Button>
                 <Button onClick={handleClose} variant="contained" color="secondary" >Regresar</Button>
             </FormLine>
 
