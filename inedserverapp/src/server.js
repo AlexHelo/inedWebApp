@@ -252,7 +252,7 @@ app.post('/API/SetUsers', async (req, res) => {
     console.log(await sequelize.query("SELECT MAX(b01_us_id) FROM ds01_usuarios", { type: QueryTypes.SELECT }));
     let id = await sequelize.query("SELECT MAX(b01_us_id) FROM ds01_usuarios", { type: QueryTypes.SELECT });
     id[0]['MAX(b01_us_id)']++;
-    await sequelize.query("INSERT INTO ds01_usuarios (b01_us_id, b01_us_Nombre, b01_us_Apellido, b01_us_clave, b01_us_password, b01_us_role) VALUES (" + id[0]['MAX(b01_us_id)'] + "','" + req.body.b01_us_Nombre + "','" + req.body.b01_us_Apellido + "','" + req.body.b01_us_clave + "'," + req.body.b01_us_password + ",'" + req.body.b01_us_role + "')"), function (err) {
+    await sequelize.query("INSERT INTO ds01_usuarios (b01_us_id, b01_us_Nombre, b01_us_Apellido, b01_us_clave, b01_us_password, b01_us_role) VALUES (" + id[0]['MAX(b01_us_id)'] + ",'" + req.body.b01_us_Nombre + "','" + req.body.b01_us_Apellido + "','" + req.body.b01_us_clave + "'," + req.body.b01_us_password + ",'" + req.body.b01_us_role + "')"), function (err) {
         res.sendStatus(500)
     }
     res.sendStatus(200);
@@ -364,25 +364,7 @@ app.get('/API/EditUser/:userId', async (req, res) => {
     res.send(user);
 })
 
-app.post('/API/UpdateAdult', async (req, res) => {
 
-    // console.log(req.body);
-    // console.log(await sequelize.query("SELECT MAX(b01_us_id) FROM ds01_usuarios", { type: QueryTypes.SELECT }));
-    // let id = await sequelize.query("SELECT MAX(b01_us_id) FROM ds01_usuarios", { type: QueryTypes.SELECT });
-    // id[0]['MAX(b01_us_id)']++;
-    await sequelize.query(`UPDATE ds01_usuarios 
-    SET b01_us_Nombre = '${req.body.b01_us_Nombre}', 
-    b01_us_Apellido = '${req.body.b01_us_Apellido}', 
-    b01_us_clave = '${req.body.b01_us_clave}', 
-    b01_us_password = ${req.body.b01_us_password}, 
-    b01_us_role= '${req.body.b01_us_role}' 
-    WHERE b01_us_id= ${req.body.b01_us_id}`
-    ,
-    )
-
-    res.sendStatus(200);
-}
-)
 
 app.post('/API/CheckUser', async (req, res) => {
 
@@ -434,6 +416,43 @@ app.post('/API/Search', async (req, res) => {
     //console.log(user);
     res.send(user);
 })
+
+app.post('/API/UpdateAdult', async (req, res) => {
+
+    // console.log(req.body);
+    // console.log(await sequelize.query("SELECT MAX(b01_us_id) FROM ds01_usuarios", { type: QueryTypes.SELECT }));
+    // let id = await sequelize.query("SELECT MAX(b01_us_id) FROM ds01_usuarios", { type: QueryTypes.SELECT });
+    // id[0]['MAX(b01_us_id)']++;
+    await sequelize.query(`UPDATE ds02_personas 
+    SET Nombre = '${req.body.Nombre}', 
+    Apellido_Paterno = '${req.body.Apellido_Paterno}', 
+    Apellido_Materno = '${req.body.Apellido_Materno}', 
+    Fecha_Nacimiento = '${req.body.Fecha_Alta}', 
+    RFC = '${req.body.Rfc}',
+    Curp= '${req.body.Curp}',
+    Nombre_Completo= '${req.body.Nombre_Completo}',
+    Sexo= ${req.body.Sexo},
+    Status= ${req.body.Status1},
+    StatusArchivo= ${req.body.StatusArchivo},
+    Edad= '${req.body.Edad}',
+    Tipo_Telefono= ${req.body.Tipo_Telefono},
+    Telefono= '${req.body.Telefono}',
+    Rep_Completo= '${req.body.Rep_Completo}',
+    Domicilio_Principal= '${req.body.Domicilio_Principal}',
+    Tipo_Vialidad= ${req.body.Tipo_Vialidad},
+    Unidad_Territorial= '${req.body.UT}',
+    Codigo_Postal= '${req.body.Codigo_Postal}',
+    Regimen_Hab= ${req.body.Regimen_Hab},
+    Regimen= '${req.body.Regimen}',
+    Tipo_Asentamiento= ${req.body.tipo_Asentamiento},
+    Asentamiento= '${req.body.Asentamiento}',
+    Observaciones= '${req.body.Observaciones}'
+    WHERE Id_Persona= ${req.body.IdPersona}`
+    )
+
+    res.sendStatus(200);
+}
+)
 
 
 const sequelize = new Sequelize('ineddb', 'root', '', {

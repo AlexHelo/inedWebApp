@@ -18,6 +18,8 @@ import NavNoS from './Components/NavNoSearch';
 import AdminSearch from './Components/AdminSearch';
 import MonitorSearch from './Components/MonitorSearch';
 import UserSearch from './Components/UserSearch';
+import AdminAcept from './Components/AceptAdult';
+import MonitorAcept from './Components/AceptAdultMonitor';
 
 
 
@@ -93,6 +95,18 @@ ReactDOM.render(
         <NavNoS />
         <Button to="/VisualizarAdmin" txt='Cancelar' />
         <AdminEdit />
+      </Route>
+
+      <Route path='/AceptarAdulto'>
+        <NavNoS />
+        <Button to="/VisualizarAdmin" txt='Cancelar' />
+        <AdminAcept />
+      </Route>
+
+      <Route path='/AceptarAdultoMonitor'>
+        <NavNoS />
+        <Button to="/VisualizarAdmin" txt='Cancelar' />
+        <MonitorAcept />
       </Route>
 
       <Route path='/EditarUsuario'>

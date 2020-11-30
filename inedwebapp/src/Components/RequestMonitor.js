@@ -23,6 +23,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 const TableTitle = styled(Typography)({
 
@@ -148,7 +149,8 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();
-    const { numSelected } = props;
+    const { numSelected, OnClickDelete, selected } = props;
+    const history = useHistory();
 
     return (
         <Toolbar
@@ -175,7 +177,15 @@ const EnhancedTableToolbar = (props) => {
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Aceptar">
-                        <IconButton aria-label="Aceptar">
+                        <IconButton aria-label="Aceptar" onClick={() => {
+
+                            console.log(selected);
+
+                            history.push({
+                                pathname: 'AceptarAdultoMonitor' + '/' + selected[0],
+                                id: selected[0]
+                            })
+                        }}>
                             <CheckCircleIcon />
                         </IconButton>
                     </Tooltip>
@@ -217,7 +227,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function EnhancedTable() {
+export default function EnhancedTable(props) {
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
@@ -285,7 +295,19 @@ export default function EnhancedTable() {
     const handleChangeDense = (event) => {
         setDense(event.target.checked);
     };
-
+    let LabelStatusArchivo=(status)=>{
+        switch(status){
+            case 0:
+                return 'Alta';
+                break;
+            case 1:
+                return 'Baja';
+                break;   
+            case 2:
+                return 'Modificacion';
+                break;
+        }
+    }
     const isSelected = (Id_Persona) => selected.indexOf(Id_Persona) !== -1;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, requests.length - page * rowsPerPage);
@@ -293,7 +315,18 @@ export default function EnhancedTable() {
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <EnhancedTableToolbar numSelected={selected.length} />
+                <EnhancedTableToolbar selected={selected} numSelected={selected.length} to={props.to} OnClickDelete={() => {
+                    selected.forEach((select) => {
+                        fetch(`http://localhost:8080/API/DeleteAdult/${select}`)
+                            .then(() => {
+                                console.log('Deleted ID = ' + select)
+                                setRequests(requests.filter((adulto) => {
+                                    return adulto.Id_Persona !== select
+                                }))
+                                setSelected([])
+                            })
+                    })
+                }} />
                 <TableContainer>
                     <Table
                         className={classes.table}
@@ -336,7 +369,7 @@ export default function EnhancedTable() {
                                             <TableCell component="th" id={labelId} scope="row" padding="none">
                                                 {row.Recibe_solicitud}
                                             </TableCell>
-                                            <TableCell align="right">{row.StatusArchivo}</TableCell>
+                                            <TableCell align="right">{LabelStatusArchivo(row.StatusArchivo)}</TableCell>
                                             <TableCell align="right">{row.Nombre_Completo}</TableCell>
                                             <TableCell align="right">{row.Observaciones}</TableCell>
                                         </TableRow>
