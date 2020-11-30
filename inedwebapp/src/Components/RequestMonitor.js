@@ -228,7 +228,7 @@ export default function EnhancedTable() {
     const [requests, setRequests] = React.useState([]);
 
     React.useEffect(() => {
-        fetch('http://localhost:8080/API/AllRequestsAdmin').then(response => {
+        fetch('http://localhost:8080/API/AllRequestsMonitor').then(response => {
 
             return (
                 response.json()

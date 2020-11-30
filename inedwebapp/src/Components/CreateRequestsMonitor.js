@@ -712,6 +712,7 @@ const CreateForm = () => {
         const NewvalueGender = (valueGender === 'Hombre') ? 1 : 2;
         return {
             Idp: tipoIDP,
+            Usuario:tipoNdUsuario,
             //TipoIngrso: tipoIngreso,
             //Folio_solicitud: tipoNO,
             Nombre: tipoNombre,
@@ -977,7 +978,7 @@ const CreateForm = () => {
                     <StyledTextField
                         id="TelCasa"
                         select
-                        label="Tel. Casa"
+                        label="Tipo de Telefono"
                         value={valueTelCasa}
                         onChange={handleChangeTelCasa}
 

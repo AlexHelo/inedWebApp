@@ -95,7 +95,8 @@ app.post('/API/SetAdults', async (req, res) => {
       Tipo_Asentamiento,
       Asentamiento,
       Observaciones,
-      Fecha_Alta
+      Fecha_Alta,
+      Recibe_Solicitud
     )
   VALUES
     (
@@ -123,7 +124,8 @@ app.post('/API/SetAdults', async (req, res) => {
       ${req.body.tipo_Asentamiento},
       '${req.body.Asentamiento}',
       '${req.body.Observaciones}',
-      '${req.body.Fecha_Alta}')`)
+      '${req.body.Fecha_Alta}',
+       '${req.body.Usuario}')`)
         , function (err) {
             res.sendStatus(500)
         }

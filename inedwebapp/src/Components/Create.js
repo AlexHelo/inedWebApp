@@ -711,6 +711,7 @@ const CreateForm = () => {
         const NewvalueGender = (valueGender === 'Hombre') ? 1 : 2;
         return {
             Idp: tipoIDP,
+            Usuario: 'Administrador',
             //TipoIngrso: tipoIngreso,
             //Folio_solicitud: tipoNO,
             Nombre: tipoNombre,

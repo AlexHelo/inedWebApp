@@ -283,13 +283,13 @@ const AdminSearch = () => {
         let con='yes';
         switch(data){
             case 'Adult':
-                con= '*'
+                con= 'Id_Persona'
                 break;
             case 'Request':
-                con= '*'
+                con= 'Id_Persona'
                 break;
             case 'User':
-                con= 'b01_us_id,b01_us_Nombre,b01_us_Apellido,b01_us_clave,b01_us_password,b01_us_role'
+                con= 'b01_us_id'
                 break;
         }
         return con;
