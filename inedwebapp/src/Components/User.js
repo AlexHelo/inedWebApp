@@ -198,7 +198,7 @@ const EnhancedTableToolbar = (props) => {
                             console.log(selected);
 
                             history.push({
-                                pathname: props.to + 'Usuario' + '/' + selected[0],
+                                pathname: 'EditarUsuario' + '/' + selected[0],
                                 id: selected[0]
                             })
                         }}>
@@ -254,16 +254,59 @@ export default function EnhancedTable(props) {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [users, setUsers] = React.useState([]);
 
-
+    const ConValue =(value)=>{
+        let s='(';
+        for(let i=0;i<value.length;i++){
+            if((i+1)==value.length){
+                s+=parseInt(value[i].b01_us_id)+')';
+            }else{
+                s+=parseInt(value[i].b01_us_id)+',';
+            }
+            
+        };
+        
+        
+        return s
+    }
+    let kl=true;
     React.useEffect(() => {
-        fetch('http://localhost:8080/API/AllUsers').then(response => {
-
-            return (
-                response.json()
-            )
-
-        }).then(a => { setUsers(a); })
+        if(props.value.yes){
+            if(props.value.yes.length>0 || kl==false){
+                let i= ConValue(props.value.yes)
+                
+                fetch('http://localhost:8080/API/GetUser', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({datos:i})
+                }).then(response => {
+    
+                return (
+                    response.json()
+                )
+    
+            }).then(a => { setUsers(a); kl=false;});
+    
+            }else if(kl==true){
+                // fetch('http://localhost:8080/API/AllUsers').then(response => {
+    
+                //     return (
+                //         response.json()
+                //     )
+    
+                // }).then(a => { setUsers(a); })
+        }}
+        // else{
+        //     fetch('http://localhost:8080/API/AllUsers').then(response => {
+    
+        //             return (
+        //                 response.json()
+        //             )
+    
+        //         }).then(a => { setUsers(a); })
+        // }
     }, []);
+        
+        
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';

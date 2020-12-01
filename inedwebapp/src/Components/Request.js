@@ -24,6 +24,7 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import { useLocation } from "react-router-dom"; 
 
 const TableTitle = styled(Typography)({
 
@@ -84,6 +85,9 @@ function EnhancedTableHead(props) {
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
+    
+    
+    
 
     return (
         <TableHead>
@@ -151,6 +155,9 @@ const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();
     const { numSelected, OnClickDelete, selected } = props;
     const history = useHistory();
+    
+    
+    
     return (
         <Toolbar
             className={clsx(classes.root, {
@@ -236,15 +243,56 @@ export default function EnhancedTable(props) {
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [requests, setRequests] = React.useState([]);
-
+    const ConValue =(value)=>{
+        let s='(';
+        for(let i=0;i<value.length;i++){
+            if((i+1)==value.length){
+                s+=parseInt(value[i].Id_Persona)+')';
+            }else{
+                s+=parseInt(value[i].Id_Persona)+',';
+            }
+            
+        };
+        
+        
+        return s
+    }
+    let kl=true;
     React.useEffect(() => {
-        fetch('http://localhost:8080/API/AllRequestsAdmin').then(response => {
-
-            return (
-                response.json()
-            )
-
-        }).then(a => { setRequests(a); })
+        if(props.value.yes){
+            if(props.value.yes.length>0 || kl==false){
+                let i= ConValue(props.value.yes)
+                
+                fetch('http://localhost:8080/API/GetRequestAdmin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({datos:i})
+                }).then(response => {
+    
+                return (
+                    response.json()
+                )
+    
+            }).then(a => { setRequests(a); kl=false;});
+    
+            }else if(kl==true){
+                // fetch('http://localhost:8080/API/AllRequestsAdmin').then(response => {
+    
+                //     return (
+                //         response.json()
+                //     )
+    
+                // }).then(a => { setRequests(a); })
+        }}
+        // else{
+        //     fetch('http://localhost:8080/API/AllRequestsAdmin').then(response => {
+    
+        //             return (
+        //                 response.json()
+        //             )
+    
+        //         }).then(a => { setRequests(a); })
+        // }
     }, []);
 
 

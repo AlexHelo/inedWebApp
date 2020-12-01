@@ -45,6 +45,31 @@ app.get('/API/AllUsers', async (req, res) => {
     res.send(users)
 })
 
+app.post('/API/GetAdult', async (req, res) => {
+
+    const adults = await sequelize.query(`SELECT * FROM ds02_personas WHERE Status=4 AND Id_Persona IN ${req.body.datos} ORDER BY Nombre `, { type: QueryTypes.SELECT });
+
+    res.send(adults)
+})
+app.post('/API/GetRequestAdmin', async (req, res) => {
+
+    const adults = await sequelize.query(`SELECT * FROM ds02_personas WHERE Status=6 AND Id_Persona IN ${req.body.datos} ORDER BY Nombre `, { type: QueryTypes.SELECT });
+
+    res.send(adults)
+})
+app.post('/API/GetRequestMonitor', async (req, res) => {
+
+    const adults = await sequelize.query(`SELECT * FROM ds02_personas WHERE Status=5 AND Id_Persona IN ${req.body.datos} ORDER BY Nombre `, { type: QueryTypes.SELECT });
+
+    res.send(adults)
+})
+
+app.post('/API/GetUser', async (req, res) => {
+    const users = await sequelize.query(`SELECT b01_us_id,b01_us_Nombre, b01_us_Apellido, b01_us_clave, b01_us_password, b01_us_role FROM ds01_usuarios WHERE b01_us_id IN ${req.body.datos} ORDER BY b01_us_Nombre`, { type: QueryTypes.SELECT });
+
+    res.send(users)
+})
+
 app.get('/API/AllPhones', async (req, res) => {
 
     const adults = await sequelize.query(`SELECT te_id, te_msglargo FROM cat_tipotel`, { type: QueryTypes.SELECT });
@@ -401,16 +426,18 @@ app.post('/API/CheckUser', async (req, res) => {
 })
 
 app.post('/API/Search', async (req, res) => {
-    const user = await sequelize.query(`SELECT ${req.body.Informacion} FROM ${req.body.Tipo} WHERE ${req.body.Campo} = '${req.body.Datos}'`, {
-        replacements: {},
-        type: QueryTypes.SELECT
-    }
-        ,
-        function (err) {
-            res.sendStatus(404)
-        }
-    );
+    // const user = await sequelize.query(`SELECT ${req.body.Informacion} FROM ${req.body.Tipo} WHERE ${req.body.Campo} = '${req.body.Datos}'`, {
+    //     replacements: {},
+    //     type: QueryTypes.SELECT
+    // }
+    //     ,
+    //     function (err) {
+    //         res.sendStatus(404)
+    //     }
+    // );
+    // console.log(user[0]);
     if (req.body.BusquedaF == 'Adulto') {
+        
         const user = await sequelize.query(`SELECT ${req.body.Informacion} FROM ${req.body.Tipo} WHERE ${req.body.Campo} = '${req.body.Datos}' AND Status = '${req.body.BusquedaData}'`, {
             replacements: {},
             type: QueryTypes.SELECT
@@ -420,6 +447,7 @@ app.post('/API/Search', async (req, res) => {
                 res.sendStatus(404)
             }
         );
+        res.send(user);
     } else if (req.body.BusquedaF == 'Usuario') {
         const user = await sequelize.query(`SELECT ${req.body.Informacion} FROM ${req.body.Tipo} WHERE ${req.body.Campo} = '${req.body.Datos}'`, {
             replacements: {},
@@ -430,10 +458,11 @@ app.post('/API/Search', async (req, res) => {
                 res.sendStatus(404)
             }
         );
+        res.send(user);
     }
 
     //console.log(user);
-    res.send(user);
+    
 })
 
 app.post('/API/UpdateAdult', async (req, res) => {

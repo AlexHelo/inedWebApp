@@ -10,6 +10,7 @@ import Box from '@material-ui/core/Box';
 import Adulto from './Adult'
 import Usuario from './User'
 import Request from './Request'
+import { useLocation } from "react-router-dom"; 
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -63,6 +64,25 @@ const UserTabs = (props) => {
         setValue(newValue);
 
     };
+    const location = useLocation();
+    let first=true;
+    React.useEffect(() => {
+        console.log(location);
+        if(location.yes && first==true){
+            switch(location.tab){
+                case 0:
+                    setValue(0);
+                    break;
+                case 1:
+                    setValue(1);
+                    break;
+                case 2:
+                    setValue(2)
+                    break;
+
+            }
+            first=false;
+        }})
 
     return (
         <div className={classes.root}>
@@ -73,13 +93,13 @@ const UserTabs = (props) => {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                <Adulto to={props.to} />
+                <Adulto value={location} />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <Request />
+                <Request value={location} />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <Usuario to={props.to} />
+                <Usuario value={location} />
             </TabPanel>
         </div>
     );

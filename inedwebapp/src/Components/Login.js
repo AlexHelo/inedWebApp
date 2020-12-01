@@ -261,15 +261,15 @@ const LoginScreen = () => {
     const BasicData = {
         b01_us_Nombre: 'Nombre',
         b01_us_Apellido: 'Apellidos',
-        b01_us_clave: 'Clave',
-        b01_us_password: 'Contraseña',
+        
+        
         b01_us_role: 'Rol'
     }
 
     const body = (
         <div style={modalStyle} className={classes.paper}>
             <h2 id="simple-modal-title">¿Eres tú?</h2>
-            {Object.keys(user).map(key =>
+            {Object.keys(BasicData).map(key =>
                 <BigText key={key}>{BasicData[key] + " : " + user[key]}</BigText>)}
             <FormLine>
                 <Button to="/Visualizar" onClick={() => { handleClose(); hist(); }} variant="contained" color="primary" >Si</Button>
