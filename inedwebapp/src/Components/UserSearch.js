@@ -197,6 +197,7 @@ const UserSearch = () => {
     const handleChangeBusqueda = (event) => {
         setValueBusqueda(event.target.value);
     };
+    const [searchh, setSearch] = React.useState();
 
     let changeField= (val)=>{
         switch(val){
@@ -227,10 +228,10 @@ const UserSearch = () => {
         let con='yes';
         switch(data){
             case 'Adult':
-                con= 0
+                con= 4;
                 break;
             case 'Request':
-                con= 2
+                con= 6
                 break;
             case 'User':
                 con= 'Usuario'
@@ -273,13 +274,13 @@ const UserSearch = () => {
         let con='yes';
         switch(data){
             case 'Adult':
-                con= '*'
+                con= 'Id_Persona'
                 break;
             case 'Request':
-                con= '*'
+                con= 'Id_Persona'
                 break;
             case 'User':
-                con= 'b01_us_id,b01_us_Nombre,b01_us_Apellido,b01_us_clave,b01_us_password,b01_us_role'
+                con= 'b01_us_id'
                 break;
         }
         return con;
@@ -348,8 +349,29 @@ const UserSearch = () => {
                 response.json()
             )
         }).then((a) => {
-            console.log(a);
+            setSearch(a);
+            history.push({
+                pathname: "/VisualizarUsuario",
+                yes: a,
+                tab: FilterSearch2(AllDataSearch().BusquedaData)
+            })
         });
+    }
+
+    let FilterSearch2=(data)=>{
+        let con='yes';
+        switch(data){
+            case 4:
+                con= 0
+                break;
+            case 6:
+                con= 1
+                break;
+            case 'Usuario':
+                con= 2
+                break;
+        }
+        return con;
     }
 
 
@@ -363,16 +385,11 @@ const UserSearch = () => {
     return (
         <CreateBox onSubmit={(e) => {
             e.preventDefault();
-            
             if(valueBusqueda){
                 UploadData();
             }else{
-                
+                history.push("/VisualizarUsuario");
             }
-            //AllDataSearch();
-            // console.log(AllDataUsers())
-            // handleOpen()
-            history.push("/VisualizarUsuario");
 
 
         }}>
