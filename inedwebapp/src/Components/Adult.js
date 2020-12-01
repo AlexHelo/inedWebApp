@@ -18,6 +18,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import TrackChangesIcon from '@material-ui/icons/TrackChanges';
 import styled from 'styled-components';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
@@ -193,14 +194,23 @@ const EnhancedTableToolbar = (props) => {
                     <Tooltip title="Editar">
                         <IconButton aria-label="Editar" onClick={() => {
 
-                            console.log(selected);
-
                             history.push({
-                                pathname: 'EditarAdulto' + '/' + selected[0],
+                                pathname: 'EditarAdultoAdmin' + '/' + selected[0],
                                 id: selected[0]
                             })
                         }}>
                             <EditIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Visualizar Datos">
+                        <IconButton aria-label="Visualizar Datos" onClick={() => {
+
+                            history.push({
+                                pathname: 'VisualizarAdultoAdmin' + '/' + selected[0],
+                                id: selected[0]
+                            })
+                        }}>
+                            <TrackChangesIcon />
                         </IconButton>
                     </Tooltip>
 

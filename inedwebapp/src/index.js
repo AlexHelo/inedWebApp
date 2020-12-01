@@ -9,6 +9,7 @@ import UserTabs from './Components/UserTabs';
 import Button from './Components/Button'
 import Create from './Components/Create'
 import AdminEdit from './Components/AdminEdit';
+import AdminVisualize from './Components/AdminVisualize';
 import CreateUser from './Components/CreateUser';
 import CreateRequestMonitor from './Components/CreateRequestsMonitor';
 import CreateRequestUser from './Components/CreateRequests';
@@ -91,10 +92,16 @@ ReactDOM.render(
         <Create />
       </Route>
 
-      <Route path='/EditarAdulto'>
+      <Route path='/EditarAdultoAdmin'>
         <NavNoS />
         <Button to="/VisualizarAdmin" txt='Cancelar' />
         <AdminEdit />
+      </Route>
+
+      <Route path='/VisualizarAdultoAdmin'>
+        <NavNoS />
+        <Button to="/VisualizarAdmin" txt='Cancelar' />
+        <AdminVisualize />
       </Route>
 
       <Route path='/AceptarAdulto'>
