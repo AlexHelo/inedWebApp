@@ -430,40 +430,40 @@ const PertenenciaEtnica = [
         label: ' ZOQUE ',
     }];
 
-const GradoDeEstudios = [
-    {
-        value: 0,
-        label: 'NUNCA ASISTIO',
-    },
-    {
-        value: 1,
-        label: 'PRIMARIA',
-    },
-    {
-        value: 2,
-        label: 'SECUNDARIA',
-    },
-    {
-        value: 3,
-        label: 'PREPA',
-    },
-    {
-        value: 4,
-        label: 'TECNICA',
-    },
-    {
-        value: 5,
-        label: 'LIC',
-    },
-    {
-        value: 6,
-        label: 'MAESTRIA',
-    },
-    {
-        value: 7,
-        label: 'DOCTORADO',
-    },
-];
+    const GradoDeEstudios = [
+        {
+            value: 'NUNCA ASISTIO',
+            label: 'NUNCA ASISTIO',
+        },
+        {
+            value: 'PRIMARIA',
+            label: 'PRIMARIA',
+        },
+        {
+            value: 'SECUNDARIA',
+            label: 'SECUNDARIA',
+        },
+        {
+            value: 'PREPA',
+            label: 'PREPA',
+        },
+        {
+            value: 'TECNICA',
+            label: 'TECNICA',
+        },
+        {
+            value: 'LIC',
+            label: 'LIC',
+        },
+        {
+            value: 'MAESTRIA',
+            label: 'MAESTRIA',
+        },
+        {
+            value: 'DOCTORADO',
+            label: 'DOCTORADO',
+        },
+    ];
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -714,19 +714,29 @@ const AdminEditForm = () => {
     today = yyyy + '-' + mm + '-' + dd;
 
     const AllDataAdults = () => {
+        const NewvalueGender = (valueGender === 'Hombre') ? 1 : 2;
         return {
             Idp: tipoIDP,
-            TipoIngrso: tipoIngreso,
-            Folio_solicitud: tipoNO,
+            Usuario: 'Administrador',
+            //TipoIngrso: tipoIngreso,
+            //Folio_solicitud: tipoNO,
             Nombre: tipoNombre,
+            IdPersona: location.id,
             Apellido_Paterno: tipoApellidoP,
             Apellido_Materno: tipoApellidoM,
             Fecha_Nacimiento: selectedDate,
             Edad: tipoEdad,
             LugarNacimiento: tipoLugarNacimiento,
-            Sexo: valueGender,
+            Sexo: NewvalueGender,
+            Status1: 4,
+            StatusArchivo: 3,
+            //Tipo_Telefono: 1,
+            Domicilio_Principal: DomicilioPrincipal,
             CIB: valueCIB,
+            Rfc: valueRFC,
             Curp: valueCURP,
+            Nombre_Completo: NombreCompleto,
+            //Tipo_Telefono: valueTelCasa,
             Tipo_Telefono: valueTelCasa,
             Telefono: valueTelRec,
             Celular: valueCelular,
@@ -739,24 +749,61 @@ const AdminEditForm = () => {
             Calle: valueCalle,
             do_No_Interior: valueNoInterno,
             do_No_Exterior: valueNoExterno,
+            Vialidad: tipoVial,
             Tipo_Vialidad: tipoVial,
             UT: valueUT,
             Codigo_Postal: valueCodigoPostal,
             do_Calle1: valueEntreCalle1,
             do_Calle2: valueCalle2,
-            Regimen_Hab: valueNoReg,
-            Regimen: valueTipoReg,
+            Regimen_Hab: valueTipoReg,
+            Regimen: valueNombreReg,
             do_Regimen: valueNombreReg,
-            tipo_Asentamiento: valueNumeroAse,
-            Asentamiento: valueTipoAse,
+            tipo_Asentamiento: valueTipoAse,
+            //ValueNumeroAse
+            Asentamiento: valueNombreAse,
             do_Asentamiento: valueNombreAse,
-            Observaciones: valueComentario
+            Observaciones: valueComentario,
+            Fecha_Alta: today
         }
+
     }
+    const AllDataAdults1 = () => {
+        const NewvalueGender = (valueGender === 'Hombre') ? 1 : 2;
+        return {
+            Idp: tipoIDP,
+            Nombre: tipoNombre,
+            Apellido_Paterno: tipoApellidoP,
+            Apellido_Materno: tipoApellidoM,
+            Fecha_Nacimiento: selectedDate,
+            Edad: tipoEdad,
+            LugarNacimiento: tipoLugarNacimiento,
+            Sexo: NewvalueGender,
+            Curp: valueCURP,
+            Telefono: valueTelRec,
+            Ocupacion: valueOcupacion,
+            Tipo_de_Etnicidad: tipoEtnica,
+            Tipo_de_Grado: tipoGrado,
+            Padre: valuePadre,
+            Madre: valueMadre,
+            Rep_Completo: valueTutor,
+            Domicilio_Principal: DomicilioPrincipal,
+            Tipo_Vialidad: tipoVial,
+            UT: valueUT,
+            Codigo_Postal: valueCodigoPostal,
+            Regimen_Hab: valueTipoReg,
+            Regimen: valueNombreReg,
+            do_Regimen: valueNombreReg,
+            tipo_Asentamiento: valueTipoAse,
+            Asentamiento: valueNombreAse,
+            do_Asentamiento: valueNombreAse,
+        }
+
+    }
+
     const BasicData = {
         Idp: 'IDP',
-        TipoIngrso: 'Tipo de Ingreso',
-        Folio_solicitud: 'Folio Solicitud',
+        // TipoIngrso: 'Tipo de Ingreso',
+        // Folio_solicitud: 'Folio Solicitud',
         Nombre: 'Nombre',
         Apellido_Paterno: 'Apellido Paterno',
         Apellido_Materno: 'Apellido Materno',
@@ -764,32 +811,33 @@ const AdminEditForm = () => {
         Edad: 'Edad',
         LugarNacimiento: 'Lugar de Nacimiento',
         Sexo: 'Genero',
-        CIB: 'CIB',
+        // CIB: 'CIB',
         Curp: 'CURP',
-        Tipo_Telefono: 'Tel. Casa',
+        // Tipo_Telefono: 'Tel. Casa',
         Telefono: 'Tel. Recados',
-        Celular: 'Celular',
+        // Celular: 'Celular',
         Ocupacion: 'Ocupacion',
         Tipo_de_Etnicidad: 'Etnicidad',
         Tipo_de_Grado: 'Tipo de Grado',
         Padre: 'Padre',
         Madre: 'Madre',
         Rep_Completo: 'Tutor',
-        Calle: 'Calle',
-        do_No_Interior: 'No. Interno',
-        do_No_Exterior: 'No. Externo',
+        Domicilio_Principal: 'Domicilio Principal',
+        // Calle: 'Calle',
+        // do_No_Interior: 'No. Interno',
+        // do_No_Exterior: 'No. Externo',
         Tipo_Vialidad: 'Tipo de Vialidad',
         UT: 'Unidad Territorial',
         Codigo_Postal: 'Codigo Postal',
-        do_Calle1: 'Entre Calle 1',
-        do_Calle2: 'Entre Calle 2',
+        // do_Calle1: 'Entre Calle 1',
+        // do_Calle2: 'Entre Calle 2',
         Regimen_Hab: 'No. Regimen',
         Regimen: 'Tipo de Regimen',
         do_Regimen: 'Nombre de Regimen',
         tipo_Asentamiento: 'Numero Asentamiento',
         Asentamiento: 'Tipo de Asentamiento',
         do_Asentamiento: 'Nombre de Asentamiento',
-        Observaciones: 'Comentarios'
+        // Observaciones: 'Comentarios'
     }
     const history = useHistory();
     const classes = useStyles();
@@ -813,11 +861,11 @@ const AdminEditForm = () => {
     }
     const body = (
         <div style={modalStyle} className={classes.paper}>
-            <h2 id="simple-modal-title">Se va a dar de Alta el Usuario:</h2>
-            {Object.keys(AllDataAdults()).map(key =>
-                <BigText key={key}>{BasicData[key] + " : " + AllDataAdults()[key]}</BigText>)}
+            <h2 id="simple-modal-title">Se va a Modificar el Usuario:</h2>
+            {Object.keys(AllDataAdults1()).map(key =>
+                <BigText key={key}>{BasicData[key] + " : " + AllDataAdults1()[key]}</BigText>)}
             <FormLine>
-                <Button to="/Visualizar" onClick={() => { UploadData(); handleClose(); history.push("/Visualizar"); }} variant="contained" color="primary" >Aceptar</Button>
+                <Button to="/Visualizar" onClick={() => { UploadData(); handleClose(); history.push("/Visualizar"); }} variant="contained" color="primary" >Aceptar Edición</Button>
                 <Button onClick={handleClose} variant="contained" color="secondary" >Regresar</Button>
             </FormLine>
 
@@ -840,7 +888,8 @@ const AdminEditForm = () => {
             setSelectedDate(a[0].Fecha_Nacimiento);
             setTipoEdad(a[0].Edad);
             setTipoLugarNacimiento(a[0].co_lugarnac);
-            setValueGender(a[0].Sexo);
+            const NewvalueGender = (a[0].Sexo === 1) ? 'Hombre' : 'Mujer';
+            setValueGender(NewvalueGender);
             setValueCURP(a[0].Curp);
             setValueRFC(a[0].Curp);
             setValueTelCasa(a[0].Tipo_Telefono);
@@ -863,7 +912,8 @@ const AdminEditForm = () => {
             setValueNombreReg(a[0].Regimen);
             setValueNombreAse(a[0].Asentamiento);
             setValueComentario(a[0].Observaciones);
-
+            setValueCalle(a[0].do_completo.split(/(\d+)/)[0]);
+            setTipoGrado(a[0].co_gradoest);
 
 
         })
@@ -878,7 +928,7 @@ const AdminEditForm = () => {
         }}>
             <FormLine>
                 <StyledTextField id="IDP" label="IDP"
-                    value={tipoIDP}
+                    value={tipoIDP ||''}
                     onChange={handleChangeTipoIDP}
                 />
 
@@ -886,7 +936,7 @@ const AdminEditForm = () => {
                     id="TipoDeIngreso"
                     select
                     label="Tipo de Entrada"
-                    value={tipoIngreso}
+                    value={tipoIngreso||''}
                     onChange={handleChangeTipoIngreso}
 
                 >
@@ -898,18 +948,18 @@ const AdminEditForm = () => {
                 </StyledTextField>
 
                 <StyledTextField id="Nu" label="No."
-                    value={tipoNO}
+                    value={tipoNO ||''}
                     onChange={handleChangeTipoNO} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="Nombre" label="Nombre(s)"
-                    value={tipoNombre}
+                    value={tipoNombre ||''}
                     onChange={handleChangeTipoNombre} />
                 <StyledTextField id="ApellidoP" label="Apellido Paterno"
-                    value={tipoApellidoP}
+                    value={tipoApellidoP ||''}
                     onChange={handleChangeTipoApellidoP} />
                 <StyledTextField id="AppelidoM" label="Apellido Materno"
-                    value={tipoApellidoM}
+                    value={tipoApellidoM ||''}
                     onChange={handleChangeTipoApellidoM} />
             </FormLine>
 
@@ -921,7 +971,7 @@ const AdminEditForm = () => {
                         format="dd/MM/yyyy"
                         margin="normal"
                         id="date-picker-inline"
-                        value={selectedDate}
+                        value={selectedDate ||''}
                         onChange={handleDateChange}
                         KeyboardButtonProps={{
                             'aria-label': 'change date',
@@ -929,17 +979,17 @@ const AdminEditForm = () => {
                     />
                 </MuiPickersUtilsProvider>
                 <TextField id="Edad" label="Edad"
-                    value={tipoEdad}
+                    value={tipoEdad ||''}
                     onChange={handleChangeTipoEdad} />
                 <TextField id="LdNacimiento" label="Lugar de Nacimiento"
-                    value={tipoLugarNacimiento}
+                    value={tipoLugarNacimiento ||''}
                     onChange={handleChangeTipoLugarNacimiento} />
 
 
 
                 <FormControl component="fieldset">
                     <FormLabel component="legend">Sexo</FormLabel>
-                    <RadioGroup row aria-label="gender" name="gender1" value={valueGender} onChange={handleChangeGender}>
+                    <RadioGroup row aria-label="gender" name="gender1" value={valueGender ||''} onChange={handleChangeGender}>
                         <FormControlLabel value="Mujer" control={<Radio
 
                             onChange={handleChangeGender}
@@ -955,10 +1005,10 @@ const AdminEditForm = () => {
             </FormLine>
             <FormLine>
                 <SmallTextField id="RFC" label="RFC"
-                    value={valueRFC}
+                    value={valueRFC ||''}
                     onChange={handleChangeRFC} />
                 <StyledTextField id="CURP" label="CURP"
-                    value={valueCURP}
+                    value={valueCURP ||''}
                     onChange={handleChangeCURP} />
             </FormLine>
             <FormLine>
@@ -966,7 +1016,7 @@ const AdminEditForm = () => {
                     id="TelCasa"
                     select
                     label="Tipo de Telefono"
-                    value={valueTelCasa}
+                    value={valueTelCasa ||''}
                     onChange={handleChangeTelCasa}
 
                 >
@@ -977,20 +1027,20 @@ const AdminEditForm = () => {
                     ))}
                 </StyledTextField>
                 <StyledTextField id="TelReca" label="Telefono"
-                    value={valueTelRec}
+                    value={valueTelRec ||''}
                     onChange={handleChangeTelRec} />
 
             </FormLine>
             <FormLine>
                 <StyledTextField id="Ocupacion" label="Ocupacion"
-                    value={valueOcupacion}
+                    value={valueOcupacion ||''}
                     onChange={handleChangeOcupacion} />
 
                 <StyledTextField
                     id="TipoDeEtnicidad"
                     select
                     label="Tipo de Etnicidad"
-                    value={tipoEtnica}
+                    value={tipoEtnica ||''}
                     onChange={handleChangeTipoEtnica}
 
                 >
@@ -1005,7 +1055,7 @@ const AdminEditForm = () => {
                     id="TipoDeGrado"
                     select
                     label="Tipo de Grado"
-                    value={tipoGrado}
+                    value={tipoGrado ||''}
                     onChange={handleChangeTipoGrado}
 
                 >
@@ -1019,28 +1069,28 @@ const AdminEditForm = () => {
             </FormLine>
             <FormLine>
                 <StyledTextField id="Padre" label="Padre"
-                    value={valuePadre}
+                    value={valuePadre ||''}
                     onChange={handleChangePadre} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="Madre" label="Madre"
-                    value={valueMadre}
+                    value={valueMadre ||''}
                     onChange={handleChangeMadre} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="Tutor" label="Tutor"
-                    value={valueTutor}
+                    value={valueTutor ||''}
                     onChange={handleChangeTutor} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="Calle" label="Calle"
-                    value={valueCalle}
+                    value={valueCalle ||''}
                     onChange={handleChangeCalle} />
                 <SmallTextField id='interno' label='Interno'
-                    value={valueNoInterno}
+                    value={valueNoInterno ||''}
                     onChange={handleChangeNoInterno} />
                 <SmallTextField id='externo' label='Externo'
-                    value={valueNoExterno}
+                    value={valueNoExterno ||''}
                     onChange={handleChangeNoExterno} />
             </FormLine>
 
@@ -1049,7 +1099,7 @@ const AdminEditForm = () => {
                     id="TipoDeVialidad"
                     select
                     label="Tipo de Vialidad"
-                    value={tipoVial}
+                    value={tipoVial ||''}
                     onChange={handleChangeTipoDeVialidad}
 
                 >
@@ -1060,20 +1110,20 @@ const AdminEditForm = () => {
                     ))}
                 </StyledTextField>
                 <SmallTextField id='ut' label='UT'
-                    value={valueUT}
+                    value={valueUT ||''}
                     onChange={handleChangeUT} />
                 <SmallTextField id='CodigoPostal' label='Codigo Postal'
-                    value={valueCodigoPostal}
+                    value={valueCodigoPostal ||''}
                     onChange={handleChangeCodigoPostal} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="EntreCalle1" label="Entre Calle 1"
-                    value={valueEntreCalle1}
+                    value={valueEntreCalle1 ||''}
                     onChange={handleChangeEntreCalle1} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="EntreCalle2" label="Entre Calle 2"
-                    value={valueCalle2}
+                    value={valueCalle2 ||''}
                     onChange={handleChangeCalle2} />
             </FormLine>
             <FormLine>
@@ -1081,7 +1131,7 @@ const AdminEditForm = () => {
                     id="TipoReg"
                     select
                     label="Tipo de Regimen"
-                    value={valueTipoReg}
+                    value={valueTipoReg ||''}
                     onChange={handleChangeTipoReg}
 
                 >
@@ -1092,7 +1142,7 @@ const AdminEditForm = () => {
                     ))}
                 </StyledTextField>
                 <StyledTextField id="NombreReg" label="Nombre de Regimen"
-                    value={valueNombreReg}
+                    value={valueNombreReg ||''}
                     onChange={handleChangeNombreReg} />
             </FormLine>
             <FormLine>
@@ -1100,7 +1150,7 @@ const AdminEditForm = () => {
                     id="TipoAse"
                     select
                     label="Tipo de Asentamiento"
-                    value={valueTipoAse}
+                    value={valueTipoAse ||''}
                     onChange={handleChangeTipoAse}
 
                 >
@@ -1111,17 +1161,17 @@ const AdminEditForm = () => {
                     ))}
                 </StyledTextField>
                 <StyledTextField id="NombreAse" label="Nombre de Asentamiento"
-                    value={valueNombreAse}
+                    value={valueNombreAse ||''}
                     onChange={handleChangeNombreAse} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="Comentarios" label="Comentarios"
-                    value={valueComentario}
+                    value={valueComentario ||''}
                     onChange={handleChangeComentario} />
             </FormLine>
             <FormLine>
                 <Button variant="contained" color="primary" type='submit'>
-                    Agregar
+                    Editar
                 </Button>
             </FormLine>
             <Modal

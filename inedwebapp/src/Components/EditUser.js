@@ -231,11 +231,11 @@ const EditUser = () => {
 
     const body = (
         <div style={modalStyle} className={classes.paper}>
-            <h2 id="simple-modal-title">Se va a dar de Alta el Usuario:</h2>
+            <h2 id="simple-modal-title">Se va a Editar el Usuario:</h2>
             {Object.keys(AllDataUsers()).map(key =>
                 <BigText key={key}>{BasicData[key] + " : " + AllDataUsers()[key]}</BigText>)}
             <FormLine>
-                <Button to="/Visualizar" onClick={() => { UploadData(); handleClose(); history.push("/Visualizar"); }} variant="contained" color="primary" >Aceptar</Button>
+                <Button to="/Visualizar" onClick={() => { UploadData(); handleClose(); history.push("/Visualizar"); }} variant="contained" color="primary" >Aceptar Edición</Button>
                 <Button onClick={handleClose} variant="contained" color="secondary" >Regresar</Button>
             </FormLine>
 
@@ -274,73 +274,73 @@ const EditUser = () => {
 
 
         }}>
-            <FormLine>
-                <BigTextField id="Nombre" 
-                    value={user.b01_us_Nombre}
-                    onChange={handleChangeNombre} />
-                <BigTextField id="ApellidoP" 
-                    value={valueApellidoP}
-                    onChange={handleChangeApellidoP} />
-                <BigTextField id="ApellidoM" 
-                    value={valueApellidoM}
-                    onChange={handleChangeApellidoM} />
-            </FormLine>
-            <FormLine>
-                <BigTextField id="Clave" 
-                    value={user.b01_us_clave}
-                    onChange={handleChangeClave} />
-            </FormLine>
-            <FormLine>
-                <BigPassword>
-                    <InputLabel htmlFor="standard-adornment-password" ></InputLabel>
-                    <Input
+        <FormLine>
+        <BigTextField id="Nombre" label="Nombre(s)"
+            value={valueNombre ||''}
+            onChange={handleChangeNombre} />
+        <BigTextField id="ApellidoP" label="Apellido Paterno"
+            value={valueApellidoP ||''}
+            onChange={handleChangeApellidoP} />
+        <BigTextField id="ApellidoM" label="Apellido Materno"
+            value={valueApellidoM ||''}
+            onChange={handleChangeApellidoM} />
+    </FormLine>
+    <FormLine>
+        <BigTextField id="Clave" label="Clave"
+            value={valueClave ||''}
+            onChange={handleChangeClave} />
+    </FormLine>
+    <FormLine>
+        <BigPassword>
+            <InputLabel htmlFor="standard-adornment-password" >Password</InputLabel>
+            <Input
 
 
-                        id="standard-adornment-password"
+                id="standard-adornment-password"
 
-                        type={values.showPassword ? 'text' : 'password'}
-                        value={user.b01_us_password}
+                type={values.showPassword ? 'text' : 'password'}
+                value={values.password ||''}
 
-                        onChange={handleChangePassword('password')}
+                onChange={handleChangePassword('password')}
 
-                        error={valueError}
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                >
-                                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                    />
-                    <FormHelperText id="component-helper-text">{valueHelperText}</FormHelperText>
+                error={valueError}
+                endAdornment={
+                    <InputAdornment position="end">
+                        <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                        >
+                            {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                    </InputAdornment>
+                }
+            />
+            <FormHelperText id="component-helper-text">{valueHelperText}</FormHelperText>
 
-                </BigPassword>
-            </FormLine>
-            <FormLine>
-                <BigTextField
-                    id="Nivel"
-                    select
-                    
-                    value={user.b01_us_role}
-                    onChange={handleChangeTipoNivel}
+        </BigPassword>
+    </FormLine>
+    <FormLine>
+        <BigTextField
+            id="Nivel"
+            select
+            label="Nivel"
+            value={tipoNivel ||''}
+            onChange={handleChangeTipoNivel}
 
-                >
-                    {Niveles.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </BigTextField>
-                <BigTextField id="UT"  value={'pendiente'} onChange={handleChangeValueUT} />
-            </FormLine>
-            <FormLine>
-                <Button variant="contained" color="primary" type='submit'>
-                    Crear
-                </Button>
+        >
+            {Niveles.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                </MenuItem>
+            ))}
+        </BigTextField>
+        <BigTextField id="UT" label="Unidad Territorial" value={'Pendiente' ||''} onChange={handleChangeValueUT} />
+    </FormLine>
+    <FormLine>
+        <Button variant="contained" color="primary" type='submit'>
+            Editar
+        </Button>
             </FormLine>
             <Modal
                 open={open}

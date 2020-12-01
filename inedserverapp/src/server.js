@@ -349,6 +349,19 @@ app.post('/API/UpdateUser', async (req, res) => {
 )
 
 app.get('/API/DeleteAdult/:userId', async (req, res) => {
+    await sequelize.query(`DELETE FROM ds10_complpersonal WHERE co_persona = ${req.params.userId} `, {
+        replacements: {},
+        type: QueryTypes.DELETE
+    });
+    //let id2 = await sequelize.query(`SELECT per_Id_Persona FROM ds06_personas WHERE idds02 = ${req.params.userId}`, { type: QueryTypes.SELECT });
+    await sequelize.query(`DELETE FROM ds06_personas WHERE idds02 = ${req.params.userId} `, {
+        replacements: {},
+        type: QueryTypes.DELETE
+    });
+    await sequelize.query(`DELETE FROM ds03_domicilios WHERE do_Persona = ${req.params.userId} `, {
+        replacements: {},
+        type: QueryTypes.DELETE
+    });
     await sequelize.query(`DELETE FROM ds02_personas WHERE Id_Persona = ${req.params.userId} `, {
         replacements: {},
         type: QueryTypes.DELETE

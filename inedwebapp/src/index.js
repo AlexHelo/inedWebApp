@@ -105,7 +105,7 @@ ReactDOM.render(
 
       <Route path='/AceptarAdultoMonitor'>
         <NavNoS />
-        <Button to="/VisualizarAdmin" txt='Cancelar' />
+        <Button to="/VisualizarMonitor" txt='Cancelar' />
         <MonitorAcept />
       </Route>
 

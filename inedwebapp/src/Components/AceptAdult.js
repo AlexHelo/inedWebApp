@@ -430,40 +430,40 @@ const PertenenciaEtnica = [
         label: ' ZOQUE ',
     }];
 
-const GradoDeEstudios = [
-    {
-        value: 0,
-        label: 'NUNCA ASISTIO',
-    },
-    {
-        value: 1,
-        label: 'PRIMARIA',
-    },
-    {
-        value: 2,
-        label: 'SECUNDARIA',
-    },
-    {
-        value: 3,
-        label: 'PREPA',
-    },
-    {
-        value: 4,
-        label: 'TECNICA',
-    },
-    {
-        value: 5,
-        label: 'LIC',
-    },
-    {
-        value: 6,
-        label: 'MAESTRIA',
-    },
-    {
-        value: 7,
-        label: 'DOCTORADO',
-    },
-];
+    const GradoDeEstudios = [
+        {
+            value: 'NUNCA ASISTIO',
+            label: 'NUNCA ASISTIO',
+        },
+        {
+            value: 'PRIMARIA',
+            label: 'PRIMARIA',
+        },
+        {
+            value: 'SECUNDARIA',
+            label: 'SECUNDARIA',
+        },
+        {
+            value: 'PREPA',
+            label: 'PREPA',
+        },
+        {
+            value: 'TECNICA',
+            label: 'TECNICA',
+        },
+        {
+            value: 'LIC',
+            label: 'LIC',
+        },
+        {
+            value: 'MAESTRIA',
+            label: 'MAESTRIA',
+        },
+        {
+            value: 'DOCTORADO',
+            label: 'DOCTORADO',
+        },
+    ];
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -862,11 +862,11 @@ const AceptAdultForm = () => {
     
     const body = (
         <div style={modalStyle} className={classes.paper}>
-            <h2 id="simple-modal-title">Se va a dar de Alta el Usuario:</h2>
+            <h2 id="simple-modal-title">Se va a Ingresar el Usuario:</h2>
             {Object.keys(AllDataAdults1()).map(key =>
                 <BigText key={key}>{BasicData[key] + " : " + AllDataAdults1()[key]}</BigText>)}
             <FormLine>
-                <Button to="/VisualizarAdmin" onClick={() => { UploadData(); handleClose(); history.push("/VisualizarAdmin"); }} variant="contained" color="primary" >Aceptar</Button>
+                <Button to="/VisualizarAdmin" onClick={() => { UploadData(); handleClose(); history.push("/VisualizarAdmin"); }} variant="contained" color="primary" >Agregar Solicitud</Button>
                 <Button onClick={handleClose} variant="contained" color="secondary" >Regresar</Button>
             </FormLine>
 
@@ -881,7 +881,7 @@ const AceptAdultForm = () => {
             )
 
         }).then(a => {
-
+            console.log(a);
             setTipoIDP(a[0].Idp);
             setTipoNombre(a[0].Nombre);
             setTipoApellidoP(a[0].Apellido_Paterno);
@@ -889,7 +889,8 @@ const AceptAdultForm = () => {
             setSelectedDate(a[0].Fecha_Nacimiento);
             setTipoEdad(a[0].Edad);
             setTipoLugarNacimiento(a[0].co_lugarnac);
-            setValueGender(a[0].Sexo);
+            const NewvalueGender = (a[0].Sexo === 1) ? 'Hombre' : 'Mujer';
+            setValueGender(NewvalueGender);
             setValueCURP(a[0].Curp);
             setValueRFC(a[0].Curp);
             setValueTelCasa(a[0].Tipo_Telefono);
@@ -912,6 +913,8 @@ const AceptAdultForm = () => {
             setValueNombreReg(a[0].Regimen);
             setValueNombreAse(a[0].Asentamiento);
             setValueComentario(a[0].Observaciones);
+            setValueCalle(a[0].do_completo.split(/(\d+)/)[0]);
+            setTipoGrado(a[0].co_gradoest);
 
 
 
@@ -927,7 +930,7 @@ const AceptAdultForm = () => {
         }}>
             <FormLine>
                 <StyledTextField id="IDP" label="IDP"
-                    value={tipoIDP}
+                    value={tipoIDP ||''}
                     onChange={handleChangeTipoIDP}
                 />
 
@@ -935,7 +938,7 @@ const AceptAdultForm = () => {
                     id="TipoDeIngreso"
                     select
                     label="Tipo de Entrada"
-                    value={tipoIngreso}
+                    value={tipoIngreso||''}
                     onChange={handleChangeTipoIngreso}
 
                 >
@@ -947,18 +950,18 @@ const AceptAdultForm = () => {
                 </StyledTextField>
 
                 <StyledTextField id="Nu" label="No."
-                    value={tipoNO}
+                    value={tipoNO ||''}
                     onChange={handleChangeTipoNO} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="Nombre" label="Nombre(s)"
-                    value={tipoNombre}
+                    value={tipoNombre ||''}
                     onChange={handleChangeTipoNombre} />
                 <StyledTextField id="ApellidoP" label="Apellido Paterno"
-                    value={tipoApellidoP}
+                    value={tipoApellidoP ||''}
                     onChange={handleChangeTipoApellidoP} />
                 <StyledTextField id="AppelidoM" label="Apellido Materno"
-                    value={tipoApellidoM}
+                    value={tipoApellidoM ||''}
                     onChange={handleChangeTipoApellidoM} />
             </FormLine>
 
@@ -970,7 +973,7 @@ const AceptAdultForm = () => {
                         format="dd/MM/yyyy"
                         margin="normal"
                         id="date-picker-inline"
-                        value={selectedDate}
+                        value={selectedDate ||''}
                         onChange={handleDateChange}
                         KeyboardButtonProps={{
                             'aria-label': 'change date',
@@ -978,17 +981,17 @@ const AceptAdultForm = () => {
                     />
                 </MuiPickersUtilsProvider>
                 <TextField id="Edad" label="Edad"
-                    value={tipoEdad}
+                    value={tipoEdad ||''}
                     onChange={handleChangeTipoEdad} />
                 <TextField id="LdNacimiento" label="Lugar de Nacimiento"
-                    value={tipoLugarNacimiento}
+                    value={tipoLugarNacimiento ||''}
                     onChange={handleChangeTipoLugarNacimiento} />
 
 
 
                 <FormControl component="fieldset">
                     <FormLabel component="legend">Sexo</FormLabel>
-                    <RadioGroup row aria-label="gender" name="gender1" value={valueGender} onChange={handleChangeGender}>
+                    <RadioGroup row aria-label="gender" name="gender1" value={valueGender ||''} onChange={handleChangeGender}>
                         <FormControlLabel value="Mujer" control={<Radio
 
                             onChange={handleChangeGender}
@@ -1004,10 +1007,10 @@ const AceptAdultForm = () => {
             </FormLine>
             <FormLine>
                 <SmallTextField id="RFC" label="RFC"
-                    value={valueRFC}
+                    value={valueRFC ||''}
                     onChange={handleChangeRFC} />
                 <StyledTextField id="CURP" label="CURP"
-                    value={valueCURP}
+                    value={valueCURP ||''}
                     onChange={handleChangeCURP} />
             </FormLine>
             <FormLine>
@@ -1015,7 +1018,7 @@ const AceptAdultForm = () => {
                     id="TelCasa"
                     select
                     label="Tipo de Telefono"
-                    value={valueTelCasa}
+                    value={valueTelCasa ||''}
                     onChange={handleChangeTelCasa}
 
                 >
@@ -1026,20 +1029,20 @@ const AceptAdultForm = () => {
                     ))}
                 </StyledTextField>
                 <StyledTextField id="TelReca" label="Telefono"
-                    value={valueTelRec}
+                    value={valueTelRec ||''}
                     onChange={handleChangeTelRec} />
 
             </FormLine>
             <FormLine>
                 <StyledTextField id="Ocupacion" label="Ocupacion"
-                    value={valueOcupacion}
+                    value={valueOcupacion ||''}
                     onChange={handleChangeOcupacion} />
 
                 <StyledTextField
                     id="TipoDeEtnicidad"
                     select
                     label="Tipo de Etnicidad"
-                    value={tipoEtnica}
+                    value={tipoEtnica ||''}
                     onChange={handleChangeTipoEtnica}
 
                 >
@@ -1054,7 +1057,7 @@ const AceptAdultForm = () => {
                     id="TipoDeGrado"
                     select
                     label="Tipo de Grado"
-                    value={tipoGrado}
+                    value={tipoGrado ||''}
                     onChange={handleChangeTipoGrado}
 
                 >
@@ -1068,28 +1071,28 @@ const AceptAdultForm = () => {
             </FormLine>
             <FormLine>
                 <StyledTextField id="Padre" label="Padre"
-                    value={valuePadre}
+                    value={valuePadre ||''}
                     onChange={handleChangePadre} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="Madre" label="Madre"
-                    value={valueMadre}
+                    value={valueMadre ||''}
                     onChange={handleChangeMadre} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="Tutor" label="Tutor"
-                    value={valueTutor}
+                    value={valueTutor ||''}
                     onChange={handleChangeTutor} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="Calle" label="Calle"
-                    value={valueCalle}
+                    value={valueCalle ||''}
                     onChange={handleChangeCalle} />
                 <SmallTextField id='interno' label='Interno'
-                    value={valueNoInterno}
+                    value={valueNoInterno ||''}
                     onChange={handleChangeNoInterno} />
                 <SmallTextField id='externo' label='Externo'
-                    value={valueNoExterno}
+                    value={valueNoExterno ||''}
                     onChange={handleChangeNoExterno} />
             </FormLine>
 
@@ -1098,7 +1101,7 @@ const AceptAdultForm = () => {
                     id="TipoDeVialidad"
                     select
                     label="Tipo de Vialidad"
-                    value={tipoVial}
+                    value={tipoVial ||''}
                     onChange={handleChangeTipoDeVialidad}
 
                 >
@@ -1109,20 +1112,20 @@ const AceptAdultForm = () => {
                     ))}
                 </StyledTextField>
                 <SmallTextField id='ut' label='UT'
-                    value={valueUT}
+                    value={valueUT ||''}
                     onChange={handleChangeUT} />
                 <SmallTextField id='CodigoPostal' label='Codigo Postal'
-                    value={valueCodigoPostal}
+                    value={valueCodigoPostal ||''}
                     onChange={handleChangeCodigoPostal} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="EntreCalle1" label="Entre Calle 1"
-                    value={valueEntreCalle1}
+                    value={valueEntreCalle1 ||''}
                     onChange={handleChangeEntreCalle1} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="EntreCalle2" label="Entre Calle 2"
-                    value={valueCalle2}
+                    value={valueCalle2 ||''}
                     onChange={handleChangeCalle2} />
             </FormLine>
             <FormLine>
@@ -1130,7 +1133,7 @@ const AceptAdultForm = () => {
                     id="TipoReg"
                     select
                     label="Tipo de Regimen"
-                    value={valueTipoReg}
+                    value={valueTipoReg ||''}
                     onChange={handleChangeTipoReg}
 
                 >
@@ -1141,7 +1144,7 @@ const AceptAdultForm = () => {
                     ))}
                 </StyledTextField>
                 <StyledTextField id="NombreReg" label="Nombre de Regimen"
-                    value={valueNombreReg}
+                    value={valueNombreReg ||''}
                     onChange={handleChangeNombreReg} />
             </FormLine>
             <FormLine>
@@ -1149,7 +1152,7 @@ const AceptAdultForm = () => {
                     id="TipoAse"
                     select
                     label="Tipo de Asentamiento"
-                    value={valueTipoAse}
+                    value={valueTipoAse ||''}
                     onChange={handleChangeTipoAse}
 
                 >
@@ -1160,17 +1163,17 @@ const AceptAdultForm = () => {
                     ))}
                 </StyledTextField>
                 <StyledTextField id="NombreAse" label="Nombre de Asentamiento"
-                    value={valueNombreAse}
+                    value={valueNombreAse ||''}
                     onChange={handleChangeNombreAse} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="Comentarios" label="Comentarios"
-                    value={valueComentario}
+                    value={valueComentario ||''}
                     onChange={handleChangeComentario} />
             </FormLine>
             <FormLine>
                 <Button variant="contained" color="primary" type='submit'>
-                    Agregar
+                    Agregar Solicitud
                 </Button>
             </FormLine>
             <Modal

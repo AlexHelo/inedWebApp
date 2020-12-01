@@ -171,7 +171,7 @@ const EnhancedTableToolbar = (props) => {
 
                 <div>
                     <Tooltip title="Borrar">
-                        <IconButton aria-label="Borrar">
+                        <IconButton aria-label="Borrar" onClick={OnClickDelete}>
                             <DeleteIcon />
                         </IconButton>
                     </Tooltip>
@@ -200,6 +200,7 @@ const EnhancedTableToolbar = (props) => {
 
 EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
+    OnClickDelete: PropTypes.func.isRequired
 };
 
 const useStyles = makeStyles((theme) => ({
