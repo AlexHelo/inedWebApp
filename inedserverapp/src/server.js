@@ -18,6 +18,12 @@ app.get('/API/AllAdults', async (req, res) => {
 
     res.send(adults)
 })
+app.get('/API/AllAdultsAdmin', async (req, res) => {
+
+    const adults = await sequelize.query("SELECT * FROM ds02_personas WHERE Status IN (4,7) ORDER BY Nombre ", { type: QueryTypes.SELECT });
+
+    res.send(adults)
+})
 
 app.get('/API/AllRequestsMonitor', async (req, res) => {
 

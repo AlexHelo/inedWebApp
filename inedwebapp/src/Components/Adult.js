@@ -19,6 +19,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import styled from 'styled-components';
+import Modal from '@material-ui/core/Modal';
+import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 
 const TableTitle = styled(Typography)({
@@ -29,6 +31,31 @@ const TableTitle = styled(Typography)({
     marginRight: '2%',
     marginTop: '5px'
 })
+const BigText = styled(Typography)({
+    width: '100%',
+    marginRight: '5% !important',
+    marginLeft: '5% !important'
+
+})
+const FormLine = styled.span({
+
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    flexWrap: 'noWrap',
+    marginTop: '2%',
+
+})
+function getModalStyle() {
+    const top = 50;
+    const left = 50;
+
+    return {
+        top: `${top}%`,
+        left: `${left}%`,
+        transform: `translate(-${top}%, -${left}%)`,
+    };
+}
 
 
 function descendingComparator(a, b, orderBy) {
@@ -291,7 +318,27 @@ export default function EnhancedTable(props) {
     const isSelected = (Id_Persona) => selected.indexOf(Id_Persona) !== -1;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, adult.length - page * rowsPerPage);
+    const [modalStyle] = React.useState(getModalStyle);
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    };
 
+    const handleClose = () => {
+        setOpen(false);
+    };
+    // const body = (
+    //     <div style={modalStyle} className={classes.paper}>
+    //         <h2 id="simple-modal-title">Se va a dar de Alta el Usuario:</h2>
+    //         {Object.keys(AllDataAdults1()).map(key =>
+    //             <BigText key={key}>{BasicData[key] + " : " + AllDataAdults1()[key]}</BigText>)}
+    //         <FormLine>
+    //             <Button to="/VisualizarAdmin" onClick={() => { UploadData(); handleClose(); history.push("/VisualizarAdmin"); }} variant="contained" color="primary" >Aceptar</Button>
+    //             <Button onClick={handleClose} variant="contained" color="secondary" >Regresar</Button>
+    //         </FormLine>
+
+    //     </div>
+    // );
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
@@ -376,6 +423,7 @@ export default function EnhancedTable(props) {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
+            
 
         </div>
     );
