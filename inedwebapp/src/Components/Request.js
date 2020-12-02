@@ -276,23 +276,23 @@ export default function EnhancedTable(props) {
             }).then(a => { setRequests(a); kl=false;});
     
             }else if(kl==true){
-                // fetch('http://localhost:8080/API/AllRequestsAdmin').then(response => {
+                fetch('http://localhost:8080/API/AllRequestsAdmin').then(response => {
     
-                //     return (
-                //         response.json()
-                //     )
+                    return (
+                        response.json()
+                    )
     
-                // }).then(a => { setRequests(a); })
+                }).then(a => { setRequests(a); })
         }}
-        // else{
-        //     fetch('http://localhost:8080/API/AllRequestsAdmin').then(response => {
+        else{
+            fetch('http://localhost:8080/API/AllRequestsAdmin').then(response => {
     
-        //             return (
-        //                 response.json()
-        //             )
+                    return (
+                        response.json()
+                    )
     
-        //         }).then(a => { setRequests(a); })
-        // }
+                }).then(a => { setRequests(a); })
+        }
     }, []);
 
 

@@ -124,6 +124,14 @@ const fields1 = [
     {
         value: 'Responsible',
         label: 'Responsable Nombre',
+    },
+    {
+        value: 'Unidad Territorial',
+        label: 'Unidad Territorial',
+    },
+    {
+        value: 'IDP',
+        label: 'IDP',
     }
 
 ];
@@ -140,14 +148,7 @@ const fields2 = [
         value: 'Nombre de Adulto',
         label: 'Nombre de Adulto',
     },
-    {
-        value: 'Unidad Territorial',
-        label: 'Unidad Territorial',
-    },
-    {
-        value: 'IDP',
-        label: 'IDP',
-    }
+    
 ];
 const fields3 = [
     {
