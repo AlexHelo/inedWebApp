@@ -56,7 +56,8 @@ const CreateBox = styled.form({
     paddingBottom: '1%',
     width: '70%',
     marginLeft: 'Auto',
-    marginRight: 'Auto'
+    marginRight: 'Auto',
+    marginBottom: '5%',
 
 })
 
@@ -496,7 +497,7 @@ function getModalStyle() {
 
 
 
-const AceptAdultFormMonitor = () => {
+const AdminEditForm = () => {
 
     const location = useLocation();
     const [user, setUser] = React.useState([]);
@@ -666,6 +667,7 @@ const AceptAdultFormMonitor = () => {
     const handleChangeTipoNdUsuario = (event) => {
         settipoNdUsuario(event.target.value);
     };
+
     const [tipoTele, setTipoTele] = React.useState([]);
     const [tipoRegimen, setTipoRegimen] = React.useState([]);
     const [tipoAsentamiento, setTipoAsentamiento] = React.useState([]);
@@ -732,8 +734,8 @@ const AceptAdultFormMonitor = () => {
             Edad: tipoEdad,
             LugarNacimiento: tipoLugarNacimiento,
             Sexo: NewvalueGender,
-            Status1: 6,
-            StatusArchivo: 0,
+            Status1: 5,
+            StatusArchivo: 2,
             //Tipo_Telefono: 1,
             Domicilio_Principal: DomicilioPrincipal,
             CIB: valueCIB,
@@ -775,37 +777,22 @@ const AceptAdultFormMonitor = () => {
         const NewvalueGender = (valueGender === 'Hombre') ? 1 : 2;
         return {
             Idp: tipoIDP,
+            Usuario: tipoNdUsuario,
             Nombre: tipoNombre,
             Apellido_Paterno: tipoApellidoP,
             Apellido_Materno: tipoApellidoM,
-            Fecha_Nacimiento: selectedDate,
-            Edad: tipoEdad,
-            LugarNacimiento: tipoLugarNacimiento,
-            Sexo: NewvalueGender,
             Curp: valueCURP,
-            Telefono: valueTelRec,
-            Ocupacion: valueOcupacion,
-            Tipo_de_Etnicidad: tipoEtnica,
-            Tipo_de_Grado: tipoGrado,
-            Padre: valuePadre,
-            Madre: valueMadre,
-            Rep_Completo: valueTutor,
             Domicilio_Principal: DomicilioPrincipal,
             Tipo_Vialidad: tipoVial,
             UT: valueUT,
             Codigo_Postal: valueCodigoPostal,
-            Regimen_Hab: valueTipoReg,
-            Regimen: valueNombreReg,
-            do_Regimen: valueNombreReg,
-            tipo_Asentamiento: valueTipoAse,
-            Asentamiento: valueNombreAse,
-            do_Asentamiento: valueNombreAse,
         }
 
     }
 
     const BasicData = {
         Idp: 'IDP',
+        Usuario: 'Nombre de Usuario',
         // TipoIngrso: 'Tipo de Ingreso',
         // Folio_solicitud: 'Folio Solicitud',
         Nombre: 'Nombre',
@@ -865,11 +852,11 @@ const AceptAdultFormMonitor = () => {
     }
     const body = (
         <div style={modalStyle} className={classes.paper}>
-            <h2 id="simple-modal-title">Se va a Aceptar el Usuario:</h2>
+            <h2 id="simple-modal-title">Se va a Modificar el Adulto:</h2>
             {Object.keys(AllDataAdults1()).map(key =>
                 <BigText key={key}>{BasicData[key] + " : " + AllDataAdults1()[key]}</BigText>)}
             <FormLine>
-                <Button to="/MonitorBuscar" onClick={() => { UploadData(); handleClose(); history.push("/MonitorBuscar"); }} variant="contained" color="primary" >Aceptar Solicitud</Button>
+                <Button to="/UsuarioBuscar" onClick={() => { UploadData(); handleClose(); history.push("/UsuarioBuscar"); }} variant="contained" color="primary" >Aceptar Edición</Button>
                 <Button onClick={handleClose} variant="contained" color="secondary" >Regresar</Button>
             </FormLine>
 
@@ -885,7 +872,6 @@ const AceptAdultFormMonitor = () => {
 
         }).then(a => {
 
-            settipoNdUsuario(a[0].Recibe_solicitud);
             setTipoIDP(a[0].Idp);
             setTipoNombre(a[0].Nombre);
             setTipoApellidoP(a[0].Apellido_Paterno);
@@ -894,9 +880,9 @@ const AceptAdultFormMonitor = () => {
             setTipoEdad(a[0].Edad);
             setTipoLugarNacimiento(a[0].co_lugarnac);
             const NewvalueGender = (a[0].Sexo === 1) ? 'Hombre' : 'Mujer';
-            setValueGender(NewvalueGender);;
+            setValueGender(NewvalueGender);
             setValueCURP(a[0].Curp);
-            setValueRFC(a[0].Curp);
+            setValueRFC(a[0].RFC);
             setValueTelCasa(a[0].Tipo_Telefono);
             setValueTelRec(a[0].Telefono);
             setValueOcupacion(a[0].co_ocupacion);
@@ -921,18 +907,18 @@ const AceptAdultFormMonitor = () => {
             setTipoGrado(a[0].co_gradoest);
 
 
-
         })
     }, []);
 
 
     return (
 
+
         <div>
             <CreateBox>
                 <FormLine>
                     <StyledTextField id="NdUsuario" label="Nombre de Usuario"
-                        value={tipoNdUsuario || ''}
+                        value={tipoNdUsuario}
                         onChange={handleChangeTipoNdUsuario}
                     />
 
@@ -951,7 +937,7 @@ const AceptAdultFormMonitor = () => {
                         onChange={handleChangeTipoIDP}
                     />
 
-                    <StyledTextField
+                    <StyledTextField disabled type="password"
                         id="TipoDeIngreso"
                         select
                         label="Tipo de Entrada"
@@ -959,14 +945,10 @@ const AceptAdultFormMonitor = () => {
                         onChange={handleChangeTipoIngreso}
 
                     >
-                        {TiposDeEntrada.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
+
                     </StyledTextField>
 
-                    <StyledTextField id="Nu" label="No."
+                    <StyledTextField disabled type="password" id="Nu" label="No."
                         value={tipoNO || ''}
                         onChange={handleChangeTipoNO} />
                 </FormLine>
@@ -983,8 +965,8 @@ const AceptAdultFormMonitor = () => {
                 </FormLine>
 
                 <FormLine>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
+                    <MuiPickersUtilsProvider disabled type="password" utils={DateFnsUtils}>
+                        <KeyboardDatePicker disabled type="password"
                             disableToolbar
                             variant="inline"
                             format="dd/MM/yyyy"
@@ -997,16 +979,16 @@ const AceptAdultFormMonitor = () => {
                             }}
                         />
                     </MuiPickersUtilsProvider>
-                    <TextField id="Edad" label="Edad"
+                    <TextField disabled type="password" id="Edad" label="Edad"
                         value={tipoEdad || ''}
                         onChange={handleChangeTipoEdad} />
-                    <TextField id="LdNacimiento" label="Lugar de Nacimiento"
+                    <TextField disabled type="password" id="LdNacimiento" label="Lugar de Nacimiento"
                         value={tipoLugarNacimiento || ''}
                         onChange={handleChangeTipoLugarNacimiento} />
 
 
 
-                    <FormControl component="fieldset">
+                    <FormControl disabled type="password" component="fieldset">
                         <FormLabel component="legend">Sexo</FormLabel>
                         <RadioGroup row aria-label="gender" name="gender1" value={valueGender || ''} onChange={handleChangeGender}>
                             <FormControlLabel value="Mujer" control={<Radio
@@ -1023,7 +1005,7 @@ const AceptAdultFormMonitor = () => {
                     </FormControl>
                 </FormLine>
                 <FormLine>
-                    <SmallTextField id="RFC" label="RFC"
+                    <SmallTextField disabled type="password" id="RFC" label="RFC"
                         value={valueRFC || ''}
                         onChange={handleChangeRFC} />
                     <StyledTextField id="CURP" label="CURP"
@@ -1031,7 +1013,7 @@ const AceptAdultFormMonitor = () => {
                         onChange={handleChangeCURP} />
                 </FormLine>
                 <FormLine>
-                    <StyledTextField
+                    <StyledTextField disabled type="password"
                         id="TelCasa"
                         select
                         label="Tipo de Telefono"
@@ -1039,23 +1021,19 @@ const AceptAdultFormMonitor = () => {
                         onChange={handleChangeTelCasa}
 
                     >
-                        {tipoTele.map((option) => (
-                            <MenuItem key={option.te_id} value={option.te_id}>
-                                {option.te_msglargo}
-                            </MenuItem>
-                        ))}
+
                     </StyledTextField>
-                    <StyledTextField id="TelReca" label="Telefono"
+                    <StyledTextField disabled type="password" id="TelReca" label="Telefono"
                         value={valueTelRec || ''}
                         onChange={handleChangeTelRec} />
 
                 </FormLine>
                 <FormLine>
-                    <StyledTextField id="Ocupacion" label="Ocupacion"
+                    <StyledTextField disabled type="password" id="Ocupacion" label="Ocupacion"
                         value={valueOcupacion || ''}
                         onChange={handleChangeOcupacion} />
 
-                    <StyledTextField
+                    <StyledTextField disabled type="password"
                         id="TipoDeEtnicidad"
                         select
                         label="Tipo de Etnicidad"
@@ -1063,14 +1041,10 @@ const AceptAdultFormMonitor = () => {
                         onChange={handleChangeTipoEtnica}
 
                     >
-                        {PertenenciaEtnica.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
+
                     </StyledTextField>
 
-                    <StyledTextField
+                    <StyledTextField disabled type="password"
                         id="TipoDeGrado"
                         select
                         label="Tipo de Grado"
@@ -1078,26 +1052,22 @@ const AceptAdultFormMonitor = () => {
                         onChange={handleChangeTipoGrado}
 
                     >
-                        {GradoDeEstudios.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
+
                     </StyledTextField>
 
                 </FormLine>
                 <FormLine>
-                    <StyledTextField id="Padre" label="Padre"
+                    <StyledTextField disabled type="password" id="Padre" label="Padre"
                         value={valuePadre || ''}
                         onChange={handleChangePadre} />
                 </FormLine>
                 <FormLine>
-                    <StyledTextField id="Madre" label="Madre"
+                    <StyledTextField disabled type="password" id="Madre" label="Madre"
                         value={valueMadre || ''}
                         onChange={handleChangeMadre} />
                 </FormLine>
                 <FormLine>
-                    <StyledTextField id="Tutor" label="Tutor"
+                    <StyledTextField disabled type="password" id="Tutor" label="Tutor"
                         value={valueTutor || ''}
                         onChange={handleChangeTutor} />
                 </FormLine>
@@ -1146,7 +1116,7 @@ const AceptAdultFormMonitor = () => {
                         onChange={handleChangeCalle2} />
                 </FormLine>
                 <FormLine>
-                    <StyledTextField
+                    <StyledTextField disabled type="password"
                         id="TipoReg"
                         select
                         label="Tipo de Regimen"
@@ -1154,18 +1124,14 @@ const AceptAdultFormMonitor = () => {
                         onChange={handleChangeTipoReg}
 
                     >
-                        {tipoRegimen.map((option) => (
-                            <MenuItem key={option.re_id} value={option.re_id}>
-                                {option.re_msglargo}
-                            </MenuItem>
-                        ))}
+
                     </StyledTextField>
-                    <StyledTextField id="NombreReg" label="Nombre de Regimen"
+                    <StyledTextField disabled type="password" id="NombreReg" label="Nombre de Regimen"
                         value={valueNombreReg || ''}
                         onChange={handleChangeNombreReg} />
                 </FormLine>
                 <FormLine>
-                    <StyledTextField
+                    <StyledTextField disabled type="password"
                         id="TipoAse"
                         select
                         label="Tipo de Asentamiento"
@@ -1173,25 +1139,21 @@ const AceptAdultFormMonitor = () => {
                         onChange={handleChangeTipoAse}
 
                     >
-                        {tipoAsentamiento.map((option) => (
-                            <MenuItem key={option.as_id} value={option.as_id}>
-                                {option.as_msgcorto}
-                            </MenuItem>
-                        ))}
+
                     </StyledTextField>
-                    <StyledTextField id="NombreAse" label="Nombre de Asentamiento"
+                    <StyledTextField disabled type="password" id="NombreAse" label="Nombre de Asentamiento"
                         value={valueNombreAse || ''}
                         onChange={handleChangeNombreAse} />
                 </FormLine>
                 <FormLine>
-                    <StyledTextField id="Comentarios" label="Comentarios"
+                    <StyledTextField disabled type="password" id="Comentarios" label="Comentarios"
                         value={valueComentario || ''}
                         onChange={handleChangeComentario} />
                 </FormLine>
                 <FormLine>
                     <Button variant="contained" color="primary" type='submit'>
-                        Aceptar Solicitud
-                    </Button>
+                        Editar
+                </Button>
                 </FormLine>
                 <Modal
                     open={open}
@@ -1210,4 +1172,4 @@ const AceptAdultFormMonitor = () => {
     )
 }
 
-export default AceptAdultFormMonitor;
+export default AdminEditForm; 

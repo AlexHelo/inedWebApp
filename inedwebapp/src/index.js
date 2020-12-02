@@ -9,6 +9,8 @@ import UserTabs from './Components/UserTabs';
 import Button from './Components/Button'
 import Create from './Components/Create'
 import AdminEdit from './Components/AdminEdit';
+import ModeratorEdit from './Components/ModeratorEdit';
+import BasicUserEdit from './Components/BasicUserEdit';
 import AdminVisualize from './Components/AdminVisualize';
 import CreateUser from './Components/CreateUser';
 import CreateRequestMonitor from './Components/CreateRequestsMonitor';
@@ -94,8 +96,20 @@ ReactDOM.render(
 
       <Route path='/EditarAdultoAdmin'>
         <NavNoS />
-        <Button to="/VisualizarAdmin" txt='Cancelar' />
+        <Button to="/AdminBuscar" txt='Cancelar' />
         <AdminEdit />
+      </Route>
+
+      <Route path='/EditarAdultoMonitor'>
+        <NavNoS />
+        <Button to="/MonitorBuscar" txt='Cancelar' />
+        <ModeratorEdit />
+      </Route>
+
+      <Route path='/EditarAdultoUsuario'>
+        <NavNoS />
+        <Button to="/UsuarioBuscar" txt='Cancelar' />
+        <BasicUserEdit />
       </Route>
 
       <Route path='/VisualizarAdultoAdmin'>

@@ -430,40 +430,40 @@ const PertenenciaEtnica = [
         label: ' ZOQUE ',
     }];
 
-    const GradoDeEstudios = [
-        {
-            value: 'NUNCA ASISTIO',
-            label: 'NUNCA ASISTIO',
-        },
-        {
-            value: 'PRIMARIA',
-            label: 'PRIMARIA',
-        },
-        {
-            value: 'SECUNDARIA',
-            label: 'SECUNDARIA',
-        },
-        {
-            value: 'PREPA',
-            label: 'PREPA',
-        },
-        {
-            value: 'TECNICA',
-            label: 'TECNICA',
-        },
-        {
-            value: 'LIC',
-            label: 'LIC',
-        },
-        {
-            value: 'MAESTRIA',
-            label: 'MAESTRIA',
-        },
-        {
-            value: 'DOCTORADO',
-            label: 'DOCTORADO',
-        },
-    ];
+const GradoDeEstudios = [
+    {
+        value: 'NUNCA ASISTIO',
+        label: 'NUNCA ASISTIO',
+    },
+    {
+        value: 'PRIMARIA',
+        label: 'PRIMARIA',
+    },
+    {
+        value: 'SECUNDARIA',
+        label: 'SECUNDARIA',
+    },
+    {
+        value: 'PREPA',
+        label: 'PREPA',
+    },
+    {
+        value: 'TECNICA',
+        label: 'TECNICA',
+    },
+    {
+        value: 'LIC',
+        label: 'LIC',
+    },
+    {
+        value: 'MAESTRIA',
+        label: 'MAESTRIA',
+    },
+    {
+        value: 'DOCTORADO',
+        label: 'DOCTORADO',
+    },
+];
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -662,6 +662,10 @@ const AceptAdultForm = () => {
         setTipoGrado(event.target.value);
     };
 
+    const [tipoNdUsuario, settipoNdUsuario] = React.useState();
+    const handleChangeTipoNdUsuario = (event) => {
+        settipoNdUsuario(event.target.value);
+    };
     const [tipoTele, setTipoTele] = React.useState([]);
     const [tipoRegimen, setTipoRegimen] = React.useState([]);
     const [tipoAsentamiento, setTipoAsentamiento] = React.useState([]);
@@ -717,7 +721,7 @@ const AceptAdultForm = () => {
         const NewvalueGender = (valueGender === 'Hombre') ? 1 : 2;
         return {
             Idp: tipoIDP,
-            Usuario: 'Administrador',
+            Usuario: tipoNdUsuario,
             //TipoIngrso: tipoIngreso,
             //Folio_solicitud: tipoNO,
             Nombre: tipoNombre,
@@ -859,14 +863,14 @@ const AceptAdultForm = () => {
             body: JSON.stringify(AllDataAdults())
         }).then((res) => console.log(res));
     }
-    
+
     const body = (
         <div style={modalStyle} className={classes.paper}>
             <h2 id="simple-modal-title">Se va a Ingresar el Usuario:</h2>
             {Object.keys(AllDataAdults1()).map(key =>
                 <BigText key={key}>{BasicData[key] + " : " + AllDataAdults1()[key]}</BigText>)}
             <FormLine>
-                <Button to="/VisualizarAdmin" onClick={() => { UploadData(); handleClose(); history.push("/VisualizarAdmin"); }} variant="contained" color="primary" >Agregar Solicitud</Button>
+                <Button to="/AdminBuscar" onClick={() => { UploadData(); handleClose(); history.push("/AdminBuscar"); }} variant="contained" color="primary" >Agregar Solicitud</Button>
                 <Button onClick={handleClose} variant="contained" color="secondary" >Regresar</Button>
             </FormLine>
 
@@ -881,7 +885,8 @@ const AceptAdultForm = () => {
             )
 
         }).then(a => {
-            console.log(a);
+
+            settipoNdUsuario(a[0].Recibe_solicitud);
             setTipoIDP(a[0].Idp);
             setTipoNombre(a[0].Nombre);
             setTipoApellidoP(a[0].Apellido_Paterno);
@@ -923,271 +928,286 @@ const AceptAdultForm = () => {
 
 
     return (
-        <CreateBox onSubmit={(e) => {
-            e.preventDefault();
-            handleOpen()
 
-        }}>
-            <FormLine>
-                <StyledTextField id="IDP" label="IDP"
-                    value={tipoIDP ||''}
-                    onChange={handleChangeTipoIDP}
-                />
-
-                <StyledTextField
-                    id="TipoDeIngreso"
-                    select
-                    label="Tipo de Entrada"
-                    value={tipoIngreso||''}
-                    onChange={handleChangeTipoIngreso}
-
-                >
-                    {TiposDeEntrada.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </StyledTextField>
-
-                <StyledTextField id="Nu" label="No."
-                    value={tipoNO ||''}
-                    onChange={handleChangeTipoNO} />
-            </FormLine>
-            <FormLine>
-                <StyledTextField id="Nombre" label="Nombre(s)"
-                    value={tipoNombre ||''}
-                    onChange={handleChangeTipoNombre} />
-                <StyledTextField id="ApellidoP" label="Apellido Paterno"
-                    value={tipoApellidoP ||''}
-                    onChange={handleChangeTipoApellidoP} />
-                <StyledTextField id="AppelidoM" label="Apellido Materno"
-                    value={tipoApellidoM ||''}
-                    onChange={handleChangeTipoApellidoM} />
-            </FormLine>
-
-            <FormLine>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                        disableToolbar
-                        variant="inline"
-                        format="dd/MM/yyyy"
-                        margin="normal"
-                        id="date-picker-inline"
-                        value={selectedDate ||''}
-                        onChange={handleDateChange}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
+        <div>
+            <CreateBox>
+                <FormLine>
+                    <StyledTextField id="NdUsuario" label="Nombre de Usuario"
+                        value={tipoNdUsuario || ''}
+                        onChange={handleChangeTipoNdUsuario}
                     />
-                </MuiPickersUtilsProvider>
-                <TextField id="Edad" label="Edad"
-                    value={tipoEdad ||''}
-                    onChange={handleChangeTipoEdad} />
-                <TextField id="LdNacimiento" label="Lugar de Nacimiento"
-                    value={tipoLugarNacimiento ||''}
-                    onChange={handleChangeTipoLugarNacimiento} />
+
+                </FormLine>
+
+            </CreateBox>
+
+            <CreateBox onSubmit={(e) => {
+                e.preventDefault();
+                handleOpen()
+
+            }}>
+                <FormLine>
+                    <StyledTextField id="IDP" label="IDP"
+                        value={tipoIDP || ''}
+                        onChange={handleChangeTipoIDP}
+                    />
+
+                    <StyledTextField
+                        id="TipoDeIngreso"
+                        select
+                        label="Tipo de Entrada"
+                        value={tipoIngreso || ''}
+                        onChange={handleChangeTipoIngreso}
+
+                    >
+                        {TiposDeEntrada.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </StyledTextField>
+
+                    <StyledTextField id="Nu" label="No."
+                        value={tipoNO || ''}
+                        onChange={handleChangeTipoNO} />
+                </FormLine>
+                <FormLine>
+                    <StyledTextField id="Nombre" label="Nombre(s)"
+                        value={tipoNombre || ''}
+                        onChange={handleChangeTipoNombre} />
+                    <StyledTextField id="ApellidoP" label="Apellido Paterno"
+                        value={tipoApellidoP || ''}
+                        onChange={handleChangeTipoApellidoP} />
+                    <StyledTextField id="AppelidoM" label="Apellido Materno"
+                        value={tipoApellidoM || ''}
+                        onChange={handleChangeTipoApellidoM} />
+                </FormLine>
+
+                <FormLine>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                            disableToolbar
+                            variant="inline"
+                            format="dd/MM/yyyy"
+                            margin="normal"
+                            id="date-picker-inline"
+                            value={selectedDate || ''}
+                            onChange={handleDateChange}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                            }}
+                        />
+                    </MuiPickersUtilsProvider>
+                    <TextField id="Edad" label="Edad"
+                        value={tipoEdad || ''}
+                        onChange={handleChangeTipoEdad} />
+                    <TextField id="LdNacimiento" label="Lugar de Nacimiento"
+                        value={tipoLugarNacimiento || ''}
+                        onChange={handleChangeTipoLugarNacimiento} />
 
 
 
-                <FormControl component="fieldset">
-                    <FormLabel component="legend">Sexo</FormLabel>
-                    <RadioGroup row aria-label="gender" name="gender1" value={valueGender ||''} onChange={handleChangeGender}>
-                        <FormControlLabel value="Mujer" control={<Radio
+                    <FormControl component="fieldset">
+                        <FormLabel component="legend">Sexo</FormLabel>
+                        <RadioGroup row aria-label="gender" name="gender1" value={valueGender || ''} onChange={handleChangeGender}>
+                            <FormControlLabel value="Mujer" control={<Radio
 
-                            onChange={handleChangeGender}
-                        />}
-                            label="Mujer" />
-                        <FormControlLabel value="Hombre" control={<Radio
+                                onChange={handleChangeGender}
+                            />}
+                                label="Mujer" />
+                            <FormControlLabel value="Hombre" control={<Radio
 
-                            onChange={handleChangeGender}
-                        />}
-                            label="Hombre" />
-                    </RadioGroup>
-                </FormControl>
-            </FormLine>
-            <FormLine>
-                <SmallTextField id="RFC" label="RFC"
-                    value={valueRFC ||''}
-                    onChange={handleChangeRFC} />
-                <StyledTextField id="CURP" label="CURP"
-                    value={valueCURP ||''}
-                    onChange={handleChangeCURP} />
-            </FormLine>
-            <FormLine>
-                <StyledTextField
-                    id="TelCasa"
-                    select
-                    label="Tipo de Telefono"
-                    value={valueTelCasa ||''}
-                    onChange={handleChangeTelCasa}
+                                onChange={handleChangeGender}
+                            />}
+                                label="Hombre" />
+                        </RadioGroup>
+                    </FormControl>
+                </FormLine>
+                <FormLine>
+                    <SmallTextField id="RFC" label="RFC"
+                        value={valueRFC || ''}
+                        onChange={handleChangeRFC} />
+                    <StyledTextField id="CURP" label="CURP"
+                        value={valueCURP || ''}
+                        onChange={handleChangeCURP} />
+                </FormLine>
+                <FormLine>
+                    <StyledTextField
+                        id="TelCasa"
+                        select
+                        label="Tipo de Telefono"
+                        value={valueTelCasa || ''}
+                        onChange={handleChangeTelCasa}
 
-                >
-                    {tipoTele.map((option) => (
-                        <MenuItem key={option.te_id} value={option.te_id}>
-                            {option.te_msglargo}
-                        </MenuItem>
-                    ))}
-                </StyledTextField>
-                <StyledTextField id="TelReca" label="Telefono"
-                    value={valueTelRec ||''}
-                    onChange={handleChangeTelRec} />
+                    >
+                        {tipoTele.map((option) => (
+                            <MenuItem key={option.te_id} value={option.te_id}>
+                                {option.te_msglargo}
+                            </MenuItem>
+                        ))}
+                    </StyledTextField>
+                    <StyledTextField id="TelReca" label="Telefono"
+                        value={valueTelRec || ''}
+                        onChange={handleChangeTelRec} />
 
-            </FormLine>
-            <FormLine>
-                <StyledTextField id="Ocupacion" label="Ocupacion"
-                    value={valueOcupacion ||''}
-                    onChange={handleChangeOcupacion} />
+                </FormLine>
+                <FormLine>
+                    <StyledTextField id="Ocupacion" label="Ocupacion"
+                        value={valueOcupacion || ''}
+                        onChange={handleChangeOcupacion} />
 
-                <StyledTextField
-                    id="TipoDeEtnicidad"
-                    select
-                    label="Tipo de Etnicidad"
-                    value={tipoEtnica ||''}
-                    onChange={handleChangeTipoEtnica}
+                    <StyledTextField
+                        id="TipoDeEtnicidad"
+                        select
+                        label="Tipo de Etnicidad"
+                        value={tipoEtnica || ''}
+                        onChange={handleChangeTipoEtnica}
 
-                >
-                    {PertenenciaEtnica.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </StyledTextField>
+                    >
+                        {PertenenciaEtnica.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </StyledTextField>
 
-                <StyledTextField
-                    id="TipoDeGrado"
-                    select
-                    label="Tipo de Grado"
-                    value={tipoGrado ||''}
-                    onChange={handleChangeTipoGrado}
+                    <StyledTextField
+                        id="TipoDeGrado"
+                        select
+                        label="Tipo de Grado"
+                        value={tipoGrado || ''}
+                        onChange={handleChangeTipoGrado}
 
-                >
-                    {GradoDeEstudios.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </StyledTextField>
+                    >
+                        {GradoDeEstudios.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </StyledTextField>
 
-            </FormLine>
-            <FormLine>
-                <StyledTextField id="Padre" label="Padre"
-                    value={valuePadre ||''}
-                    onChange={handleChangePadre} />
-            </FormLine>
-            <FormLine>
-                <StyledTextField id="Madre" label="Madre"
-                    value={valueMadre ||''}
-                    onChange={handleChangeMadre} />
-            </FormLine>
-            <FormLine>
-                <StyledTextField id="Tutor" label="Tutor"
-                    value={valueTutor ||''}
-                    onChange={handleChangeTutor} />
-            </FormLine>
-            <FormLine>
-                <StyledTextField id="Calle" label="Calle"
-                    value={valueCalle ||''}
-                    onChange={handleChangeCalle} />
-                <SmallTextField id='interno' label='Interno'
-                    value={valueNoInterno ||''}
-                    onChange={handleChangeNoInterno} />
-                <SmallTextField id='externo' label='Externo'
-                    value={valueNoExterno ||''}
-                    onChange={handleChangeNoExterno} />
-            </FormLine>
+                </FormLine>
+                <FormLine>
+                    <StyledTextField id="Padre" label="Padre"
+                        value={valuePadre || ''}
+                        onChange={handleChangePadre} />
+                </FormLine>
+                <FormLine>
+                    <StyledTextField id="Madre" label="Madre"
+                        value={valueMadre || ''}
+                        onChange={handleChangeMadre} />
+                </FormLine>
+                <FormLine>
+                    <StyledTextField id="Tutor" label="Tutor"
+                        value={valueTutor || ''}
+                        onChange={handleChangeTutor} />
+                </FormLine>
+                <FormLine>
+                    <StyledTextField id="Calle" label="Calle"
+                        value={valueCalle || ''}
+                        onChange={handleChangeCalle} />
+                    <SmallTextField id='interno' label='Interno'
+                        value={valueNoInterno || ''}
+                        onChange={handleChangeNoInterno} />
+                    <SmallTextField id='externo' label='Externo'
+                        value={valueNoExterno || ''}
+                        onChange={handleChangeNoExterno} />
+                </FormLine>
 
-            <FormLine>
-                <StyledTextField
-                    id="TipoDeVialidad"
-                    select
-                    label="Tipo de Vialidad"
-                    value={tipoVial ||''}
-                    onChange={handleChangeTipoDeVialidad}
+                <FormLine>
+                    <StyledTextField
+                        id="TipoDeVialidad"
+                        select
+                        label="Tipo de Vialidad"
+                        value={tipoVial || ''}
+                        onChange={handleChangeTipoDeVialidad}
 
-                >
-                    {TipoDeVialidad.map((option) => (
-                        <MenuItem key={option.vi_id} value={option.vi_id}>
-                            {option.vi_msglargo}
-                        </MenuItem>
-                    ))}
-                </StyledTextField>
-                <SmallTextField id='ut' label='UT'
-                    value={valueUT ||''}
-                    onChange={handleChangeUT} />
-                <SmallTextField id='CodigoPostal' label='Codigo Postal'
-                    value={valueCodigoPostal ||''}
-                    onChange={handleChangeCodigoPostal} />
-            </FormLine>
-            <FormLine>
-                <StyledTextField id="EntreCalle1" label="Entre Calle 1"
-                    value={valueEntreCalle1 ||''}
-                    onChange={handleChangeEntreCalle1} />
-            </FormLine>
-            <FormLine>
-                <StyledTextField id="EntreCalle2" label="Entre Calle 2"
-                    value={valueCalle2 ||''}
-                    onChange={handleChangeCalle2} />
-            </FormLine>
-            <FormLine>
-                <StyledTextField
-                    id="TipoReg"
-                    select
-                    label="Tipo de Regimen"
-                    value={valueTipoReg ||''}
-                    onChange={handleChangeTipoReg}
+                    >
+                        {TipoDeVialidad.map((option) => (
+                            <MenuItem key={option.vi_id} value={option.vi_id}>
+                                {option.vi_msglargo}
+                            </MenuItem>
+                        ))}
+                    </StyledTextField>
+                    <SmallTextField id='ut' label='UT'
+                        value={valueUT || ''}
+                        onChange={handleChangeUT} />
+                    <SmallTextField id='CodigoPostal' label='Codigo Postal'
+                        value={valueCodigoPostal || ''}
+                        onChange={handleChangeCodigoPostal} />
+                </FormLine>
+                <FormLine>
+                    <StyledTextField id="EntreCalle1" label="Entre Calle 1"
+                        value={valueEntreCalle1 || ''}
+                        onChange={handleChangeEntreCalle1} />
+                </FormLine>
+                <FormLine>
+                    <StyledTextField id="EntreCalle2" label="Entre Calle 2"
+                        value={valueCalle2 || ''}
+                        onChange={handleChangeCalle2} />
+                </FormLine>
+                <FormLine>
+                    <StyledTextField
+                        id="TipoReg"
+                        select
+                        label="Tipo de Regimen"
+                        value={valueTipoReg || ''}
+                        onChange={handleChangeTipoReg}
 
-                >
-                    {tipoRegimen.map((option) => (
-                        <MenuItem key={option.re_id} value={option.re_id}>
-                            {option.re_msglargo}
-                        </MenuItem>
-                    ))}
-                </StyledTextField>
-                <StyledTextField id="NombreReg" label="Nombre de Regimen"
-                    value={valueNombreReg ||''}
-                    onChange={handleChangeNombreReg} />
-            </FormLine>
-            <FormLine>
-                <StyledTextField
-                    id="TipoAse"
-                    select
-                    label="Tipo de Asentamiento"
-                    value={valueTipoAse ||''}
-                    onChange={handleChangeTipoAse}
+                    >
+                        {tipoRegimen.map((option) => (
+                            <MenuItem key={option.re_id} value={option.re_id}>
+                                {option.re_msglargo}
+                            </MenuItem>
+                        ))}
+                    </StyledTextField>
+                    <StyledTextField id="NombreReg" label="Nombre de Regimen"
+                        value={valueNombreReg || ''}
+                        onChange={handleChangeNombreReg} />
+                </FormLine>
+                <FormLine>
+                    <StyledTextField
+                        id="TipoAse"
+                        select
+                        label="Tipo de Asentamiento"
+                        value={valueTipoAse || ''}
+                        onChange={handleChangeTipoAse}
 
-                >
-                    {tipoAsentamiento.map((option) => (
-                        <MenuItem key={option.as_id} value={option.as_id}>
-                            {option.as_msgcorto}
-                        </MenuItem>
-                    ))}
-                </StyledTextField>
-                <StyledTextField id="NombreAse" label="Nombre de Asentamiento"
-                    value={valueNombreAse ||''}
-                    onChange={handleChangeNombreAse} />
-            </FormLine>
-            <FormLine>
-                <StyledTextField id="Comentarios" label="Comentarios"
-                    value={valueComentario ||''}
-                    onChange={handleChangeComentario} />
-            </FormLine>
-            <FormLine>
-                <Button variant="contained" color="primary" type='submit'>
-                    Agregar Solicitud
+                    >
+                        {tipoAsentamiento.map((option) => (
+                            <MenuItem key={option.as_id} value={option.as_id}>
+                                {option.as_msgcorto}
+                            </MenuItem>
+                        ))}
+                    </StyledTextField>
+                    <StyledTextField id="NombreAse" label="Nombre de Asentamiento"
+                        value={valueNombreAse || ''}
+                        onChange={handleChangeNombreAse} />
+                </FormLine>
+                <FormLine>
+                    <StyledTextField id="Comentarios" label="Comentarios"
+                        value={valueComentario || ''}
+                        onChange={handleChangeComentario} />
+                </FormLine>
+                <FormLine>
+                    <Button variant="contained" color="primary" type='submit'>
+                        Agregar Solicitud
                 </Button>
-            </FormLine>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-                disableBackdropClick='true'
-            >
-                {body}
-            </Modal>
+                </FormLine>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    disableBackdropClick='true'
+                >
+                    {body}
+                </Modal>
 
 
-        </CreateBox>
+            </CreateBox>
+
+        </div>
 
     )
 }

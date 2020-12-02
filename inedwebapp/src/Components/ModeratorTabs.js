@@ -7,10 +7,10 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Adulto from './Adult'
+import Adulto from './AdultMonitor'
 import Usuario from './User'
 import Request from './RequestMonitor'
-import { useLocation } from "react-router-dom"; 
+import { useLocation } from "react-router-dom";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -65,11 +65,11 @@ const ModeratorTabs = (props) => {
 
     };
     const location = useLocation();
-    let first=true;
+    let first = true;
     React.useEffect(() => {
         console.log(location);
-        if(location.yes && first==true){
-            switch(location.tab){
+        if (location.yes && first == true) {
+            switch (location.tab) {
                 case 0:
                     setValue(0);
                     break;
@@ -81,8 +81,9 @@ const ModeratorTabs = (props) => {
                     break;
 
             }
-            first=false;
-        }})
+            first = false;
+        }
+    })
 
     return (
         <div className={classes.root}>
@@ -96,7 +97,7 @@ const ModeratorTabs = (props) => {
                 <Adulto value={location} />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <Request value={location}/>
+                <Request value={location} />
             </TabPanel>
             <TabPanel value={value} index={2}>
                 <Usuario value={location} />

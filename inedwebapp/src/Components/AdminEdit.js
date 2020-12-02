@@ -430,40 +430,40 @@ const PertenenciaEtnica = [
         label: ' ZOQUE ',
     }];
 
-    const GradoDeEstudios = [
-        {
-            value: 'NUNCA ASISTIO',
-            label: 'NUNCA ASISTIO',
-        },
-        {
-            value: 'PRIMARIA',
-            label: 'PRIMARIA',
-        },
-        {
-            value: 'SECUNDARIA',
-            label: 'SECUNDARIA',
-        },
-        {
-            value: 'PREPA',
-            label: 'PREPA',
-        },
-        {
-            value: 'TECNICA',
-            label: 'TECNICA',
-        },
-        {
-            value: 'LIC',
-            label: 'LIC',
-        },
-        {
-            value: 'MAESTRIA',
-            label: 'MAESTRIA',
-        },
-        {
-            value: 'DOCTORADO',
-            label: 'DOCTORADO',
-        },
-    ];
+const GradoDeEstudios = [
+    {
+        value: 'NUNCA ASISTIO',
+        label: 'NUNCA ASISTIO',
+    },
+    {
+        value: 'PRIMARIA',
+        label: 'PRIMARIA',
+    },
+    {
+        value: 'SECUNDARIA',
+        label: 'SECUNDARIA',
+    },
+    {
+        value: 'PREPA',
+        label: 'PREPA',
+    },
+    {
+        value: 'TECNICA',
+        label: 'TECNICA',
+    },
+    {
+        value: 'LIC',
+        label: 'LIC',
+    },
+    {
+        value: 'MAESTRIA',
+        label: 'MAESTRIA',
+    },
+    {
+        value: 'DOCTORADO',
+        label: 'DOCTORADO',
+    },
+];
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -853,19 +853,19 @@ const AdminEditForm = () => {
 
 
     const UploadData = () => {
-        // fetch('http://localhost:8080/API/SetUsers', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(AllDataUsers())
-        // }).then((res) => console.log(res));
+        fetch('http://localhost:8080/API/UpdateAdult', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(AllDataAdults())
+        }).then((res) => console.log(res));
     }
     const body = (
         <div style={modalStyle} className={classes.paper}>
-            <h2 id="simple-modal-title">Se va a Modificar el Usuario:</h2>
+            <h2 id="simple-modal-title">Se va a Modificar el Adulto:</h2>
             {Object.keys(AllDataAdults1()).map(key =>
                 <BigText key={key}>{BasicData[key] + " : " + AllDataAdults1()[key]}</BigText>)}
             <FormLine>
-                <Button to="/Visualizar" onClick={() => { UploadData(); handleClose(); history.push("/Visualizar"); }} variant="contained" color="primary" >Aceptar Edición</Button>
+                <Button to="/AdminBuscar" onClick={() => { UploadData(); handleClose(); history.push("/AdminBuscar"); }} variant="contained" color="primary" >Aceptar Edición</Button>
                 <Button onClick={handleClose} variant="contained" color="secondary" >Regresar</Button>
             </FormLine>
 
@@ -891,7 +891,7 @@ const AdminEditForm = () => {
             const NewvalueGender = (a[0].Sexo === 1) ? 'Hombre' : 'Mujer';
             setValueGender(NewvalueGender);
             setValueCURP(a[0].Curp);
-            setValueRFC(a[0].Curp);
+            setValueRFC(a[0].RFC);
             setValueTelCasa(a[0].Tipo_Telefono);
             setValueTelRec(a[0].Telefono);
             setValueOcupacion(a[0].co_ocupacion);
@@ -928,7 +928,7 @@ const AdminEditForm = () => {
         }}>
             <FormLine>
                 <StyledTextField id="IDP" label="IDP"
-                    value={tipoIDP ||''}
+                    value={tipoIDP || ''}
                     onChange={handleChangeTipoIDP}
                 />
 
@@ -936,7 +936,7 @@ const AdminEditForm = () => {
                     id="TipoDeIngreso"
                     select
                     label="Tipo de Entrada"
-                    value={tipoIngreso||''}
+                    value={tipoIngreso || ''}
                     onChange={handleChangeTipoIngreso}
 
                 >
@@ -948,18 +948,18 @@ const AdminEditForm = () => {
                 </StyledTextField>
 
                 <StyledTextField id="Nu" label="No."
-                    value={tipoNO ||''}
+                    value={tipoNO || ''}
                     onChange={handleChangeTipoNO} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="Nombre" label="Nombre(s)"
-                    value={tipoNombre ||''}
+                    value={tipoNombre || ''}
                     onChange={handleChangeTipoNombre} />
                 <StyledTextField id="ApellidoP" label="Apellido Paterno"
-                    value={tipoApellidoP ||''}
+                    value={tipoApellidoP || ''}
                     onChange={handleChangeTipoApellidoP} />
                 <StyledTextField id="AppelidoM" label="Apellido Materno"
-                    value={tipoApellidoM ||''}
+                    value={tipoApellidoM || ''}
                     onChange={handleChangeTipoApellidoM} />
             </FormLine>
 
@@ -971,7 +971,7 @@ const AdminEditForm = () => {
                         format="dd/MM/yyyy"
                         margin="normal"
                         id="date-picker-inline"
-                        value={selectedDate ||''}
+                        value={selectedDate || ''}
                         onChange={handleDateChange}
                         KeyboardButtonProps={{
                             'aria-label': 'change date',
@@ -979,17 +979,17 @@ const AdminEditForm = () => {
                     />
                 </MuiPickersUtilsProvider>
                 <TextField id="Edad" label="Edad"
-                    value={tipoEdad ||''}
+                    value={tipoEdad || ''}
                     onChange={handleChangeTipoEdad} />
                 <TextField id="LdNacimiento" label="Lugar de Nacimiento"
-                    value={tipoLugarNacimiento ||''}
+                    value={tipoLugarNacimiento || ''}
                     onChange={handleChangeTipoLugarNacimiento} />
 
 
 
                 <FormControl component="fieldset">
                     <FormLabel component="legend">Sexo</FormLabel>
-                    <RadioGroup row aria-label="gender" name="gender1" value={valueGender ||''} onChange={handleChangeGender}>
+                    <RadioGroup row aria-label="gender" name="gender1" value={valueGender || ''} onChange={handleChangeGender}>
                         <FormControlLabel value="Mujer" control={<Radio
 
                             onChange={handleChangeGender}
@@ -1005,10 +1005,10 @@ const AdminEditForm = () => {
             </FormLine>
             <FormLine>
                 <SmallTextField id="RFC" label="RFC"
-                    value={valueRFC ||''}
+                    value={valueRFC || ''}
                     onChange={handleChangeRFC} />
                 <StyledTextField id="CURP" label="CURP"
-                    value={valueCURP ||''}
+                    value={valueCURP || ''}
                     onChange={handleChangeCURP} />
             </FormLine>
             <FormLine>
@@ -1016,7 +1016,7 @@ const AdminEditForm = () => {
                     id="TelCasa"
                     select
                     label="Tipo de Telefono"
-                    value={valueTelCasa ||''}
+                    value={valueTelCasa || ''}
                     onChange={handleChangeTelCasa}
 
                 >
@@ -1027,20 +1027,20 @@ const AdminEditForm = () => {
                     ))}
                 </StyledTextField>
                 <StyledTextField id="TelReca" label="Telefono"
-                    value={valueTelRec ||''}
+                    value={valueTelRec || ''}
                     onChange={handleChangeTelRec} />
 
             </FormLine>
             <FormLine>
                 <StyledTextField id="Ocupacion" label="Ocupacion"
-                    value={valueOcupacion ||''}
+                    value={valueOcupacion || ''}
                     onChange={handleChangeOcupacion} />
 
                 <StyledTextField
                     id="TipoDeEtnicidad"
                     select
                     label="Tipo de Etnicidad"
-                    value={tipoEtnica ||''}
+                    value={tipoEtnica || ''}
                     onChange={handleChangeTipoEtnica}
 
                 >
@@ -1055,7 +1055,7 @@ const AdminEditForm = () => {
                     id="TipoDeGrado"
                     select
                     label="Tipo de Grado"
-                    value={tipoGrado ||''}
+                    value={tipoGrado || ''}
                     onChange={handleChangeTipoGrado}
 
                 >
@@ -1069,28 +1069,28 @@ const AdminEditForm = () => {
             </FormLine>
             <FormLine>
                 <StyledTextField id="Padre" label="Padre"
-                    value={valuePadre ||''}
+                    value={valuePadre || ''}
                     onChange={handleChangePadre} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="Madre" label="Madre"
-                    value={valueMadre ||''}
+                    value={valueMadre || ''}
                     onChange={handleChangeMadre} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="Tutor" label="Tutor"
-                    value={valueTutor ||''}
+                    value={valueTutor || ''}
                     onChange={handleChangeTutor} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="Calle" label="Calle"
-                    value={valueCalle ||''}
+                    value={valueCalle || ''}
                     onChange={handleChangeCalle} />
                 <SmallTextField id='interno' label='Interno'
-                    value={valueNoInterno ||''}
+                    value={valueNoInterno || ''}
                     onChange={handleChangeNoInterno} />
                 <SmallTextField id='externo' label='Externo'
-                    value={valueNoExterno ||''}
+                    value={valueNoExterno || ''}
                     onChange={handleChangeNoExterno} />
             </FormLine>
 
@@ -1099,7 +1099,7 @@ const AdminEditForm = () => {
                     id="TipoDeVialidad"
                     select
                     label="Tipo de Vialidad"
-                    value={tipoVial ||''}
+                    value={tipoVial || ''}
                     onChange={handleChangeTipoDeVialidad}
 
                 >
@@ -1110,20 +1110,20 @@ const AdminEditForm = () => {
                     ))}
                 </StyledTextField>
                 <SmallTextField id='ut' label='UT'
-                    value={valueUT ||''}
+                    value={valueUT || ''}
                     onChange={handleChangeUT} />
                 <SmallTextField id='CodigoPostal' label='Codigo Postal'
-                    value={valueCodigoPostal ||''}
+                    value={valueCodigoPostal || ''}
                     onChange={handleChangeCodigoPostal} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="EntreCalle1" label="Entre Calle 1"
-                    value={valueEntreCalle1 ||''}
+                    value={valueEntreCalle1 || ''}
                     onChange={handleChangeEntreCalle1} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="EntreCalle2" label="Entre Calle 2"
-                    value={valueCalle2 ||''}
+                    value={valueCalle2 || ''}
                     onChange={handleChangeCalle2} />
             </FormLine>
             <FormLine>
@@ -1131,7 +1131,7 @@ const AdminEditForm = () => {
                     id="TipoReg"
                     select
                     label="Tipo de Regimen"
-                    value={valueTipoReg ||''}
+                    value={valueTipoReg || ''}
                     onChange={handleChangeTipoReg}
 
                 >
@@ -1142,7 +1142,7 @@ const AdminEditForm = () => {
                     ))}
                 </StyledTextField>
                 <StyledTextField id="NombreReg" label="Nombre de Regimen"
-                    value={valueNombreReg ||''}
+                    value={valueNombreReg || ''}
                     onChange={handleChangeNombreReg} />
             </FormLine>
             <FormLine>
@@ -1150,7 +1150,7 @@ const AdminEditForm = () => {
                     id="TipoAse"
                     select
                     label="Tipo de Asentamiento"
-                    value={valueTipoAse ||''}
+                    value={valueTipoAse || ''}
                     onChange={handleChangeTipoAse}
 
                 >
@@ -1161,12 +1161,12 @@ const AdminEditForm = () => {
                     ))}
                 </StyledTextField>
                 <StyledTextField id="NombreAse" label="Nombre de Asentamiento"
-                    value={valueNombreAse ||''}
+                    value={valueNombreAse || ''}
                     onChange={handleChangeNombreAse} />
             </FormLine>
             <FormLine>
                 <StyledTextField id="Comentarios" label="Comentarios"
-                    value={valueComentario ||''}
+                    value={valueComentario || ''}
                     onChange={handleChangeComentario} />
             </FormLine>
             <FormLine>

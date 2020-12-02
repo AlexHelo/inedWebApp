@@ -302,6 +302,7 @@ app.get('/API/DeleteUser/:userId', async (req, res) => {
 app.get('/API/EditAdults/:adultId', async (req, res) => {
 
     const adults = await sequelize.query(`SELECT 	Id_persona,
+    Recibe_solicitud,
     Nombre,
     Apellido_Paterno,
     Apellido_Materno,
@@ -437,7 +438,7 @@ app.post('/API/Search', async (req, res) => {
     // );
     // console.log(user[0]);
     if (req.body.BusquedaF == 'Adulto') {
-        
+
         const user = await sequelize.query(`SELECT ${req.body.Informacion} FROM ${req.body.Tipo} WHERE ${req.body.Campo} = '${req.body.Datos}' AND Status = '${req.body.BusquedaData}'`, {
             replacements: {},
             type: QueryTypes.SELECT
@@ -462,7 +463,7 @@ app.post('/API/Search', async (req, res) => {
     }
 
     //console.log(user);
-    
+
 })
 
 app.post('/API/UpdateAdult', async (req, res) => {
@@ -473,6 +474,7 @@ app.post('/API/UpdateAdult', async (req, res) => {
     // id[0]['MAX(b01_us_id)']++;
     await sequelize.query(`UPDATE ds02_personas 
     SET Nombre = '${req.body.Nombre}', 
+    Recibe_solicitud = '${req.body.Usuario}',
     Apellido_Paterno = '${req.body.Apellido_Paterno}', 
     Apellido_Materno = '${req.body.Apellido_Materno}', 
     Fecha_Nacimiento = '${req.body.Fecha_Alta}', 
