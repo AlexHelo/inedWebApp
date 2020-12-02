@@ -128,19 +128,21 @@ const fields1 = [
         label: 'Responsable Nombre',
     },
     {
-        value: 'Responsible Apellido Materno',
-        label: 'Responsable Apellido Materno',
+        value: 'Unidad Territorial',
+        label: 'Unidad Territorial',
     },
     {
-        value: 'Responsable Apellido Paterno',
-        label: 'Responsable Apellido Paterno',
-    },
+        value: 'IDP',
+        label: 'IDP',
+    }
+    
+    
 
 ];
 const fields2 = [
     {
         value: 'User',
-        label: 'Usuario',
+        label: 'Nombre Usuario',
     },
     {
         value: 'Tipo Solicitud',
@@ -221,12 +223,28 @@ const MonitorSearch = () => {
         return {
             Tipo: FilterSearch(tipoBusqueda),
             Campo: FilterData(tipoCampo),
-            Datos: valueBusqueda,
+            Datos: (FilterData(tipoCampo)=== 'StatusArchivo') ? ChangeValue(valueBusqueda):valueBusqueda,
             Informacion : FilterSearchType(tipoBusqueda),
             BusquedaF: FilterSSearch(tipoBusqueda),
             BusquedaData: FilterSSSearch(tipoBusqueda),
         }
 
+    }
+
+    const ChangeValue=(data)=>{
+        let con='yes';
+        switch(data){
+            case 'Alta':
+                con= 0;
+                break;
+            case 'Baja':
+                con= 1
+                break;
+            case 'Modificacion':
+                con= 2
+                break;
+        }
+        return con;
     }
     let FilterSSSearch=(data)=>{
         let con='yes';
@@ -307,7 +325,7 @@ const MonitorSearch = () => {
                 con='Curp';
                 break;
             case 'Responsible':
-                con='Rep_Nombre';
+                con='Rep_Completo';
                 break;
             case 'Responsible Apellido Materno':
                 con='Rep_ApePat';
@@ -322,7 +340,7 @@ const MonitorSearch = () => {
                 con='Recibe_solicitud'
                 break;
             case 'Tipo Solicitud':
-                con='Status'
+                con='StatusArchivo'
                 break;
             case 'Nombre de Adulto':
                 con='Nombre'
@@ -338,6 +356,12 @@ const MonitorSearch = () => {
                 break;
             case 'Rol':
                 con='b01_us_role';
+                break;
+            case 'Unidad Territorial':
+                con='Unidad_Territorial';
+                break;
+            case 'IDP':
+                con='Idp';
                 break;
         }
         return con;

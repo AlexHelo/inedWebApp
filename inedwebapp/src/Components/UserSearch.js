@@ -126,19 +126,19 @@ const fields1 = [
         label: 'Responsable Nombre',
     },
     {
-        value: 'Responsible Apellido Materno',
-        label: 'Responsable Apellido Materno',
+        value: 'Unidad Territorial',
+        label: 'Unidad Territorial',
     },
     {
-        value: 'Responsable Apellido Paterno',
-        label: 'Responsable Apellido Paterno',
-    },
+        value: 'IDP',
+        label: 'IDP',
+    }
 
 ];
 const fields2 = [
     {
         value: 'User',
-        label: 'Usuario',
+        label: 'Nombre Usuario',
     },
     {
         value: 'Tipo Solicitud',
@@ -303,7 +303,7 @@ const UserSearch = () => {
                 con='Curp';
                 break;
             case 'Responsible':
-                con='Rep_Nombre';
+                con='Rep_Completo';
                 break;
             case 'Responsible Apellido Materno':
                 con='Rep_ApePat';
@@ -334,6 +334,12 @@ const UserSearch = () => {
                 break;
             case 'Rol':
                 con='b01_us_role';
+                break;
+            case 'Unidad Territorial':
+                con='Unidad_Territorial';
+                break;
+            case 'IDP':
+                con='Idp';
                 break;
         }
         return con;

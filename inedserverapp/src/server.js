@@ -447,7 +447,13 @@ app.post('/API/Search', async (req, res) => {
     // console.log(user[0]);
     if (req.body.BusquedaF == 'Adulto') {
 
-        const user = await sequelize.query(`SELECT ${req.body.Informacion} FROM ${req.body.Tipo} WHERE ${req.body.Campo} = '${req.body.Datos}' AND Status = '${req.body.BusquedaData}'`, {
+        const user = await sequelize.query(`
+        SELECT ${req.body.Informacion}
+        FROM ${req.body.Tipo} 
+        JOIN ds03_domicilios  ON ds02_personas.Id_Persona = ds03_domicilios.do_Persona 
+        JOIN ds06_personas  ON ds03_domicilios.do_Persona  = ds06_personas.idds02 
+        JOIN ds10_complpersonal ON ds06_personas.idds02  = ds10_complpersonal.co_persona
+        WHERE ${req.body.Campo} = '${req.body.Datos}' AND Status = '${req.body.BusquedaData}'`, {
             replacements: {},
             type: QueryTypes.SELECT
         }
