@@ -44,13 +44,13 @@ ReactDOM.render(
 
       <Route path='/CrearSolicitudMonitor'>
         <NavNoS />
-        <Button to="/VisualizarMonitor" txt='Cancelar' />
+        <Button to="/MonitorBuscar" txt='Cancelar' />
         <CreateRequestMonitor />
       </Route>
 
       <Route path='/CrearSolicitudUsuario'>
         <NavNoS />
-        <Button to="/VisualizarUsuario" txt='Cancelar' />
+        <Button to="/UsuarioBuscar" txt='Cancelar' />
         <CreateRequestUser />
       </Route>
 
@@ -92,7 +92,7 @@ ReactDOM.render(
 
       <Route path='/CrearAdulto'>
         <NavNoS />
-        <Button to="/VisualizarAdmin" txt='Cancelar' />
+        <Button to="/AdminBuscar" txt='Cancelar' />
         <Create />
       </Route>
 
@@ -134,13 +134,13 @@ ReactDOM.render(
 
       <Route path='/AceptarAdulto'>
         <NavNoS />
-        <Button to="/VisualizarAdmin" txt='Cancelar' />
+        <Button to="/AdminBuscar" txt='Cancelar' />
         <AdminAcept />
       </Route>
 
       <Route path='/AceptarAdultoMonitor'>
         <NavNoS />
-        <Button to="/VisualizarMonitor" txt='Cancelar' />
+        <Button to="/MonitorBuscar" txt='Cancelar' />
         <MonitorAcept />
       </Route>
 

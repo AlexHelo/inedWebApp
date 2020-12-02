@@ -94,6 +94,12 @@ app.get('/API/AllVialidad', async (req, res) => {
 
     res.send(adults)
 })
+app.get('/API/AllDelegaciones', async (req, res) => {
+
+    const adults = await sequelize.query(`SELECT dl_id, dl_msglargo FROM cat_delegaciones`, { type: QueryTypes.SELECT });
+
+    res.send(adults)
+})
 app.post('/API/SetAdults', async (req, res) => {
 
     console.log(req.body);
@@ -127,7 +133,8 @@ app.post('/API/SetAdults', async (req, res) => {
       Asentamiento,
       Observaciones,
       Fecha_Alta,
-      Recibe_Solicitud
+      Recibe_Solicitud,
+      Delegacion
     )
   VALUES
     (
@@ -156,7 +163,8 @@ app.post('/API/SetAdults', async (req, res) => {
       '${req.body.Asentamiento}',
       '${req.body.Observaciones}',
       '${req.body.Fecha_Alta}',
-       '${req.body.Usuario}')`)
+       '${req.body.Usuario}',
+       ${req.body.Delegacion})`)
         , function (err) {
             res.sendStatus(500)
         }
@@ -301,7 +309,7 @@ app.get('/API/DeleteUser/:userId', async (req, res) => {
 
 app.get('/API/EditAdults/:adultId', async (req, res) => {
 
-    const adults = await sequelize.query(`SELECT 	Id_persona,
+    const adults = await sequelize.query(`SELECT 	Id_persona,Delegacion,
     Recibe_solicitud,
     Nombre,
     Apellido_Paterno,
@@ -496,7 +504,8 @@ app.post('/API/UpdateAdult', async (req, res) => {
     Regimen= '${req.body.Regimen}',
     Tipo_Asentamiento= ${req.body.tipo_Asentamiento},
     Asentamiento= '${req.body.Asentamiento}',
-    Observaciones= '${req.body.Observaciones}'
+    Observaciones= '${req.body.Observaciones}',
+    Delegacion = ${req.body.Delegacion}
     WHERE Id_Persona= ${req.body.IdPersona}`
     )
 

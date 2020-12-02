@@ -556,6 +556,12 @@ const CreateForm = () => {
         setValueRFC(event.target.value);
     };
 
+    const [valueTipoDeDelegacion, setValueTipoDeDelegacion] = React.useState();
+    const handleChangeTipoDeDelegacion = (event) => {
+        setValueTipoDeDelegacion(event.target.value);
+        console.log(event.target.value);
+    };
+
     const [valueTelCasa, setValueTelCasa] = React.useState();
     const handleChangeTelCasa = (event) => {
         setValueTelCasa(event.target.value);
@@ -665,6 +671,7 @@ const CreateForm = () => {
     const [tipoRegimen, setTipoRegimen] = React.useState([]);
     const [tipoAsentamiento, setTipoAsentamiento] = React.useState([]);
     const [TipoDeVialidad, setTipoDeVialidad] = React.useState([]);
+    const [TipoDelegacion, setTipoDelegacion] = React.useState([]);
     const [valueHelperText, setHelperText] = React.useState('');
     const [valueError, setError] = React.useState(false);
 
@@ -705,6 +712,13 @@ const CreateForm = () => {
             )
 
         }).then(a => { setTipoDeVialidad(a); console.log(a); });
+        fetch('http://localhost:8080/API/AllDelegaciones').then(response => {
+
+            return (
+                response.json()
+            )
+
+        }).then(a => { setTipoDelegacion(a); console.log(a); });
     }, []);
 
     today = yyyy + '-' + mm + '-' + dd;
@@ -757,7 +771,8 @@ const CreateForm = () => {
             Asentamiento: valueNombreAse,
             do_Asentamiento: valueNombreAse,
             Observaciones: valueComentario,
-            Fecha_Alta: today
+            Fecha_Alta: today,
+            Delegacion: valueTipoDeDelegacion
         }
 
     }
@@ -1044,6 +1059,22 @@ const CreateForm = () => {
                         value={valueTutor}
                         onChange={handleChangeTutor} />
                 </FormLine>
+                <FormLine>
+            <StyledTextField
+                    id="TipoDeDelegacion"
+                    select
+                    label="Delegacion"
+                    value={valueTipoDeDelegacion}
+                    onChange={handleChangeTipoDeDelegacion}
+
+                >
+                    {TipoDelegacion.map((option) => (
+                        <MenuItem key={option.dl_id} value={option.dl_id}>
+                            {option.dl_msglargo}
+                        </MenuItem>
+                    ))}
+                </StyledTextField>
+            </FormLine>
                 <FormLine>
                     <StyledTextField id="Calle" label="Calle"
                         value={valueCalle}

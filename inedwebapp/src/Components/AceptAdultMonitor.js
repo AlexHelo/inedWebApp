@@ -554,6 +554,11 @@ const AceptAdultFormMonitor = () => {
     const handleChangeCURP = (event) => {
         setValueCURP(event.target.value);
     };
+    const [valueTipoDeDelegacion, setValueTipoDeDelegacion] = React.useState();
+    const handleChangeTipoDeDelegacion = (event) => {
+        setValueTipoDeDelegacion(event.target.value);
+        console.log(event.target.value);
+    };
 
     const [valueTelCasa, setValueTelCasa] = React.useState();
     const handleChangeTelCasa = (event) => {
@@ -669,6 +674,7 @@ const AceptAdultFormMonitor = () => {
     const [tipoTele, setTipoTele] = React.useState([]);
     const [tipoRegimen, setTipoRegimen] = React.useState([]);
     const [tipoAsentamiento, setTipoAsentamiento] = React.useState([]);
+    const [TipoDelegacion, setTipoDelegacion] = React.useState([]);
     const [TipoDeVialidad, setTipoDeVialidad] = React.useState([]);
     const handleChangeTipoDeVialidad = (event) => {
         setTipoDeVialidad(event.target.value);
@@ -713,6 +719,13 @@ const AceptAdultFormMonitor = () => {
             )
 
         }).then(a => { setTipoDeVialidad(a); console.log(a); });
+        fetch('http://localhost:8080/API/AllDelegaciones').then(response => {
+
+            return (
+                response.json()
+            )
+
+        }).then(a => { setTipoDelegacion(a); console.log(a); });
     }, []);
 
     today = yyyy + '-' + mm + '-' + dd;
@@ -767,7 +780,8 @@ const AceptAdultFormMonitor = () => {
             Asentamiento: valueNombreAse,
             do_Asentamiento: valueNombreAse,
             Observaciones: valueComentario,
-            Fecha_Alta: today
+            Fecha_Alta: today,
+            Delegacion: valueTipoDeDelegacion
         }
 
     }
@@ -919,7 +933,7 @@ const AceptAdultFormMonitor = () => {
             setValueComentario(a[0].Observaciones);
             setValueCalle(a[0].do_completo.split(/(\d+)/)[0]);
             setTipoGrado(a[0].co_gradoest);
-
+            setValueTipoDeDelegacion(a[0].Delegacion);
 
 
         })
@@ -1101,6 +1115,22 @@ const AceptAdultFormMonitor = () => {
                         value={valueTutor || ''}
                         onChange={handleChangeTutor} />
                 </FormLine>
+                <FormLine>
+                <StyledTextField
+                    id="TipoDeDelegacion"
+                    select
+                    label="Delegacion"
+                    value={valueTipoDeDelegacion || ''}
+                    onChange={handleChangeTipoDeDelegacion}
+
+                >
+                    {TipoDelegacion.map((option) => (
+                        <MenuItem key={option.dl_id} value={option.dl_id}>
+                            {option.dl_msglargo}
+                        </MenuItem>
+                    ))}
+                </StyledTextField>
+            </FormLine>
                 <FormLine>
                     <StyledTextField id="Calle" label="Calle"
                         value={valueCalle || ''}
