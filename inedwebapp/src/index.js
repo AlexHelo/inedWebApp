@@ -12,6 +12,8 @@ import AdminEdit from './Components/AdminEdit';
 import ModeratorEdit from './Components/ModeratorEdit';
 import BasicUserEdit from './Components/BasicUserEdit';
 import AdminVisualize from './Components/AdminVisualize';
+import MonitorVisualize from './Components/MonitorVisualize';
+import UserVisualize from './Components/UserVisualize';
 import CreateUser from './Components/CreateUser';
 import CreateRequestMonitor from './Components/CreateRequestsMonitor';
 import CreateRequestUser from './Components/CreateRequests';
@@ -114,8 +116,20 @@ ReactDOM.render(
 
       <Route path='/VisualizarAdultoAdmin'>
         <NavNoS />
-        <Button to="/VisualizarAdmin" txt='Cancelar' />
+        <Button to="/AdminBuscar" txt='Cancelar' />
         <AdminVisualize />
+      </Route>
+
+      <Route path='/VisualizarAdultoMonitor'>
+        <NavNoS />
+        <Button to="/MonitorBuscar" txt='Cancelar' />
+        <MonitorVisualize />
+      </Route>
+
+      <Route path='/VisualizarAdultoUsuario'>
+        <NavNoS />
+        <Button to="/UsuarioBuscar" txt='Cancelar' />
+        <UserVisualize />
       </Route>
 
       <Route path='/AceptarAdulto'>

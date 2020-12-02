@@ -206,7 +206,7 @@ const EnhancedTableToolbar = (props) => {
                         <IconButton aria-label="Visualizar Datos" onClick={() => {
 
                             history.push({
-                                pathname: 'VisualizarAdultoAdmin' + '/' + selected[0],
+                                pathname: 'VisualizarAdultoMonitor' + '/' + selected[0],
                                 id: selected[0]
                             })
                         }}>
