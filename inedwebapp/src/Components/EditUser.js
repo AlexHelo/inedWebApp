@@ -99,6 +99,10 @@ const Niveles = [
         value: 'Administrador',
         label: 'Administrador',
     },
+    {
+        value: 'Personal de Modulo',
+        label: 'Personal de Modulo',
+    },
 ];
 
 const useStyles = makeStyles((theme) => ({

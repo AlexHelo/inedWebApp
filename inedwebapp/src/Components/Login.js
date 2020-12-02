@@ -254,6 +254,9 @@ const LoginScreen = () => {
             case 'Usuario':
                 history.push("/UsuarioBuscar");
                 break;
+            case 'Personal de Modulo':
+                history.push("/PersonalDeModuloBuscar");
+                break;
 
         }
         

@@ -6,6 +6,7 @@ import Nav from './Components/Nav';
 import AdminTabs from './Components/AdminTabs';
 import ModeratorTabs from './Components/ModeratorTabs';
 import UserTabs from './Components/UserTabs';
+import PersonalDeModuloTabs from './Components/PersonalDeModulosTabs';
 import Button from './Components/Button'
 import Create from './Components/Create'
 import AdminEdit from './Components/AdminEdit';
@@ -14,6 +15,7 @@ import BasicUserEdit from './Components/BasicUserEdit';
 import AdminVisualize from './Components/AdminVisualize';
 import MonitorVisualize from './Components/MonitorVisualize';
 import UserVisualize from './Components/UserVisualize';
+import PersonalDeModuloVisualize from './Components/PersonalDeModuloVisualize';
 import CreateUser from './Components/CreateUser';
 import CreateRequestMonitor from './Components/CreateRequestsMonitor';
 import CreateRequestUser from './Components/CreateRequests';
@@ -23,6 +25,7 @@ import NavNoS from './Components/NavNoSearch';
 import AdminSearch from './Components/AdminSearch';
 import MonitorSearch from './Components/MonitorSearch';
 import UserSearch from './Components/UserSearch';
+import PersonalDeModuloSearch from './Components/PersonalDeModuloSearch';
 import AdminAcept from './Components/AceptAdult';
 import MonitorAcept from './Components/AceptAdultMonitor';
 
@@ -64,6 +67,11 @@ ReactDOM.render(
         <UserSearch />
       </Route>
 
+      <Route path='/PersonalDeModuloBuscar'>
+        <NavNoS />
+        <PersonalDeModuloSearch />
+      </Route>
+
 
       <Route path='/Login'>
         <NavNoS />
@@ -88,6 +96,11 @@ ReactDOM.render(
         <Nav to="/UsuarioBuscar" />
         <Button to="/CrearSolicitudUsuario" txt='Crear Solicitud Adulto' />
         <UserTabs to='/Editar' />
+      </Route>
+
+      <Route path='/VisualizarPersonalDeModulo'>
+        <Nav to="/PersonalDeModuloBuscar" />
+        <PersonalDeModuloTabs to='/Editar' />
       </Route>
 
       <Route path='/CrearAdulto'>
@@ -130,6 +143,12 @@ ReactDOM.render(
         <NavNoS />
         <Button to="/UsuarioBuscar" txt='Cancelar' />
         <UserVisualize />
+      </Route>
+      
+      <Route path='/VisualizarAdultoPersonalDeModulo'>
+        <NavNoS />
+        <Button to="/PersonalDeModuloBuscar" txt='Cancelar' />
+        <PersonalDeModuloVisualize />
       </Route>
 
       <Route path='/AceptarAdulto'>
